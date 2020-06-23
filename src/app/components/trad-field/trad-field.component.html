@@ -1,3 +1,7 @@
-<p>
-  trad-field works!
-</p>
+<ion-item>
+  <ion-label position="floating">Français</ion-label>
+  <ion-textarea></ion-textarea>
+  <ion-button slot="end" (click)="confirm()" expand="block" shape="round" [color]="btnColor"  [fill]="btnFill">
+    {{btnText}}
+  </ion-button>
+</ion-item>

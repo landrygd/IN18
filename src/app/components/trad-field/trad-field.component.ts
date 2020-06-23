@@ -7,8 +7,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TradFieldComponent implements OnInit {
 
-  constructor() { }
+  checked: boolean;
+  btnColor: string;
+  btnFill: string;
+  btnText: string;
+
+  constructor() {
+    this.checked = true;
+    this.updateBtn();
+  }
 
   ngOnInit() {}
 
+  confirm() {
+    this.checked = !this.checked;
+    this.updateBtn();
+  }
+
+  updateBtn() {
+    if (this.checked) {
+      this.btnColor = 'primary';
+      this.btnFill = 'clear';
+      this.btnText = 'Valider';
+    } else {
+      this.btnColor = 'success';
+      this.btnFill = 'solid';
+      this.btnText = 'Validé';
+    }
+  }
 }
