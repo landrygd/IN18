@@ -1,6 +1,20 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-icon slot="start" name="chatbox"></ion-icon>
+  <ion-toolbar color="tertiary">
+    
+  <ion-buttons slot="start">
+    <ion-icon name="chatbox"></ion-icon>
     <ion-title>IN18</ion-title>
+  </ion-buttons>
+    
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="start">
+    <ion-button (click)="presentPopover($event)">
+      <ion-icon name="more"></ion-icon> test
+    </ion-button>
+  </ion-buttons>
   </ion-toolbar>
 </ion-header>
