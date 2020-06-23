@@ -11,10 +11,12 @@ export class TradFieldComponent implements OnInit {
   btnColor: string;
   btnFill: string;
   btnText: string;
+  language: string;
 
   constructor() {
     this.checked = true;
     this.updateBtn();
+    this.language = 'Français';
   }
 
   ngOnInit() {}
