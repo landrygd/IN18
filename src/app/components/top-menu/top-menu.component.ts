@@ -13,9 +13,10 @@ export class TopMenuComponent implements OnInit {
 
   ngOnInit() {}
 
-  async presentPopover(ev: any) {
+  async presentPopover(ev: any,id:number) {
     const popover = await this.popoverCtrl.create({
       component: PopoverPage,
+      componentProps:{id:id},
       cssClass: '',
       event: ev,
       translucent: true

@@ -2,7 +2,7 @@
   <ion-toolbar color="tertiary">
     
   <ion-buttons slot="start">
-    <ion-icon name="chatbox"></ion-icon>
+    <ion-icon name="chatbox" size="large"></ion-icon>
     <ion-title>IN18</ion-title>
   </ion-buttons>
     
@@ -11,10 +11,12 @@
         <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
       </ion-button>
     </ion-buttons>
+
     <ion-buttons slot="start">
-    <ion-button (click)="presentPopover($event)">
-      <ion-icon name="more"></ion-icon> test
+    <ion-button (click)="presentPopover($event,0)">
+      <ion-icon name="file-tray-full" size="large"></ion-icon>Project
     </ion-button>
+
   </ion-buttons>
   </ion-toolbar>
 </ion-header>
