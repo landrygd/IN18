@@ -1,4 +1,5 @@
 {
+  "experimentalDecorators":true,
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
