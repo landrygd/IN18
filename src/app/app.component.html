@@ -3,14 +3,18 @@
     <ion-menu content-id="main-content">
       <ion-header>
         <ion-toolbar color="primary">
-          <ion-title>Menu</ion-title>
+          <ion-icon slot="start" name="chatbox"></ion-icon>
+          <ion-title>IN18</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <ion-content>
         <ion-list>
           <ion-list-header>
-            Navigate
+            <ion-button (click)="onClick()">
+              <ion-icon slot="start" name="add"></ion-icon>
+              Click me
+            </ion-button>
           </ion-list-header>
           <ion-menu-toggle auto-hide="false">
             <ion-item button>
