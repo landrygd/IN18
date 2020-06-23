@@ -13,7 +13,8 @@ import { TopMenuComponent } from './components/top-menu/top-menu.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TopMenuComponent
   ],
   entryComponents: [
     
