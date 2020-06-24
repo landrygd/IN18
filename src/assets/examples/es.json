@@ -1,0 +1,314 @@
+{
+	"BOOKSETTINGS": {
+		"background": "Cambiar el fondo",
+		"delete": "Eliminar este libro",
+		"deleteConfirm": "¿Seguro que quieres eliminar este libro?",
+		"header": "Configuraciones de libro",
+		"invitationSent": "Invitación enviada",
+		"invite": "Invita a un amigo a cooperar",
+		"leave": "Retirarse del libro",
+		"leaveBookConfirm": "¿Estás seguro de que deseas eliminarte de los autores de este libro?",
+		"policyConfirm": "Respeté la carta",
+		"policyError": "Debes aceptar las reglas de la carta Noetic",
+		"publish": "Publica este libro",
+		"publishConfirm": "¿Seguro que quieres hacer público este libro? Su contenido debe respetar las reglas de la Carta Noética.",
+		"seePolicy": "Ver la carta",
+		"stopPublishingConfirm": "¿Estás seguro de que quieres que este libro sea privado?",
+		"tuto": "Reinicia el tutorial",
+		"tutoReactivated": "Tutorial reactivado",
+		"unPublish": "Deja de publicar este libro"
+	},
+	"BOOKTABS": {
+		"story": "Guión"
+	},
+	"CATEGORIES": {
+		"action": "Acción",
+		"adventure": "Aventuras",
+		"fanfiction": "Fan fiction",
+		"fantastic": "Fantástico",
+		"fiction": "Ficcion general",
+		"horror": "Horror",
+		"humor": "Humor",
+		"mystery": "Mytérieux",
+		"nonfiction": "No ficción",
+		"romance": "Romance",
+		"scifi": "Ciencia ficción",
+		"thriller": "Novela de suspenso",
+		"undefined": "Sin categorizar"
+	},
+	"CHART": {
+		"header": "Carta Noética",
+		"intro": "Está estrictamente prohibido en cualquier trabajo:",
+		"outro": "",
+		"rules": [
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
+	"CHAT": {
+		"alertSettingsHeader": "",
+		"avaibleAmbiances": "",
+		"avaibleMusics": "",
+		"avaibleSounds": "",
+		"enterMessage": ""
+	},
+	"COMMON": {
+		"accept": "",
+		"cancel": "",
+		"category": "",
+		"confirm": "",
+		"create": "Crear",
+		"delete": "",
+		"disconnected": "",
+		"erase": "",
+		"error": "",
+		"examples": "",
+		"loading": "",
+		"more": "",
+		"next": "",
+		"no": "",
+		"notifs": "",
+		"ok": "",
+		"options": "",
+		"read": "",
+		"refuse": "",
+		"register": "",
+		"rename": "",
+		"return": "",
+		"send": "",
+		"settings": "",
+		"use": "",
+		"warning": "",
+		"yes": ""
+	},
+	"COVER": {
+		"addTag": "",
+		"alertAnswerPlaceholder": "",
+		"alertDescPlaceholder": "",
+		"alertTagPlaceholder": "",
+		"alertTitleHeader": "",
+		"alertTitlePlaceholder": "",
+		"alertVersoPlaceholder": "",
+		"answer": "",
+		"changeDesc": "",
+		"changeVerso": "",
+		"hideAuthorAnswer": "",
+		"more": "",
+		"seeAuthorAnswer": "",
+		"toastAddedToList": "",
+		"toastCommentSent": "",
+		"toastRemovedFromList": ""
+	},
+	"ERRORS": {
+		"5TagsMax": "",
+		"buttonsNotAvaible": "",
+		"invalidLabelName": "",
+		"title3CarMin": "",
+		"title40CarMax": "",
+		"unratedComment": ""
+	},
+	"GAME": {
+		"answer": "",
+		"input": "",
+		"maxChatError": "",
+		"maxLabelError": "",
+		"restartBook": "",
+		"restartBookWarning": ""
+	},
+	"HOME": {
+		"about": "",
+		"aboutApp": "",
+		"aboutBlockup": "",
+		"chart": "",
+		"mostRecent": "",
+		"mostVue": "",
+		"noeticSite": "",
+		"policy": "",
+		"popupRGPD": "",
+		"rate": "",
+		"report": "",
+		"saves": "",
+		"search": "",
+		"share": "",
+		"topRated": ""
+	},
+	"LANGUAGES": {
+		"arabic": "",
+		"chinese": "",
+		"english": "",
+		"french": "Francés",
+		"german": "",
+		"hindi": "",
+		"portugese": "",
+		"russian": "",
+		"spanish": "",
+		"swahili": ""
+	},
+	"LOGIN": {
+		"forgotPassword": "",
+		"login": "",
+		"noAccount": "",
+		"otherConnexion": "",
+		"register": "",
+		"return": ""
+	},
+	"MODALS": {
+		"ACTOR": {
+			"changeColor": "",
+			"warningDesc": ""
+		},
+		"MANUAL": {
+			"ambiance": "",
+			"command": "",
+			"music": "",
+			"sound": ""
+		},
+		"SEARCHUSER": {
+			"search": ""
+		},
+		"UPLOAD": {
+			"error": "",
+			"header": ""
+		},
+		"WALLPAPER": {
+			"header": ""
+		}
+	},
+	"NEWBOOK": {
+		"changeCover": "",
+		"create": "",
+		"descMaxError": "",
+		"descMinError": "",
+		"tagMaxError": "",
+		"titleMaxError": "",
+		"titleMinError": "",
+		"versoMaxError": ""
+	},
+	"NOTIFS": {
+		"acceptInvWriting": "",
+		"invWriting": "",
+		"noNotif": ""
+	},
+	"OFFLINE": {
+		"pleaseReconnect": ""
+	},
+	"PASSWORD": {
+		"reinit": ""
+	},
+	"PRESENTATION": {
+		"create": "",
+		"createDesc": "",
+		"discover": "",
+		"discoverDesc": "",
+		"invite": "",
+		"inviteDesc": "",
+		"letsGo": ""
+	},
+	"PROFILE": {
+		"changeBio": "",
+		"changePseudo": "",
+		"disconnect": "",
+		"follow": "",
+		"hisStories": "",
+		"myFollows": "",
+		"myList": "",
+		"myStories": "",
+		"newBio": "",
+		"newPseudo": "",
+		"noBio": "",
+		"share": "",
+		"unfollow": ""
+	},
+	"REGISTER": {
+		"accept": "Acepto",
+		"passwordMaxError": "La contraseña no debe contener más de 30 caracteres.",
+		"paswordMatchError": "Las contraseñas no coinciden",
+		"paswordMinError": "La contraseña debe contener al menos 8 caracteres",
+		"policyError": "",
+		"privatePolicy": "",
+		"pseudoInvalidCarError": "",
+		"pseudoMaxError": "",
+		"pseudoMinError": ""
+	},
+	"SEARCH": {
+		"noresult": "Sin resultados",
+		"nosearch": "Búsqueda vacía"
+	},
+	"SERVICES": {
+		"ACTOR": {
+			"actorName": "",
+			"actorNameError": "",
+			"newActor": ""
+		},
+		"AUTH": {
+			"confirmNewMail": "",
+			"confirmPasswordWarning": "",
+			"emailUsedError": "",
+			"password": "",
+			"passwordError": "",
+			"resetPasswordLink": ""
+		},
+		"BOOK": {
+			"addChat": "",
+			"authorAlreadyError": "",
+			"authorMaxError": "",
+			"backgroundChanged": "",
+			"bookNotExistError": "",
+			"bookPublished": "",
+			"chatName": "",
+			"chatNameError": "",
+			"chatReservedNameError": "",
+			"chatUsedNameError": "",
+			"emptyCategory": "",
+			"newChatError": "",
+			"shareMsg": "",
+			"shareSubject": ""
+		},
+		"CHAT": {
+			"changeChatName": "",
+			"chatLogsMaxError": "",
+			"logMaxError": "",
+			"newChatName": ""
+		},
+		"USER": {
+			"avaibleLanguages": "Idiomas Disponibles",
+			"copiedLink": "link copiado al portapapeles",
+			"languagesMax": "No puedes elegir más de 10 idiomas.",
+			"ownProfileError": "¡Es tu propio perfil!",
+			"readingSaved": "Lectura guardada",
+			"report": "Informar de un problema",
+			"reportBook": "Denunciar un libro",
+			"reportMsg": "Haremos todo lo posible para corregirlo lo antes posible. Todo el spam se castiga con el destierro.",
+			"reportPlaceholder": "Tu problema",
+			"reportSent": "reporte enviado",
+			"reportUser": "Informar a un usuario",
+			"restartApp": "Reinicie la aplicación para que su configuración surta efecto",
+			"shareAppMsg": "Aquí está Noetic, una aplicación para crear tus propios juegos narrativos en forma de gatos.",
+			"shareAppSubject": "Noetic, una aplicación para crear juegos narrativos con un chat",
+			"shareProfileMsg": "Aquí está mi perfil en Noetic:",
+			"shareProfileSubject": "Compartir perfil",
+			"syncError": "",
+			"userNotFoundError": ""
+		}
+	},
+	"TABS": {
+		"home": "",
+		"profile": ""
+	},
+	"USERSETTINGS": {
+		"changeMail": "",
+		"email": "",
+		"header": "",
+		"language": "",
+		"nightMode": "",
+		"reinitPassword": "",
+		"searchLanguages": ""
+	}
+}

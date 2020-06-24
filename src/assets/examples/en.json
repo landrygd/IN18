@@ -1,0 +1,314 @@
+{
+	"BOOKSETTINGS": {
+		"background": "Change the background",
+		"delete": "Delete this book",
+		"deleteConfirm": "Are you sure you want to delete this book?",
+		"header": "Book settings",
+		"invitationSent": "Invitation sent",
+		"invite": "Invite a firend to cooperate.",
+		"leave": "Leave this book",
+		"leaveBookConfirm": "Are you sure you want to remove yourself from the authors of this book?",
+		"policyConfirm": "I respected the charter",
+		"policyError": "You must accept the rules of the Noetic charter",
+		"publish": "Publish the book",
+		"publishConfirm": "Are you sure you want to make this book public? Its content must respect the rules of the Noetic charter",
+		"seePolicy": "See the charter",
+		"stopPublishingConfirm": "Are you sure you want to make this book private?",
+		"tuto": "Restart the tutorial again",
+		"tutoReactivated": "Tutorial reactivated",
+		"unPublish": "Stop publishing the book"
+	},
+	"BOOKTABS": {
+		"story": "Scenario"
+	},
+	"CATEGORIES": {
+		"action": "Action",
+		"adventure": "Adventure",
+		"fanfiction": "Fan-fiction",
+		"fantastic": "Fantastic",
+		"fiction": "General fiction",
+		"horror": "Horror",
+		"humor": "Humor",
+		"mystery": "Mystery",
+		"nonfiction": "Non-Fiction",
+		"romance": "Romance",
+		"scifi": "Science-Fiction",
+		"thriller": "Thriller",
+		"undefined": "Uncategorized"
+	},
+	"CHART": {
+		"header": "Noetic Chart",
+		"intro": "Il est formellement interdit dans tout ouvrage :",
+		"outro": "Tout utilisateur ne respectant pas ces règles est pénalisable d’un bannissement.",
+		"rules": [
+			"De porter des propos racistes, homophobes, sexiste ou tout autres sujets politiquement incorrectes.",
+			"D’être irrespectueux envers le lecteur, le harceler ou l’agresser.",
+			"De spammer, abuser des bruitages.",
+			"De spoiler sans avertir les lecteurs.",
+			"D’utiliser du contenu pornographique ou d’extrême violence.",
+			"De ne pas avertir les lecteurs d’un contenu choquant où parlant d’un sujet sensible.",
+			"De divulguer des informations privée d’autres personnes sans consentement.",
+			"Plagier une histoire",
+			"Ne pas mentionner les auteurs des images utilisées. Y compris la couverture!"
+		]
+	},
+	"CHAT": {
+		"alertSettingsHeader": "",
+		"avaibleAmbiances": "Voir les ambiances disponibles",
+		"avaibleMusics": "Voir les musiques disponibles",
+		"avaibleSounds": "Voir les sons disponibles",
+		"enterMessage": "Entrez un message..."
+	},
+	"COMMON": {
+		"accept": "Accept",
+		"cancel": "Cancel",
+		"category": "Category",
+		"confirm": "Confirm",
+		"create": "Create",
+		"delete": "",
+		"disconnected": "Disconnected",
+		"erase": "Erase",
+		"error": "",
+		"examples": "",
+		"loading": "Loading...",
+		"more": "",
+		"next": "Next",
+		"no": "",
+		"notifs": "Notifications",
+		"ok": "Ok",
+		"options": "",
+		"read": "Read",
+		"refuse": "Refuse",
+		"register": "Register",
+		"rename": "",
+		"return": "Return",
+		"send": "",
+		"settings": "",
+		"use": "",
+		"warning": "",
+		"yes": ""
+	},
+	"COVER": {
+		"addTag": "Ajouter un tag",
+		"alertAnswerPlaceholder": "",
+		"alertDescPlaceholder": "",
+		"alertTagPlaceholder": "",
+		"alertTitleHeader": "",
+		"alertTitlePlaceholder": "",
+		"alertVersoPlaceholder": "",
+		"answer": "Répondre",
+		"changeDesc": "",
+		"changeVerso": "Changer le verso",
+		"hideAuthorAnswer": "Cacher la réponse du créateur",
+		"more": "En savoir plus",
+		"seeAuthorAnswer": "Voir la réponse du créateur",
+		"toastAddedToList": "",
+		"toastCommentSent": "",
+		"toastRemovedFromList": ""
+	},
+	"ERRORS": {
+		"5TagsMax": "",
+		"buttonsNotAvaible": "",
+		"invalidLabelName": "",
+		"title3CarMin": "",
+		"title40CarMax": "",
+		"unratedComment": ""
+	},
+	"GAME": {
+		"answer": "Choisir une réponse",
+		"input": "Entrer du texte",
+		"maxChatError": "",
+		"maxLabelError": "",
+		"restartBook": "",
+		"restartBookWarning": ""
+	},
+	"HOME": {
+		"about": "",
+		"aboutApp": "",
+		"aboutBlockup": "",
+		"chart": "",
+		"mostRecent": "Most recent",
+		"mostVue": "Most view",
+		"noeticSite": "",
+		"policy": "",
+		"popupRGPD": "",
+		"rate": "",
+		"report": "",
+		"saves": "My saves",
+		"search": "Search for a story",
+		"share": "",
+		"topRated": "Top rated"
+	},
+	"LANGUAGES": {
+		"arabic": "",
+		"chinese": "",
+		"english": "",
+		"french": "French",
+		"german": "",
+		"hindi": "",
+		"portugese": "",
+		"russian": "",
+		"spanish": "",
+		"swahili": ""
+	},
+	"LOGIN": {
+		"forgotPassword": "Password forgotten?",
+		"login": "Log in",
+		"noAccount": "No account yet",
+		"otherConnexion": "Or log in with",
+		"register": "Create an account",
+		"return": "Return to the site"
+	},
+	"MODALS": {
+		"ACTOR": {
+			"changeColor": "",
+			"warningDesc": ""
+		},
+		"MANUAL": {
+			"ambiance": "",
+			"command": "",
+			"music": "",
+			"sound": ""
+		},
+		"SEARCHUSER": {
+			"search": ""
+		},
+		"UPLOAD": {
+			"error": "",
+			"header": ""
+		},
+		"WALLPAPER": {
+			"header": ""
+		}
+	},
+	"NEWBOOK": {
+		"changeCover": "Change cover",
+		"create": "Create a story",
+		"descMaxError": "",
+		"descMinError": "",
+		"tagMaxError": "",
+		"titleMaxError": "",
+		"titleMinError": "",
+		"versoMaxError": ""
+	},
+	"NOTIFS": {
+		"acceptInvWriting": "accepted your invitation on the story",
+		"invWriting": "invite you to write with him/her on the story",
+		"noNotif": "No notification for the time being..."
+	},
+	"OFFLINE": {
+		"pleaseReconnect": "Please re-establish connection to continue"
+	},
+	"PASSWORD": {
+		"reinit": "Réinitialiser le mot de passe"
+	},
+	"PRESENTATION": {
+		"create": "Create",
+		"createDesc": "stories with interactives chats,",
+		"discover": "And find out",
+		"discoverDesc": "what the others have done, you might be surprised!",
+		"invite": "Invite",
+		"inviteDesc": "your friends to read/write stories together,",
+		"letsGo": "Let's go !"
+	},
+	"PROFILE": {
+		"changeBio": "",
+		"changePseudo": "",
+		"disconnect": "",
+		"follow": "Follow",
+		"hisStories": "His/her stories",
+		"myFollows": "My follows",
+		"myList": "My list",
+		"myStories": "My Stories",
+		"newBio": "",
+		"newPseudo": "",
+		"noBio": "Nothing to say for the time being...",
+		"share": "",
+		"unfollow": "Stop following"
+	},
+	"REGISTER": {
+		"accept": "I accept",
+		"passwordMaxError": "Password must not contain more than 30 characters",
+		"paswordMatchError": "Passwords do not match",
+		"paswordMinError": "",
+		"policyError": "",
+		"privatePolicy": "the privacy policy",
+		"pseudoInvalidCarError": "",
+		"pseudoMaxError": "",
+		"pseudoMinError": ""
+	},
+	"SEARCH": {
+		"noresult": "No result",
+		"nosearch": "Empty search"
+	},
+	"SERVICES": {
+		"ACTOR": {
+			"actorName": "",
+			"actorNameError": "",
+			"newActor": ""
+		},
+		"AUTH": {
+			"confirmNewMail": "",
+			"confirmPasswordWarning": "",
+			"emailUsedError": "",
+			"password": "",
+			"passwordError": "",
+			"resetPasswordLink": ""
+		},
+		"BOOK": {
+			"addChat": "",
+			"authorAlreadyError": "",
+			"authorMaxError": "",
+			"backgroundChanged": "",
+			"bookNotExistError": "",
+			"bookPublished": "",
+			"chatName": "",
+			"chatNameError": "",
+			"chatReservedNameError": "",
+			"chatUsedNameError": "",
+			"emptyCategory": "",
+			"newChatError": "",
+			"shareMsg": "",
+			"shareSubject": ""
+		},
+		"CHAT": {
+			"changeChatName": "",
+			"chatLogsMaxError": "",
+			"logMaxError": "",
+			"newChatName": ""
+		},
+		"USER": {
+			"avaibleLanguages": "Available Languages",
+			"copiedLink": "Link copied to clipboard",
+			"languagesMax": "You cannot choose more than 10 languages",
+			"ownProfileError": "It's your own profile!",
+			"readingSaved": "Reading saved",
+			"report": "to report a problem",
+			"reportBook": "Report a book",
+			"reportMsg": "We will do our best to correct it as soon as possible. All spam is punishable by banishment.",
+			"reportPlaceholder": "Your problem",
+			"reportSent": "Report sent",
+			"reportUser": "Report a user",
+			"restartApp": "Please restart the application for your settings to take effect",
+			"shareAppMsg": "Here is Noetic, an app to create your own narrative games in the form of cats",
+			"shareAppSubject": "Noetic, an app to create narrative games with a chat",
+			"shareProfileMsg": "Here is my profile on Noetic:",
+			"shareProfileSubject": "Profile Sharing",
+			"syncError": "",
+			"userNotFoundError": ""
+		}
+	},
+	"TABS": {
+		"home": "Home",
+		"profile": "Profile"
+	},
+	"USERSETTINGS": {
+		"changeMail": "Change the mail addresse",
+		"email": "",
+		"header": "User settings",
+		"language": "Manage the application language",
+		"nightMode": "Night mode",
+		"reinitPassword": "Reset the password",
+		"searchLanguages": "Manage the languages of the research books"
+	}
+}

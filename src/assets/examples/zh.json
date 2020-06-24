@@ -1,0 +1,314 @@
+{
+	"BOOKSETTINGS": {
+		"background": "换背景",
+		"delete": "删除这本书",
+		"deleteConfirm": "您确定要删除这本书吗？",
+		"header": "书籍设定",
+		"invitationSent": "邀请已发送",
+		"invite": "邀请朋友合作",
+		"leave": "从书中撤出",
+		"leaveBookConfirm": "您确定要从本书的作者中删除吗？",
+		"policyConfirm": "我尊重章程",
+		"policyError": "您必须接受Noetic宪章的规则",
+		"publish": "出版这本书",
+		"publishConfirm": "您确定要公开此书吗？其内容必须遵守Noetic宪章的规则",
+		"seePolicy": "见宪章",
+		"stopPublishingConfirm": "您确定要将这本书设为私人吗？",
+		"tuto": "重新开始本教程",
+		"tutoReactivated": "教程已重新激活",
+		"unPublish": "停止出版这本书"
+	},
+	"BOOKTABS": {
+		"story": "情境"
+	},
+	"CATEGORIES": {
+		"action": "行动",
+		"adventure": "冒险",
+		"fanfiction": "粉丝小说",
+		"fantastic": "太棒了",
+		"fiction": "一般小说",
+		"horror": "恐怖",
+		"humor": "幽默",
+		"mystery": "迈特里厄",
+		"nonfiction": "非小说类",
+		"romance": "浪漫",
+		"scifi": "科幻小说",
+		"thriller": "惊悚片",
+		"undefined": "未分类"
+	},
+	"CHART": {
+		"header": "诺伊特宪章",
+		"intro": "严禁在任何工作中使用：",
+		"outro": "",
+		"rules": [
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			"",
+			""
+		]
+	},
+	"CHAT": {
+		"alertSettingsHeader": "",
+		"avaibleAmbiances": "",
+		"avaibleMusics": "",
+		"avaibleSounds": "",
+		"enterMessage": ""
+	},
+	"COMMON": {
+		"accept": "",
+		"cancel": "",
+		"category": "",
+		"confirm": "",
+		"create": "",
+		"delete": "",
+		"disconnected": "",
+		"erase": "",
+		"error": "",
+		"examples": "",
+		"loading": "",
+		"more": "",
+		"next": "",
+		"no": "",
+		"notifs": "",
+		"ok": "",
+		"options": "",
+		"read": "",
+		"refuse": "",
+		"register": "",
+		"rename": "",
+		"return": "",
+		"send": "",
+		"settings": "",
+		"use": "",
+		"warning": "",
+		"yes": ""
+	},
+	"COVER": {
+		"addTag": "",
+		"alertAnswerPlaceholder": "",
+		"alertDescPlaceholder": "",
+		"alertTagPlaceholder": "",
+		"alertTitleHeader": "",
+		"alertTitlePlaceholder": "",
+		"alertVersoPlaceholder": "",
+		"answer": "",
+		"changeDesc": "",
+		"changeVerso": "",
+		"hideAuthorAnswer": "",
+		"more": "",
+		"seeAuthorAnswer": "",
+		"toastAddedToList": "",
+		"toastCommentSent": "",
+		"toastRemovedFromList": ""
+	},
+	"ERRORS": {
+		"5TagsMax": "",
+		"buttonsNotAvaible": "",
+		"invalidLabelName": "",
+		"title3CarMin": "",
+		"title40CarMax": "",
+		"unratedComment": ""
+	},
+	"GAME": {
+		"answer": "",
+		"input": "",
+		"maxChatError": "",
+		"maxLabelError": "",
+		"restartBook": "",
+		"restartBookWarning": ""
+	},
+	"HOME": {
+		"about": "",
+		"aboutApp": "",
+		"aboutBlockup": "",
+		"chart": "",
+		"mostRecent": "",
+		"mostVue": "",
+		"noeticSite": "",
+		"policy": "",
+		"popupRGPD": "",
+		"rate": "",
+		"report": "",
+		"saves": "",
+		"search": "",
+		"share": "",
+		"topRated": ""
+	},
+	"LANGUAGES": {
+		"arabic": "",
+		"chinese": "",
+		"english": "",
+		"french": "",
+		"german": "",
+		"hindi": "",
+		"portugese": "",
+		"russian": "",
+		"spanish": "",
+		"swahili": ""
+	},
+	"LOGIN": {
+		"forgotPassword": "",
+		"login": "",
+		"noAccount": "",
+		"otherConnexion": "",
+		"register": "",
+		"return": ""
+	},
+	"MODALS": {
+		"ACTOR": {
+			"changeColor": "",
+			"warningDesc": ""
+		},
+		"MANUAL": {
+			"ambiance": "",
+			"command": "",
+			"music": "",
+			"sound": ""
+		},
+		"SEARCHUSER": {
+			"search": ""
+		},
+		"UPLOAD": {
+			"error": "",
+			"header": ""
+		},
+		"WALLPAPER": {
+			"header": ""
+		}
+	},
+	"NEWBOOK": {
+		"changeCover": "",
+		"create": "",
+		"descMaxError": "",
+		"descMinError": "",
+		"tagMaxError": "",
+		"titleMaxError": "",
+		"titleMinError": "",
+		"versoMaxError": ""
+	},
+	"NOTIFS": {
+		"acceptInvWriting": "",
+		"invWriting": "",
+		"noNotif": ""
+	},
+	"OFFLINE": {
+		"pleaseReconnect": ""
+	},
+	"PASSWORD": {
+		"reinit": ""
+	},
+	"PRESENTATION": {
+		"create": "",
+		"createDesc": "",
+		"discover": "",
+		"discoverDesc": "",
+		"invite": "",
+		"inviteDesc": "",
+		"letsGo": ""
+	},
+	"PROFILE": {
+		"changeBio": "",
+		"changePseudo": "",
+		"disconnect": "",
+		"follow": "",
+		"hisStories": "",
+		"myFollows": "",
+		"myList": "",
+		"myStories": "",
+		"newBio": "",
+		"newPseudo": "",
+		"noBio": "",
+		"share": "",
+		"unfollow": ""
+	},
+	"REGISTER": {
+		"accept": "我接受",
+		"passwordMaxError": "密码不能超过30个字符",
+		"paswordMatchError": "密码不匹配",
+		"paswordMinError": "",
+		"policyError": "",
+		"privatePolicy": "",
+		"pseudoInvalidCarError": "",
+		"pseudoMaxError": "",
+		"pseudoMinError": ""
+	},
+	"SEARCH": {
+		"noresult": "没有结果",
+		"nosearch": "空搜索"
+	},
+	"SERVICES": {
+		"ACTOR": {
+			"actorName": "",
+			"actorNameError": "",
+			"newActor": ""
+		},
+		"AUTH": {
+			"confirmNewMail": "",
+			"confirmPasswordWarning": "",
+			"emailUsedError": "",
+			"password": "",
+			"passwordError": "",
+			"resetPasswordLink": ""
+		},
+		"BOOK": {
+			"addChat": "",
+			"authorAlreadyError": "",
+			"authorMaxError": "",
+			"backgroundChanged": "",
+			"bookNotExistError": "",
+			"bookPublished": "",
+			"chatName": "",
+			"chatNameError": "",
+			"chatReservedNameError": "",
+			"chatUsedNameError": "",
+			"emptyCategory": "",
+			"newChatError": "",
+			"shareMsg": "",
+			"shareSubject": ""
+		},
+		"CHAT": {
+			"changeChatName": "",
+			"chatLogsMaxError": "",
+			"logMaxError": "",
+			"newChatName": ""
+		},
+		"USER": {
+			"avaibleLanguages": "",
+			"copiedLink": "",
+			"languagesMax": "",
+			"ownProfileError": "",
+			"readingSaved": "",
+			"report": "",
+			"reportBook": "",
+			"reportMsg": "",
+			"reportPlaceholder": "",
+			"reportSent": "",
+			"reportUser": "",
+			"restartApp": "",
+			"shareAppMsg": "",
+			"shareAppSubject": "",
+			"shareProfileMsg": "",
+			"shareProfileSubject": "",
+			"syncError": "",
+			"userNotFoundError": ""
+		}
+	},
+	"TABS": {
+		"home": "",
+		"profile": ""
+	},
+	"USERSETTINGS": {
+		"changeMail": "",
+		"email": "",
+		"header": "",
+		"language": "",
+		"nightMode": "",
+		"reinitPassword": "",
+		"searchLanguages": ""
+	}
+}
