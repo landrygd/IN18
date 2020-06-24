@@ -1,8 +1,12 @@
+
+
 <ion-list *ngIf="id==0">
-    <ion-item button  (click)="testClick()">
+        
+    <ion-item button  (click)="file.click()">
+            
        Load <ion-note slot="end">Ctrl+I</ion-note><ion-icon name="folder-open" slot="end"></ion-icon>
     </ion-item>
-    <ion-item button (click)="testClick()">
+    <ion-item button (click)="save()">
       Save <ion-note slot="end">Ctrl+S</ion-note><ion-icon name="save" slot="end"></ion-icon>
       </ion-item>
     
@@ -14,3 +18,6 @@
     </ion-item>
     
   </ion-list>
+
+  <input type="file" (change)="load(file.files)" #file style="display: none;"/>
+
