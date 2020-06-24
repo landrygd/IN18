@@ -10,10 +10,6 @@ import {  PopoverController } from '@ionic/angular';
 
     constructor(public popoverCtrl: PopoverController) {
     }
-  
-    close() {
-      
-    }
     
 
     testClick(){
@@ -27,6 +23,10 @@ import {  PopoverController } from '@ionic/angular';
       
       this.popoverCtrl.dismiss()
 
+    }
+
+    import(files){
+      this.popoverCtrl.dismiss()
     }
 
     save(){

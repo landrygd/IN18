@@ -2,7 +2,7 @@
 
 <ion-list *ngIf="id==0">
         
-    <ion-item button  (click)="file.click()">
+    <ion-item button  (click)="load.click()">
             
        Load <ion-note slot="end">Ctrl+I</ion-note><ion-icon name="folder-open" slot="end"></ion-icon>
     </ion-item>
@@ -10,7 +10,7 @@
       Save <ion-note slot="end">Ctrl+S</ion-note><ion-icon name="save" slot="end"></ion-icon>
       </ion-item>
     
-    <ion-item button (click)="testClick()">
+    <ion-item button (click)="import.click()">
       Import <ion-note slot="end">Ctrl+Shift+I</ion-note><ion-icon name="cloud-upload" slot="end"></ion-icon>
       </ion-item>
     <ion-item button lines="none" (click)="testClick()">
@@ -19,5 +19,6 @@
     
   </ion-list>
 
-  <input type="file" (change)="load(file.files)" #file style="display: none;"/>
+  <input type="file" (change)="load(load.files)" #load accept=".in18" style="display: none;"/>
+  <input type="file" (change)="import(import.files)" accept=".json,.csv,.xml" #import style="display: none;"/>
 

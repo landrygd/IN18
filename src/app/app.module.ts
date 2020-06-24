@@ -13,6 +13,7 @@ import { TradFieldComponent } from './components/trad-field/trad-field.component
 import { TradsGroupComponent } from './components/trads-group/trads-group.component';
 import { CommonModule } from '@angular/common';
 import { PopoverPage } from './components/top-menu/template-popover.component';
+import { ModalPage } from './components/top-menu/template-modal.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { PopoverPage } from './components/top-menu/template-popover.component';
     TopMenuComponent,
     TradFieldComponent,
     TradsGroupComponent,
-    PopoverPage
+    PopoverPage,
+    ModalPage
   ],
   entryComponents: [
     

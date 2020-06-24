@@ -21,10 +21,10 @@
     <ion-button (click)="presentPopover($event,0)">
       <ion-icon name="file-tray-full" size="large"></ion-icon> <ion-label>Project</ion-label>
     </ion-button>
-    <ion-button>
+    <ion-button (click)="presentTradConfirm()">
       <ion-icon name="language" size="large"></ion-icon> Translate
     </ion-button>
-    <ion-button>
+    <ion-button (click)="presentModal(0)">
       <ion-icon name="globe" size="large"></ion-icon> Languages
     </ion-button>
     <ion-button>
