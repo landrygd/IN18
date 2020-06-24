@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
-import { PopoverPage } from './test-popover.component';
+import { PopoverPage } from './template-popover.component';
 
 @Component({
   selector: 'app-top-menu',

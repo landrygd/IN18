@@ -11,6 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { TopMenuComponent } from './components/top-menu/top-menu.component';
 import { TradFieldComponent } from './components/trad-field/trad-field.component';
 import { TradsGroupComponent } from './components/trads-group/trads-group.component';
+import { CommonModule } from '@angular/common';
+import { PopoverPage } from './components/top-menu/template-popover.component';
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import { TradsGroupComponent } from './components/trads-group/trads-group.compon
     AppComponent,
     TopMenuComponent,
     TradFieldComponent,
-    TradsGroupComponent
+    TradsGroupComponent,
+    PopoverPage
   ],
   entryComponents: [
     
@@ -26,7 +29,8 @@ import { TradsGroupComponent } from './components/trads-group/trads-group.compon
   imports: [
     BrowserModule, 
     IonicModule.forRoot(), 
-    AppRoutingModule
+    AppRoutingModule,
+    CommonModule
     ],
   providers: [
     StatusBar,
