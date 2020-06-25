@@ -14,6 +14,7 @@ import { TradsGroupComponent } from './components/trads-group/trads-group.compon
 import { CommonModule } from '@angular/common';
 import { PopoverPage } from './components/top-menu/template-popover.component';
 import { ModalPage } from './components/top-menu/template-modal.component';
+import { TreeViewComponent } from './components/tree-view/tree-view.component';
 
 
 @NgModule({
@@ -23,14 +24,13 @@ import { ModalPage } from './components/top-menu/template-modal.component';
     TradFieldComponent,
     TradsGroupComponent,
     PopoverPage,
-    ModalPage
+    ModalPage,
+    TreeViewComponent
   ],
-  entryComponents: [
-    
-  ],
+  entryComponents: [],
   imports: [
-    BrowserModule, 
-    IonicModule.forRoot(), 
+    BrowserModule,
+    IonicModule.forRoot(),
     AppRoutingModule,
     CommonModule
     ],

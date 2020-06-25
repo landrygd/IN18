@@ -13,55 +13,48 @@ import * as  pt from '../../assets/examples/pt.json';
 })
 export class GlobalService {
 
-  files: any;
-  structure: any;
+  structure = {};
 
   constructor() {
     this.test();
   }
 
   test() {
-    this.indexFiles([de, en, es, fr, it, ja, nl, pt], ['de', 'en', 'es', 'fr', 'it', 'ja', 'nl', 'pt']);
-    this.loadProjectStructure('fr');
+    this.loadProjectStructure([de, en, es, fr, it, ja, nl, pt], ['de', 'en', 'es', 'fr', 'it', 'ja', 'nl', 'pt']);
   }
 
-  indexFiles(files: any[], languages: string[]) {
-    for (let i; i < files.length; i++) {
-      this.files[languages[i]] = files[i];
-    }
-  }
-
-  loadProjectStructure(primaryLang: string) {
-    let paths: string[];
-    for (const langName of this.files) {
-      this.recursivePath(paths, langName);
-    }
-  }
-
-  recursivePath(paths: string[], language: string) {
-    if (paths === undefined) {
-      paths = [];
-      for (const key of this.files[language]) {
-        if (Object.keys(key).length > 0) {
-          paths.push(key);
+  loadProjectStructure(files: any[], languages: string[]) {
+    for (let i = 0; i < languages.length; i++) {
+      const paths = ['default'];
+      for (let j = 0; j < 1000; j++) {
+        if (paths.length > 0) {
+          const path = paths.shift();
+          const obj = this.modifyJson(files[i], path);
+          for (const key of Object.keys(obj)) {
+            const subPath = path + '.' + key;
+            const subObj = this.modifyJson(files[i], subPath);
+            if (typeof subObj === 'object') {
+              paths.push(subPath);
+            } else {
+              this.modifyJson(this.structure, subPath + '.' + languages[i], subObj);
+            }
+          }
         }
       }
     }
-    for (const key of this.files[language]) {
-      if (Object.keys(key).length > 0) {
-        paths.push(key);
-      }
-    }
   }
 
-  modifyJson(obj, is, value) {
+  modifyJson(obj, is, value = '') {
     if (typeof is === 'string') {
       return this.modifyJson(obj, is.split('.'), value);
-    } else if (is.length === 1 && value !== undefined) {
+    } else if (is.length === 1 && value !== '') {
       return obj[is[0]] = value;
     } else if (is.length === 0) {
       return obj;
     } else {
+      if (!obj[is[0]]) {
+        obj[is[0]] = {};
+      }
       return this.modifyJson(obj[is[0]], is.slice(1), value);
     }
   }
