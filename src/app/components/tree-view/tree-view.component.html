@@ -1,9 +1,18 @@
 <ion-list>
-    <ion-item button ngFor="let path of paths">
-      <ion-icon slot="start" name="chevron-forward"></ion-icon>
-      <ion-icon slot="start" name='folder'></ion-icon>
-      <ion-label>
-        Home
-      </ion-label>
-    </ion-item>
+  <div *ngFor="let path of paths">
+    <ion-row  *ngIf="isVisible(path)">
+      <ion-col size="1" *ngFor="let level of getLevels(path)"></ion-col>
+      <ion-col>
+        <ion-item button *ngIf="isVisible(path)" (click)="develop(path)">
+          <ion-icon slot="start" [color]="getColor(path)" [name]="getIcon(path, 'chevron')" *ngIf="isFolder(path)"></ion-icon>
+          <ion-icon slot="start" [color]="getColor(path)" [name]="getIcon(path, 'folder')"></ion-icon>
+          <ion-label>
+            <p [color]="getColor(path)">
+              {{getName(path)}}
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </div>
 </ion-list>

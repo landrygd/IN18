@@ -26,18 +26,16 @@ export class GlobalService {
   loadProjectStructure(files: any[], languages: string[]) {
     for (let i = 0; i < languages.length; i++) {
       const paths = ['default'];
-      for (let j = 0; j < 1000; j++) {
-        if (paths.length > 0) {
-          const path = paths.shift();
-          const obj = this.modifyJson(files[i], path);
-          for (const key of Object.keys(obj)) {
-            const subPath = path + '.' + key;
-            const subObj = this.modifyJson(files[i], subPath);
-            if (typeof subObj === 'object') {
-              paths.push(subPath);
-            } else {
-              this.modifyJson(this.structure, subPath + '.' + languages[i], subObj);
-            }
+      while (paths.length > 0) {
+        const path = paths.shift();
+        const obj = this.modifyJson(files[i], path);
+        for (const key of Object.keys(obj)) {
+          const subPath = path + '.' + key;
+          const subObj = this.modifyJson(files[i], subPath);
+          if (typeof subObj === 'object') {
+            paths.push(subPath);
+          } else {
+            this.modifyJson(this.structure, subPath + '.' + languages[i], subObj);
           }
         }
       }

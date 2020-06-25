@@ -11,6 +11,9 @@ import { GlobalService } from './services/global.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+
+  tree: any;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -18,6 +21,7 @@ export class AppComponent {
     private global: GlobalService
   ) {
     this.initializeApp();
+    this.tree = this.global.structure;
   }
 
   initializeApp() {
