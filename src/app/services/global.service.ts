@@ -20,21 +20,21 @@ import { Traduction } from '../classes/traduction';
 export class GlobalService {
 
   structure = {};
-  observablestructure= new BehaviorSubject<Object>(this.structure);
+  observablestructure = new BehaviorSubject<object>(this.structure);
 
   constructor() {
     this.test();
   }
 
   setStructure(newStructure) {
-    this.structure=newStructure
+    this.structure = newStructure;
     this.observablestructure.next(this.structure);
-    console.log(this.observablestructure)
+    console.log(this.observablestructure);
     }
 
   newProject(){
-    this.setStructure({})
-    console.log("new project")
+    this.setStructure({});
+    console.log('new project');
   }
 
   test() {
@@ -43,7 +43,7 @@ export class GlobalService {
 
   loadProjectStructure(files: any[], languages: string[]) {
     console.log(files, languages);
-    var structureCopy = {};
+    const structureCopy = {};
     for (let i = 0; i < languages.length; i++) {
       const paths = ['default'];
       while (paths.length > 0) {
@@ -60,7 +60,7 @@ export class GlobalService {
         }
       }
     }
-    this.setStructure(structureCopy)
+    this.setStructure(structureCopy);
   }
 
   modifyJson(obj, is, value = '') {
@@ -82,19 +82,19 @@ export class GlobalService {
     return this.modifyJson(obj, path);
   }
 
-  updatePath(traduction:Traduction) {
+  updatePath(traduction: Traduction) {
     console.log(traduction.getPath());
-    var structureCopy=this.structure
+    const structureCopy = this.structure;
     this.modifyJson(structureCopy, traduction.getPathWithLanguage(), traduction.getValue());
-    //this.setStructure(structureCopy)
-    this.structure=structureCopy
+    // this.setStructure(structureCopy)
+    this.structure = structureCopy;
     return this.structure;
   }
 
   export(): any[] {
     const docs: any = {};
     const paths = ['default'];
-    var structureCopy=this.structure
+    const structureCopy = this.structure;
     while (paths.length > 0) {
       const path = paths.shift();
       const obj = this.modifyJson(structureCopy, path);

@@ -20,11 +20,11 @@ export class TraductionsGroup {
       this.tradList = tradList;
   }
 
-  public addTraduction(traduction:Traduction){
-    this.tradList.push(traduction)
+  public addTraduction(traduction: Traduction){
+    this.tradList.push(traduction);
   }
 
-  constructor(path: string, tradList:Traduction[]) {
+  constructor(path: string, tradList: Traduction[]) {
     this.path = path;
     this.tradList = tradList;
   }

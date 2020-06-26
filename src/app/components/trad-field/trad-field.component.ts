@@ -45,7 +45,7 @@ export class TradFieldComponent implements OnInit {
   }
 
   onUpdate(event) {
-    const res:Traduction = new Traduction(this.path,event.target.value,this.language)
+    const res: Traduction = new Traduction(this.path, event.target.value, this.language);
     this.update.emit(res);
   }
 }

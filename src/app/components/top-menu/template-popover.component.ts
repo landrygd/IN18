@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input } from '@angular/core';
 import {  PopoverController, AlertController } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global.service';
 
@@ -7,38 +7,38 @@ import { GlobalService } from 'src/app/services/global.service';
   })
   export class PopoverPage {
 
-    @Input() id:number=10
+    @Input() id = 10;
 
     constructor(public popoverCtrl: PopoverController,
-      public alertController: AlertController,
-      public global:GlobalService) {
+                public alertController: AlertController,
+                public global: GlobalService) {
     }
-    
+
 
     testClick(){
-      this.popoverCtrl.dismiss()
+      this.popoverCtrl.dismiss();
     }
 
     load(files){
-      console.log(files)
-      //var myBlob = new Blob([new Uint8Array(file)], {type: "octet/stream"});
+      console.log(files);
+      // var myBlob = new Blob([new Uint8Array(file)], {type: "octet/stream"});
 
-      
-      this.popoverCtrl.dismiss()
+
+      this.popoverCtrl.dismiss();
 
     }
 
     import(files){
-      this.popoverCtrl.dismiss()
+      this.popoverCtrl.dismiss();
     }
 
     save(){
-      this.popoverCtrl.dismiss()
+      this.popoverCtrl.dismiss();
     }
 
     new(){
-      this.presentNewProject()
-      this.popoverCtrl.dismiss()
+      this.presentNewProject();
+      this.popoverCtrl.dismiss();
     }
 
     async presentNewProject() {
@@ -52,17 +52,17 @@ import { GlobalService } from 'src/app/services/global.service';
           role: 'cancel',
           cssClass: 'danger',
           handler: (blah) => {
-            console.log("cancel")
+            console.log('cancel');
           }
         }, {
           text: 'Yes',
           cssClass: 'primary',
           handler: () => {
-            this.global.newProject()
+            this.global.newProject();
           }
         }]
       });
-  
+
       await alert.present();
     }
   }

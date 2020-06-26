@@ -24,8 +24,8 @@ export class Traduction {
         return this.path;
     }
 
-    public getPathWithLanguage():string {
-        return this.path+"."+this.language;
+    public getPathWithLanguage(): string {
+        return this.path + '.' + this.language;
     }
 
     public setPath(path: string): void {

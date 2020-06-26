@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input } from '@angular/core';
 import {  ModalController } from '@ionic/angular';
 
 @Component({
@@ -6,14 +6,14 @@ import {  ModalController } from '@ionic/angular';
   })
   export class ModalPage {
 
-    @Input() id:number=10
+    @Input() id = 10;
 
     constructor(public modalCtrl: ModalController) {
     }
 
     dismissModal(){
-        this.modalCtrl.dismiss()
+        this.modalCtrl.dismiss();
     }
-    
+
 
   }

@@ -25,7 +25,7 @@ export class TreeViewComponent implements OnInit {
     private modalController: ModalController,
     private global: GlobalService
   ) {
-    
+
    }
 
   ngOnInit(){
@@ -35,8 +35,8 @@ export class TreeViewComponent implements OnInit {
   }
 
   updateTree(value) {
-    console.log(value)
-    this.tree=value
+    console.log(value);
+    this.tree = value;
     this.paths = [];
     this.opened = [];
     this.visible = [];
@@ -56,7 +56,7 @@ export class TreeViewComponent implements OnInit {
       }
     }
     this.paths.sort();
-    console.log(this.paths)
+    console.log(this.paths);
   }
 
   modifyJson(obj, is, value = '') {
@@ -169,13 +169,13 @@ export class TreeViewComponent implements OnInit {
     });
     await modal.present();
     const traduction = (await modal.onDidDismiss()).data;
-    //this.newTrad.emit(traduction);
-    if (traduction.path!=""){
-      traduction.path="default."+traduction.path
-      this.global.updatePath(traduction)
-      console.log("eh")
-      console.log(this.global.structure)
-      this.updateTree(this.global.structure)
+    // this.newTrad.emit(traduction);
+    if (traduction.path !== ''){
+      traduction.path = 'default.' + traduction.path;
+      this.global.updatePath(traduction);
+      console.log('eh');
+      console.log(this.global.structure);
+      this.updateTree(this.global.structure);
     }
   }
 }
