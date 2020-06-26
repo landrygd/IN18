@@ -64,6 +64,11 @@ export class AppComponent {
     console.log(this.subStructure);
   }
 
+
+  update() {
+    this.tree = this.global.structure;
+  }
+
   onUpdate(event) {
     this.tree = this.global.updatePath(event.path, event.value, event.lang);
     console.log(event.path, event.value, event.lang);

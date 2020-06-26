@@ -19,19 +19,22 @@
 
     <ion-buttons slot="start">
     <ion-button (click)="presentPopover($event,0)">
-      <ion-icon name="file-tray-full" size="large"></ion-icon> <ion-label>Project</ion-label>
+      <ion-icon name="file-tray-full"></ion-icon> <ion-label>Project</ion-label>
     </ion-button>
     <ion-button (click)="presentTradConfirm()">
-      <ion-icon name="language" size="large"></ion-icon> Translate
+      <ion-icon name="language"></ion-icon> Translate
     </ion-button>
     <ion-button (click)="presentModal(0)">
-      <ion-icon name="globe" size="large"></ion-icon> Languages
+      <ion-icon name="globe"></ion-icon> Languages
     </ion-button>
     <ion-button>
-      <ion-icon name="settings" size="large"></ion-icon> Settings
+      <ion-icon name="settings"></ion-icon> Settings
     </ion-button>
     <ion-button (click)="download()">
-      <ion-icon name="download" size="large"></ion-icon> Download
+      <ion-icon name="download"></ion-icon> Download
+    </ion-button>
+    <ion-button (click)="upload()">
+      <ion-icon name="share"></ion-icon> Upload
     </ion-button>
   </ion-buttons>
   </ion-toolbar>

@@ -28,6 +28,8 @@ export class GlobalService {
   }
 
   loadProjectStructure(files: any[], languages: string[]) {
+    console.log(files, languages);
+    this.structure = {};
     for (let i = 0; i < languages.length; i++) {
       const paths = ['default'];
       while (paths.length > 0) {
@@ -44,6 +46,7 @@ export class GlobalService {
         }
       }
     }
+    console.log(this.structure);
   }
 
   modifyJson(obj, is, value = '') {

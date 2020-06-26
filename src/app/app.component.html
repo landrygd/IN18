@@ -1,5 +1,5 @@
 <ion-app>
-  <app-top-menu></app-top-menu>
+  <app-top-menu (update)="update()"></app-top-menu>
   <ion-split-pane when="sm" content-id="main-content" class="main-content">
     <ion-menu content-id="main-content">
       <ion-content>
@@ -7,7 +7,7 @@
           <ion-icon slot="start" name="add"></ion-icon>
           Ajouter une traduction
         </ion-button>
-        <app-tree-view [tree]="tree" (selected)="selected($event)"></app-tree-view>
+        <app-tree-view [setTree]="tree" (selected)="selected($event)"></app-tree-view>
       </ion-content>
     </ion-menu>
 

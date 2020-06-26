@@ -5,20 +5,32 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   templateUrl: './tree-view.component.html',
   styleUrls: ['./tree-view.component.scss'],
 })
-export class TreeViewComponent implements OnInit {
+export class TreeViewComponent {
 
-  @Input() tree: any;
+  @Input() set setTree(valeur: string) {
+    this.tree = valeur;
+    console.log(this.tree);
+    this.updateTree();
+  }
+
+  tree: any;
 
   @Output() selected = new EventEmitter();
 
-  paths = [];
-  opened = ['default'];
+  paths: any[];
+  opened: any[];
+  visible: string[];
   selectedPath: string;
 
   constructor() { }
 
-  ngOnInit() {
+  updateTree() {
+    this.paths = [];
+    this.opened = [];
+    this.visible = [];
+    this.selectedPath = undefined;
     const paths = ['default'];
+    this.develop('default');
     while (paths.length > 0) {
       const path = paths.shift();
       this.paths.push(path);
@@ -54,10 +66,7 @@ export class TreeViewComponent implements OnInit {
   }
 
   isVisible(path: string) {
-    const pathArr = path.split('.');
-    pathArr.pop();
-    path = pathArr.join('.');
-    return this.isOpened(path);
+    return this.visible.includes(path);
   }
 
   getName(path) {
@@ -70,9 +79,20 @@ export class TreeViewComponent implements OnInit {
         const index = this.opened.indexOf(path);
         this.opened.splice(index, 1);
         this.selectedPath = undefined;
+        const res = [];
+        for (const key of this.visible) {
+          if (!key.startsWith(path) || key === path) {
+            res.push(key);
+          }
+        }
+        this.visible = res;
       } else {
         this.opened.push(path);
         this.selectPath(path);
+        const folder = this.modifyJson(this.tree, path);
+        for (const key of Object.keys(folder)) {
+          this.visible.push(path + '.' + key);
+        }
       }
     } else {
       this.selectPath(path);

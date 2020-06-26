@@ -48,7 +48,7 @@ export class TradFieldComponent implements OnInit {
       value: event.target.value,
       lang: this.language,
       path: this.path
-    }
+    };
     this.update.emit(res);
   }
 }

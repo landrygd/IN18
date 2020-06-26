@@ -15,6 +15,8 @@ import { CommonModule } from '@angular/common';
 import { PopoverPage } from './components/top-menu/template-popover.component';
 import { ModalPage } from './components/top-menu/template-modal.component';
 import { TreeViewComponent } from './components/tree-view/tree-view.component';
+import { UploadModalComponent } from './components/top-menu/upload-modal/upload-modal.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 
 @NgModule({
@@ -25,14 +27,16 @@ import { TreeViewComponent } from './components/tree-view/tree-view.component';
     TradsGroupComponent,
     PopoverPage,
     ModalPage,
-    TreeViewComponent
+    TreeViewComponent,
+    UploadModalComponent
   ],
   entryComponents: [],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    CommonModule
+    CommonModule,
+    NgxDropzoneModule
     ],
   providers: [
     StatusBar,

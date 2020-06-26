@@ -1,0 +1,25 @@
+<ion-content>
+  <ngx-dropzone (change)="onSelect($event)" style="height: 200px;">
+    <ngx-dropzone-label>Drop your JSON files</ngx-dropzone-label>
+      <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+      </ngx-dropzone-preview>
+  </ngx-dropzone>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="cancel()" color="medium">
+        <ion-icon slot="start" name="close"></ion-icon>
+        Cancel
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button (click)="import()" slot="primary" color="success">
+        <ion-icon slot="start" name="checkmark"></ion-icon>
+        Import
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
