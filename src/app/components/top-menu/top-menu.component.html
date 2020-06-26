@@ -7,8 +7,7 @@
         <ion-icon slot="icon-only" name="menu"></ion-icon>
       </ion-button>
     </ion-menu-toggle>
-    <ion-icon name="chatbox" size="large"></ion-icon>
-    <ion-title>IN18</ion-title>
+    <ion-icon src="assets/icon/favicon.svg" size="large" class="ion-margin"></ion-icon>
   </ion-buttons>
     
     <ion-buttons slot="end">
@@ -19,22 +18,22 @@
 
     <ion-buttons slot="start">
     <ion-button (click)="presentPopover($event,0)">
-      <ion-icon name="file-tray-full"></ion-icon> <ion-label>Project</ion-label>
+      <ion-icon size="large" slot="start" name="file-tray-full"></ion-icon> <ion-label>Project</ion-label>
     </ion-button>
     <ion-button (click)="presentTradConfirm()">
-      <ion-icon name="language"></ion-icon> Translate
+      <ion-icon size="large" slot="start" name="language"></ion-icon> Translate
     </ion-button>
     <ion-button (click)="presentModal(0)">
-      <ion-icon name="globe"></ion-icon> Languages
+      <ion-icon size="large" slot="start" name="globe"></ion-icon> Languages
     </ion-button>
     <ion-button>
-      <ion-icon name="settings"></ion-icon> Settings
+      <ion-icon size="large" slot="start" name="settings"></ion-icon> Settings
     </ion-button>
     <ion-button (click)="download()">
-      <ion-icon name="download"></ion-icon> Download
+      <ion-icon size="large" slot="start" name="download"></ion-icon> Download
     </ion-button>
     <ion-button (click)="upload()">
-      <ion-icon name="share"></ion-icon> Upload
+      <ion-icon size="large" slot="start" name="share"></ion-icon> Upload
     </ion-button>
   </ion-buttons>
   </ion-toolbar>
