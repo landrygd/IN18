@@ -37,9 +37,6 @@ export class AppComponent {
     });
   }
 
-  addTraduction() {
-  }
-
   selected(event) {
     this.path = event;
     this.subStructure = this.global.getSubJSON(this.global.structure, event);
@@ -72,5 +69,10 @@ export class AppComponent {
   onUpdate(event) {
     this.tree = this.global.updatePath(event.path, event.value, event.lang);
     console.log(event.path, event.value, event.lang);
+  }
+
+  addTraduction(traduction: any) {
+    console.log(traduction);
+    // this.tree = this.global.updatePath(traduction.path, traduction.value, traduction.lang);
   }
 }

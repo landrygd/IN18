@@ -1,4 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { GlobalService } from 'src/app/services/global.service';
+import { NewTradModalComponent } from './new-trad-modal/new-trad-modal.component';
 
 @Component({
   selector: 'app-tree-view',
@@ -16,13 +19,17 @@ export class TreeViewComponent {
   tree: any;
 
   @Output() selected = new EventEmitter();
+  @Output() newTrad = new EventEmitter();
 
   paths: any[];
   opened: any[];
   visible: string[];
   selectedPath: string;
 
-  constructor() { }
+  constructor(
+    private modalController: ModalController,
+    private global: GlobalService
+  ) { }
 
   updateTree() {
     this.paths = [];
@@ -148,5 +155,14 @@ export class TreeViewComponent {
       return 'dark';
     }
     return 'medium';
+  }
+
+  async addTraduction() {
+    const modal = await this.modalController.create({
+      component: NewTradModalComponent,
+    });
+    await modal.present();
+    const traduction = (await modal.onDidDismiss()).data;
+    this.newTrad.emit(traduction);
   }
 }
