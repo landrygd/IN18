@@ -1,4 +1,8 @@
 import { Injectable } from '@angular/core';
+import * as JSZip from 'jszip';
+import { saveAs } from 'file-saver';
+
+// Fichiers tests //
 import * as  de from '../../assets/examples/de.json';
 import * as  en from '../../assets/examples/en.json';
 import * as  es from '../../assets/examples/es.json';
@@ -55,5 +59,53 @@ export class GlobalService {
       }
       return this.modifyJson(obj[is[0]], is.slice(1), value);
     }
+  }
+
+  getSubJSON(obj: any, path: string) {
+    return this.modifyJson(obj, path);
+  }
+
+  updatePath(path: string, value: string, lang: string) {
+    console.log({path, value, lang});
+    console.log(this.structure);
+    this.modifyJson(this.structure, path, value);
+    return this.structure;
+  }
+
+  export(): any[] {
+    const docs: any = {};
+    const paths = ['default'];
+    while (paths.length > 0) {
+      const path = paths.shift();
+      const obj = this.modifyJson(this.structure, path);
+      for (const key of Object.keys(obj)) {
+        let subPath = path + '.' + key;
+        const subObj = this.modifyJson(this.structure, subPath);
+        if (typeof subObj === 'object') {
+          paths.push(subPath);
+        } else {
+          if (!Object.keys(docs).includes(key)) {
+            docs[key] = {};
+          }
+          const subPathArr = subPath.split('.');
+          subPathArr.pop();
+          subPath = subPathArr.join('.');
+          this.modifyJson(docs[key], subPath, subObj);
+        }
+      }
+    }
+    console.log(docs);
+    return docs;
+  }
+
+  async download() {
+    const zip = new JSZip();
+    const exp = this.export();
+    for (const key of Object.keys(exp)) {
+      zip.file(key + '.json', JSON.stringify(exp[key].default));
+    }
+    const data = await zip.generateAsync({type: 'blob'});
+    const blob = new Blob([data], { type: 'application/zip' });
+    saveAs(blob, 'save.zip');
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PopoverController, AlertController,ModalController } from '@ionic/angular';
 import { PopoverPage } from './template-popover.component';
 import { ModalPage } from './template-modal.component';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-top-menu',
@@ -10,7 +11,12 @@ import { ModalPage } from './template-modal.component';
 })
 export class TopMenuComponent implements OnInit {
 
-  constructor(public popoverCtrl: PopoverController,public modalController: ModalController,public alertController: AlertController) { }
+  constructor(
+    public popoverCtrl: PopoverController,
+    public modalController: ModalController,
+    public alertController: AlertController,
+    public global: GlobalService
+    ) { }
 
   ngOnInit() {}
 
@@ -59,4 +65,7 @@ export class TopMenuComponent implements OnInit {
     await alert.present();
   }
 
+  download() {
+    this.global.download();
+  }
 }

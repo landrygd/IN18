@@ -3,20 +3,18 @@
   <ion-split-pane when="sm" content-id="main-content" class="main-content">
     <ion-menu content-id="main-content">
       <ion-content>
-        <ion-button (click)="addTraduction()">
+        <ion-button (click)="addTraduction()" expand="block" fill="clear" shape="round">
           <ion-icon slot="start" name="add"></ion-icon>
           Ajouter une traduction
         </ion-button>
-        <app-tree-view [tree]="tree"></app-tree-view>
+        <app-tree-view [tree]="tree" (selected)="selected($event)"></app-tree-view>
       </ion-content>
     </ion-menu>
 
     <div class="ion-page" id="main-content">
       <ion-content class="ion-padding">
         <ion-list>
-          <app-trads-group></app-trads-group>
-          <app-trads-group></app-trads-group>
-          <app-trads-group></app-trads-group>
+          <app-trads-group *ngFor="let itemGroup of itemGroupList" [path]="itemGroup.path" [trads]="itemGroup.trads" (update)="onUpdate($event)"></app-trads-group>
         </ion-list>
       </ion-content>
     </div>

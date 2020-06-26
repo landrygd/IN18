@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-tree-view',
@@ -9,8 +9,11 @@ export class TreeViewComponent implements OnInit {
 
   @Input() tree: any;
 
+  @Output() selected = new EventEmitter();
+
   paths = [];
   opened = ['default'];
+  selectedPath: string;
 
   constructor() { }
 
@@ -62,13 +65,27 @@ export class TreeViewComponent implements OnInit {
   }
 
   develop(path) {
-    if (this.opened.includes(path)) {
-      const index = this.opened.indexOf(path);
-      this.opened.splice(index, 1);
+    if (this.isFolder(path)) {
+      if (this.opened.includes(path)) {
+        const index = this.opened.indexOf(path);
+        this.opened.splice(index, 1);
+        this.selectedPath = undefined;
+      } else {
+        this.opened.push(path);
+        this.selectPath(path);
+      }
     } else {
-      this.opened.push(path);
+      this.selectPath(path);
     }
-    console.log(this.opened);
+  }
+
+  selectPath(path: string) {
+    if (this.selectedPath !== path) {
+      this.selectedPath = path;
+      this.selected.emit(path);
+    } else {
+      this.selectedPath = undefined;
+    }
   }
 
   getIcon(path, iconName) {
@@ -99,7 +116,14 @@ export class TreeViewComponent implements OnInit {
     return new Array(path.split('.').length - 2);
   }
 
+  isSelected(path: string) {
+    return this.selectedPath === path;
+  }
+
   getColor(path: string) {
+    if (this.isSelected(path)) {
+      return 'primary';
+    }
     if ((this.isFolder(path) && this.isOpened(path)) || !this.isFolder(path)) {
       return 'dark';
     }

@@ -1,6 +1,6 @@
 <ion-item>
   <ion-label position="floating">{{language}}</ion-label>
-  <ion-textarea></ion-textarea>
+  <ion-textarea [value]="value" (ionChange)= "onUpdate($event)"></ion-textarea>
   <ion-button slot="end" (click)="confirm()" expand="block" shape="round" [color]="btnColor"  [fill]="btnFill">
     {{btnText}}
   </ion-button>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-trad-field',
@@ -7,11 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TradFieldComponent implements OnInit {
 
+  @Input() language: string;
+  @Input() value: string;
+  @Input() path: string;
+
+  @Output() update = new EventEmitter();
+
   checked: boolean;
   btnColor: string;
   btnFill: string;
   btnText: string;
-  language: string;
 
   constructor() {
     this.checked = true;
@@ -36,5 +41,14 @@ export class TradFieldComponent implements OnInit {
       this.btnFill = 'solid';
       this.btnText = 'Validé';
     }
+  }
+
+  onUpdate(event) {
+    const res = {
+      value: event.target.value,
+      lang: this.language,
+      path: this.path
+    }
+    this.update.emit(res);
   }
 }

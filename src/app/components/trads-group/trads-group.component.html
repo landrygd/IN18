@@ -1,9 +1,7 @@
 <ion-item-group>
   <ion-item-divider>
-    <ion-label>Chemin.des.trads</ion-label>
+    <ion-label>{{path}}</ion-label>
   </ion-item-divider>
   
-  <app-trad-field></app-trad-field>
-  <app-trad-field></app-trad-field>
-  <app-trad-field></app-trad-field>
+  <app-trad-field *ngFor="let trad of tradList" [language]="trad.language" [value]="trad.value" [path]="trad.path" (update)="onUpdate($event)"></app-trad-field>
 </ion-item-group>

@@ -6,8 +6,8 @@
         <ion-item button *ngIf="isVisible(path)" (click)="develop(path)">
           <ion-icon slot="start" [color]="getColor(path)" [name]="getIcon(path, 'chevron')" *ngIf="isFolder(path)"></ion-icon>
           <ion-icon slot="start" [color]="getColor(path)" [name]="getIcon(path, 'folder')"></ion-icon>
-          <ion-label>
-            <p [color]="getColor(path)">
+          <ion-label [color]="getColor(path)">
+            <p>
               {{getName(path)}}
             </p>
           </ion-label>

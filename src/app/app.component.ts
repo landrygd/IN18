@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { GlobalService } from './services/global.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -13,12 +13,18 @@ import { GlobalService } from './services/global.service';
 export class AppComponent {
 
   tree: any;
+  path: string;
+  subStructure: any;
+  itemGroupList: any[];
+
+  fileUrl: SafeResourceUrl;
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private global: GlobalService
+    private global: GlobalService,
+    private sanitizer: DomSanitizer
   ) {
     this.initializeApp();
     this.tree = this.global.structure;
@@ -32,6 +38,34 @@ export class AppComponent {
   }
 
   addTraduction() {
-    console.log('traduction added');
+  }
+
+  selected(event) {
+    this.path = event;
+    this.subStructure = this.global.getSubJSON(this.global.structure, event);
+    this.itemGroupList = [];
+    for (const key of Object.keys(this.subStructure)) {
+      if (typeof this.subStructure[key] === 'object') {
+        this.itemGroupList.push(
+          {
+            path: this.path + '.' + key,
+            trads: this.subStructure[key]
+          }
+        );
+      } else {
+        return this.itemGroupList.push(
+          {
+            path: this.path,
+            trads: this.subStructure,
+          }
+        );
+      }
+    }
+    console.log(this.subStructure);
+  }
+
+  onUpdate(event) {
+    this.tree = this.global.updatePath(event.path, event.value, event.lang);
+    console.log(event.path, event.value, event.lang);
   }
 }
