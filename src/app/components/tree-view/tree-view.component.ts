@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global.service';
 import { NewTradModalComponent } from './new-trad-modal/new-trad-modal.component';
@@ -8,13 +8,8 @@ import { NewTradModalComponent } from './new-trad-modal/new-trad-modal.component
   templateUrl: './tree-view.component.html',
   styleUrls: ['./tree-view.component.scss'],
 })
-export class TreeViewComponent {
+export class TreeViewComponent implements OnInit {
 
-  @Input() set setTree(valeur: string) {
-    this.tree = valeur;
-    console.log(this.tree);
-    this.updateTree();
-  }
 
   tree: any;
 
@@ -29,9 +24,19 @@ export class TreeViewComponent {
   constructor(
     private modalController: ModalController,
     private global: GlobalService
-  ) { }
+  ) {
+    
+   }
 
-  updateTree() {
+  ngOnInit(){
+    this.global.observablestructure.subscribe((value) => {
+      this.updateTree(value);
+    });
+  }
+
+  updateTree(value) {
+    console.log(value)
+    this.tree=value
     this.paths = [];
     this.opened = [];
     this.visible = [];
@@ -51,6 +56,7 @@ export class TreeViewComponent {
       }
     }
     this.paths.sort();
+    console.log(this.paths)
   }
 
   modifyJson(obj, is, value = '') {
@@ -163,6 +169,13 @@ export class TreeViewComponent {
     });
     await modal.present();
     const traduction = (await modal.onDidDismiss()).data;
-    this.newTrad.emit(traduction);
+    //this.newTrad.emit(traduction);
+    if (traduction.path!=""){
+      traduction.path="default."+traduction.path
+      this.global.updatePath(traduction)
+      console.log("eh")
+      console.log(this.global.structure)
+      this.updateTree(this.global.structure)
+    }
   }
 }

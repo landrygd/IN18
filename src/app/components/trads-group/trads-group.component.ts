@@ -1,4 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { GlobalService } from 'src/app/services/global.service';
+import { Traduction } from 'src/app/classes/traduction';
+import { TraductionsGroup } from 'src/app/classes/traductions-group';
 
 @Component({
   selector: 'app-trads-group',
@@ -9,29 +12,24 @@ export class TradsGroupComponent implements OnInit {
 
   @Input() path: string;
   @Input() trads: any;
-  @Output() update = new EventEmitter();
 
-  tradList: any[];
+  tradGroup: TraductionsGroup=new TraductionsGroup(this.path,[]);
 
-  constructor() { }
+  constructor(private global:GlobalService) { }
 
   ngOnInit() {
-    this.tradList = [];
+    var tradList = this.tradGroup.tradList;
     Object.keys(this.trads).forEach((key) => {
       if (typeof this.trads[key] !== 'object') {
-        this.tradList.push(
-          {
-            language: key,
-            value: this.trads[key],
-            path: this.path + '.' + key
-          }
+        this.tradGroup.addTraduction(
+          new Traduction(this.path,this.trads[key],key)
         );
       }
     });
   }
 
-  onUpdate(event) {
-    this.update.emit(event);
+  onUpdate(event:Traduction) {
+    this.global.updatePath(event);
   }
 
 }

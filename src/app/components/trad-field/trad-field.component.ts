@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Traduction } from 'src/app/classes/traduction';
 
 @Component({
   selector: 'app-trad-field',
@@ -44,11 +45,7 @@ export class TradFieldComponent implements OnInit {
   }
 
   onUpdate(event) {
-    const res = {
-      value: event.target.value,
-      lang: this.language,
-      path: this.path
-    };
+    const res:Traduction = new Traduction(this.path,event.target.value,this.language)
     this.update.emit(res);
   }
 }

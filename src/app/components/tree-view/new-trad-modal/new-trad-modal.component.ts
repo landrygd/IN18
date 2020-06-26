@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { Traduction } from 'src/app/classes/traduction';
 
 @Component({
   selector: 'app-new-trad-modal',
@@ -8,11 +9,8 @@ import { ModalController } from '@ionic/angular';
 })
 export class NewTradModalComponent implements OnInit {
 
-  traduction: {
-    path: string;
-    lang: string;
-    value: string;
-  };
+  traduction: Traduction = new Traduction("","","en")
+
 
   constructor(
     private modalController: ModalController
@@ -24,7 +22,18 @@ export class NewTradModalComponent implements OnInit {
     this.modalController.dismiss();
   }
 
-  confirm() {
+  onLanguageChange(value){
+    this.traduction.setLanguage(value)
+  }
+
+  onValueChange(value){
+    this.traduction.setValue(value)
+  }
+  onPathChange(value){
+    this.traduction.setPath(value)
+  }
+
+  import() {
     this.modalController.dismiss(this.traduction);
   }
 

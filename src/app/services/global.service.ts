@@ -11,6 +11,8 @@ import * as  it from '../../assets/examples/it.json';
 import * as  ja from '../../assets/examples/ja.json';
 import * as  nl from '../../assets/examples/nl.json';
 import * as  pt from '../../assets/examples/pt.json';
+import { Subject, BehaviorSubject } from 'rxjs';
+import { Traduction } from '../classes/traduction';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +20,21 @@ import * as  pt from '../../assets/examples/pt.json';
 export class GlobalService {
 
   structure = {};
+  observablestructure= new BehaviorSubject<Object>(this.structure);
 
   constructor() {
     this.test();
+  }
+
+  setStructure(newStructure) {
+    this.structure=newStructure
+    this.observablestructure.next(this.structure);
+    console.log(this.observablestructure)
+    }
+
+  newProject(){
+    this.setStructure({})
+    console.log("new project")
   }
 
   test() {
@@ -29,7 +43,7 @@ export class GlobalService {
 
   loadProjectStructure(files: any[], languages: string[]) {
     console.log(files, languages);
-    this.structure = {};
+    var structureCopy = {};
     for (let i = 0; i < languages.length; i++) {
       const paths = ['default'];
       while (paths.length > 0) {
@@ -41,12 +55,12 @@ export class GlobalService {
           if (typeof subObj === 'object') {
             paths.push(subPath);
           } else {
-            this.modifyJson(this.structure, subPath + '.' + languages[i], subObj);
+            this.modifyJson(structureCopy, subPath + '.' + languages[i], subObj);
           }
         }
       }
     }
-    console.log(this.structure);
+    this.setStructure(structureCopy)
   }
 
   modifyJson(obj, is, value = '') {
@@ -68,22 +82,25 @@ export class GlobalService {
     return this.modifyJson(obj, path);
   }
 
-  updatePath(path: string, value: string, lang: string) {
-    console.log({path, value, lang});
-    console.log(this.structure);
-    this.modifyJson(this.structure, path, value);
+  updatePath(traduction:Traduction) {
+    console.log(traduction.getPath());
+    var structureCopy=this.structure
+    this.modifyJson(structureCopy, traduction.getPathWithLanguage(), traduction.getValue());
+    //this.setStructure(structureCopy)
+    this.structure=structureCopy
     return this.structure;
   }
 
   export(): any[] {
     const docs: any = {};
     const paths = ['default'];
+    var structureCopy=this.structure
     while (paths.length > 0) {
       const path = paths.shift();
-      const obj = this.modifyJson(this.structure, path);
+      const obj = this.modifyJson(structureCopy, path);
       for (const key of Object.keys(obj)) {
         let subPath = path + '.' + key;
-        const subObj = this.modifyJson(this.structure, subPath);
+        const subObj = this.modifyJson(structureCopy, subPath);
         if (typeof subObj === 'object') {
           paths.push(subPath);
         } else {

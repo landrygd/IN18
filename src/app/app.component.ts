@@ -12,7 +12,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 })
 export class AppComponent {
 
-  tree: any;
   path: string;
   subStructure: any;
   itemGroupList: any[];
@@ -27,7 +26,6 @@ export class AppComponent {
     private sanitizer: DomSanitizer
   ) {
     this.initializeApp();
-    this.tree = this.global.structure;
   }
 
   initializeApp() {
@@ -62,14 +60,6 @@ export class AppComponent {
   }
 
 
-  update() {
-    this.tree = this.global.structure;
-  }
-
-  onUpdate(event) {
-    this.tree = this.global.updatePath(event.path, event.value, event.lang);
-    console.log(event.path, event.value, event.lang);
-  }
 
   addTraduction(traduction: any) {
     console.log(traduction);

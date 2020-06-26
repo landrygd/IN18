@@ -3,5 +3,5 @@
     <ion-label>{{path}}</ion-label>
   </ion-item-divider>
   
-  <app-trad-field *ngFor="let trad of tradList" [language]="trad.language" [value]="trad.value" [path]="trad.path" (update)="onUpdate($event)"></app-trad-field>
+  <app-trad-field *ngFor="let trad of tradGroup.tradList" [language]="trad.language" [value]="trad.value" [path]="trad.path" (update)="onUpdate($event)"></app-trad-field>
 </ion-item-group>

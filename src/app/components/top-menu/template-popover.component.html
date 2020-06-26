@@ -1,8 +1,16 @@
 
 
 <ion-list *ngIf="id==0">
+
+  <ion-item button lines="none"  (click)="new()">
+            
+    New <ion-note slot="end">Ctrl+N</ion-note><ion-icon name="add-circle" slot="end"></ion-icon>
+ </ion-item>
+ <ion-item button (click)="close()">
+   Close <ion-note slot="end">Ctrl+?</ion-note><ion-icon name="close-circle" slot="end"></ion-icon>
+   </ion-item>
         
-    <ion-item button  (click)="load.click()">
+    <ion-item button lines="none"  (click)="load.click()">
             
        Load <ion-note slot="end">Ctrl+I</ion-note><ion-icon name="folder-open" slot="end"></ion-icon>
     </ion-item>
@@ -10,11 +18,15 @@
       Save <ion-note slot="end">Ctrl+S</ion-note><ion-icon name="save" slot="end"></ion-icon>
       </ion-item>
     
-    <ion-item button (click)="import.click()">
-      Import <ion-note slot="end">Ctrl+Shift+I</ion-note><ion-icon name="cloud-upload" slot="end"></ion-icon>
+    <ion-item button lines="none" (click)="import.click()">
+      Import <ion-note slot="end">Ctrl+Shift+I</ion-note><ion-icon name="share" slot="end"></ion-icon>
       </ion-item>
-    <ion-item button lines="none" (click)="testClick()">
-      Export <ion-note slot="end">Ctrl+Shift+S</ion-note><ion-icon name="cloud-download" slot="end"></ion-icon>
+    <ion-item button (click)="testClick()">
+      Export <ion-note slot="end">Ctrl+Shift+S</ion-note><ion-icon name="download" slot="end"></ion-icon>
+    </ion-item>
+
+    <ion-item button lines="none" (click)="quit()">
+      Exit
     </ion-item>
     
   </ion-list>

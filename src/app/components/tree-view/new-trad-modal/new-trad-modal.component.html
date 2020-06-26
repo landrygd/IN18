@@ -1,14 +1,14 @@
 <ion-content>
   <ion-item>
     <ion-label position="floating">Path</ion-label>
-    <ion-input [(ngModel)]="traduction.path"></ion-input>
+    <ion-input [(ngModel)]="traduction.path" (ionChange)="onPathChange($event.detail.value)"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="floating">Value</ion-label>
-    <ion-input [(ngModel)]="traduction.value"></ion-input>
+    <ion-input [(ngModel)]="traduction.value" (ionChange)="onValueChange($event.detail.value)"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-select [(ngModel)]="traduction.lang" value="en" placeholder="Language">
+    <ion-select [(ngModel)]="traduction.language" (ionChange)="onLanguageChange($event.detail.value)" value="en" placeholder="Language">
       <ion-select-option value="en">English</ion-select-option>
       <ion-select-option value="fr">French</ion-select-option>
       <ion-select-option value="de">German</ion-select-option>
@@ -27,7 +27,7 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="primary">
-      <ion-button (click)="import()" slot="primary" color="success">
+      <ion-button (click)="import()" slot="primary" color="success" [disabled]="traduction.path=='' || traduction.value==''">
         <ion-icon slot="start" name="checkmark"></ion-icon>
         Import
       </ion-button>

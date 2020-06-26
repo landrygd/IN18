@@ -1,16 +1,16 @@
 <ion-app>
-  <app-top-menu (update)="update()"></app-top-menu>
+  <app-top-menu></app-top-menu>
   <ion-split-pane when="sm" content-id="main-content" class="main-content">
     <ion-menu content-id="main-content">
       <ion-content>
-        <app-tree-view [setTree]="tree" (selected)="selected($event)" (newTrad)="addTraduction($event)"></app-tree-view>
+        <app-tree-view (selected)="selected($event)" (newTrad)="addTraduction($event)"></app-tree-view>
       </ion-content>
     </ion-menu>
 
     <div class="ion-page" id="main-content">
       <ion-content class="ion-padding">
         <ion-list>
-          <app-trads-group *ngFor="let itemGroup of itemGroupList" [path]="itemGroup.path" [trads]="itemGroup.trads" (update)="onUpdate($event)"></app-trads-group>
+          <app-trads-group *ngFor="let itemGroup of itemGroupList" [path]="itemGroup.path" [trads]="itemGroup.trads"></app-trads-group>
         </ion-list>
       </ion-content>
     </div>

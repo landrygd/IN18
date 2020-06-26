@@ -2,7 +2,7 @@ import { Traduction } from './traduction';
 
 export class TraductionsGroup {
   private path: string;
-  private tradList: Traduction[];
+  public tradList: Traduction[];
 
   public getPath(): string {
       return this.path;
@@ -20,10 +20,13 @@ export class TraductionsGroup {
       this.tradList = tradList;
   }
 
-  constructor(path: string, value: string, language: string) {
-    const firstTrad = new Traduction(path, value, language);
+  public addTraduction(traduction:Traduction){
+    this.tradList.push(traduction)
+  }
+
+  constructor(path: string, tradList:Traduction[]) {
     this.path = path;
-    this.tradList = [firstTrad];
+    this.tradList = tradList;
   }
 
   public setTrad(traduction: Traduction) {
