@@ -18,6 +18,7 @@ import { TreeViewComponent } from './components/tree-view/tree-view.component';
 import { UploadModalComponent } from './components/top-menu/upload-modal/upload-modal.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { HttpClientModule } from '@angular/common/http';
+import { NewTradModalComponent } from './components/tree-view/new-trad-modal/new-trad-modal.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { HttpClientModule } from '@angular/common/http';
     PopoverPage,
     ModalPage,
     TreeViewComponent,
-    UploadModalComponent
+    UploadModalComponent,
+    NewTradModalComponent,
   ],
   entryComponents: [],
   imports: [

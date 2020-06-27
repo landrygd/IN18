@@ -1,8 +1,8 @@
 export class Traduction {
-  private language: string;
-  private value: string;
-  private path: string;
-  private checked: boolean;
+    public language: string;
+    public value: string;
+    public path: string;
+    public checked: boolean;
 
     public getLanguage(): string {
         return this.language;

@@ -9,7 +9,7 @@ import { Traduction } from 'src/app/classes/traduction';
 })
 export class NewTradModalComponent implements OnInit {
 
-  traduction: Traduction = new Traduction("","","en")
+  traduction: Traduction = new Traduction('', '', 'en');
 
 
   constructor(
@@ -23,18 +23,17 @@ export class NewTradModalComponent implements OnInit {
   }
 
   onLanguageChange(value){
-    this.traduction.setLanguage(value)
+    this.traduction.setLanguage(value.detail.value);
   }
 
   onValueChange(value){
-    this.traduction.setValue(value)
+    this.traduction.setValue(value);
   }
   onPathChange(value){
-    this.traduction.setPath(value)
+    this.traduction.setPath(value);
   }
 
   import() {
     this.modalController.dismiss(this.traduction);
   }
-
 }
