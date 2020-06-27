@@ -2,15 +2,6 @@ import { Injectable } from '@angular/core';
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
-// Fichiers tests //
-import * as  de from '../../assets/examples/de.json';
-import * as  en from '../../assets/examples/en.json';
-import * as  es from '../../assets/examples/es.json';
-import * as  fr from '../../assets/examples/fr.json';
-import * as  it from '../../assets/examples/it.json';
-import * as  ja from '../../assets/examples/ja.json';
-import * as  nl from '../../assets/examples/nl.json';
-import * as  pt from '../../assets/examples/pt.json';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { Traduction } from '../classes/traduction';
 
@@ -24,9 +15,7 @@ export class GlobalService {
   paths = [];
   observablestructure = new BehaviorSubject<object>(this.structure);
 
-  constructor() {
-    this.test();
-  }
+  constructor() {}
 
   setStructure(newStructure) {
     this.structure = newStructure;
@@ -37,10 +26,6 @@ export class GlobalService {
   newProject(){
     this.setStructure({});
     console.log('new project');
-  }
-
-  test() {
-    this.loadProjectStructure([de, en, es, fr, it, ja, nl, pt], ['de', 'en', 'es', 'fr', 'it', 'ja', 'nl', 'pt']);
   }
 
   loadProjectStructure(files: any[], languages: string[]) {
