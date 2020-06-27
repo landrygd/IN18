@@ -20,6 +20,8 @@ import { Traduction } from '../classes/traduction';
 export class GlobalService {
 
   structure = {};
+  languages = [];
+  paths = [];
   observablestructure = new BehaviorSubject<object>(this.structure);
 
   constructor() {
@@ -44,6 +46,7 @@ export class GlobalService {
   loadProjectStructure(files: any[], languages: string[]) {
     console.log(files, languages);
     const structureCopy = {};
+    this.languages = languages;
     for (let i = 0; i < languages.length; i++) {
       const paths = ['default'];
       while (paths.length > 0) {
@@ -80,6 +83,10 @@ export class GlobalService {
 
   getSubJSON(obj: any, path: string) {
     return this.modifyJson(obj, path);
+  }
+
+  getJSON(path: string) {
+    return this.modifyJson(this.structure, path);
   }
 
   updatePath(traduction: Traduction) {
@@ -127,5 +134,15 @@ export class GlobalService {
     const data = await zip.generateAsync({type: 'blob'});
     const blob = new Blob([data], { type: 'application/zip' });
     saveAs(blob, 'save.zip');
+  }
+
+  setPaths(paths) {
+    this.paths = paths;
+  }
+
+  setPath(path, value) {
+    console.log(path, value);
+    this.modifyJson(this.structure, path, value);
+    this.observablestructure.next(this.structure);
   }
 }

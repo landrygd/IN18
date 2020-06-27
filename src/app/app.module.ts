@@ -17,6 +17,7 @@ import { ModalPage } from './components/top-menu/template-modal.component';
 import { TreeViewComponent } from './components/tree-view/tree-view.component';
 import { UploadModalComponent } from './components/top-menu/upload-modal/upload-modal.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     IonicModule.forRoot(),
     AppRoutingModule,
     CommonModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    HttpClientModule
     ],
   providers: [
     StatusBar,

@@ -56,7 +56,7 @@ export class TreeViewComponent implements OnInit {
       }
     }
     this.paths.sort();
-    console.log(this.paths);
+    this.global.setPaths(this.paths);
   }
 
   modifyJson(obj, is, value = '') {
