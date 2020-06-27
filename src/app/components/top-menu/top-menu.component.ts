@@ -4,6 +4,7 @@ import { PopoverPage } from './template-popover.component';
 import { ModalPage } from './template-modal.component';
 import { GlobalService } from 'src/app/services/global.service';
 import { UploadModalComponent } from './upload-modal/upload-modal.component';
+import { TranslatorService } from 'src/app/services/translator.service';
 
 @Component({
   selector: 'app-top-menu',
@@ -18,7 +19,8 @@ export class TopMenuComponent implements OnInit {
     public popoverCtrl: PopoverController,
     public modalController: ModalController,
     public alertController: AlertController,
-    public global: GlobalService
+    public global: GlobalService,
+    public translator: TranslatorService
     ) { }
 
   ngOnInit() {}
@@ -90,5 +92,9 @@ export class TopMenuComponent implements OnInit {
     }
     this.global.loadProjectStructure(files, languages);
     this.update.emit();
+  }
+
+  translate() {
+    this.translator.translate();
   }
 }
