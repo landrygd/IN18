@@ -13,14 +13,16 @@ import * as  nl from '../../assets/examples/nl.json';
 import * as  pt from '../../assets/examples/pt.json';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { Traduction } from '../classes/traduction';
+import { Folder } from '../classes/folder';
+import { TraductionsGroup } from '../classes/traductions-group';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GlobalService {
 
-  structure = {};
-  observablestructure = new BehaviorSubject<object>(this.structure);
+  structure: Folder = new Folder('root');
+  observablestructure = new BehaviorSubject<Folder>(this.structure);
 
   constructor() {
     this.test();
@@ -33,34 +35,58 @@ export class GlobalService {
     }
 
   newProject(){
-    this.setStructure({});
+    this.setStructure(new Folder('root'));
     console.log('new project');
   }
 
   test() {
-    this.loadProjectStructure([de, en, es, fr, it, ja, nl, pt], ['de', 'en', 'es', 'fr', 'it', 'ja', 'nl', 'pt']);
+    this.importJsonFiles([de, en, es, fr, it, ja, nl, pt], ['de', 'en', 'es', 'fr', 'it', 'ja', 'nl', 'pt']);
   }
 
-  loadProjectStructure(files: any[], languages: string[]) {
-    console.log(files, languages);
-    const structureCopy = {};
+  importJsonFiles(files: object[], languages: string[]) {
+    const newStructure = new Folder('root');
     for (let i = 0; i < languages.length; i++) {
-      const paths = ['default'];
-      while (paths.length > 0) {
-        const path = paths.shift();
-        const obj = this.modifyJson(files[i], path);
-        for (const key of Object.keys(obj)) {
-          const subPath = path + '.' + key;
-          const subObj = this.modifyJson(files[i], subPath);
-          if (typeof subObj === 'object') {
-            paths.push(subPath);
-          } else {
-            this.modifyJson(structureCopy, subPath + '.' + languages[i], subObj);
-          }
-        }
-      }
+
+      this.walkInJson(files[i], 'default', newStructure, languages[i]);
+
     }
-    this.setStructure(structureCopy);
+
+    console.log(newStructure);
+  }
+
+  walkInJson(holder: object, key: string, structure: Folder, language: string) {
+
+      let k;
+      const json = holder[key];
+      if (json && typeof json === 'object') {
+          for (k in json) {
+              if (Object.prototype.hasOwnProperty.call(json, k)) {
+                  // obj = this.walk(json, k, structure, language);
+                  const keys = Object.keys(json[k]);
+                  if (typeof json[k] === 'string'){
+                    const tradGroup = structure.findTraductionGroup(k);
+                    const trad = new Traduction(k, json[k], language);
+                    if (tradGroup !== undefined){
+                      tradGroup.addTraduction(trad);
+                    }else{
+                      structure.addTraductionGroup(new TraductionsGroup(k, [trad]) );
+                    }
+
+                  }
+                  else if (json[k] !== undefined) {
+                    let folder = structure.findFolder(k);
+                    if (folder === undefined){
+                      folder = new Folder(k);
+                      structure.addFolder(folder);
+                    }
+                    this.walkInJson(json, k, folder, language);
+
+                  } else {
+                      delete json[k];
+                  }
+              }
+          }
+      }
   }
 
   modifyJson(obj, is, value = '') {
