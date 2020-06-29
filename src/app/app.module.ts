@@ -19,6 +19,8 @@ import { UploadModalComponent } from './components/top-menu/upload-modal/upload-
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { HttpClientModule } from '@angular/common/http';
 import { NewTradModalComponent } from './components/tree-view/new-trad-modal/new-trad-modal.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -40,7 +42,8 @@ import { NewTradModalComponent } from './components/tree-view/new-trad-modal/new
     AppRoutingModule,
     CommonModule,
     NgxDropzoneModule,
-    HttpClientModule
+    HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
   providers: [
     StatusBar,

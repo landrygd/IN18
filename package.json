@@ -6,7 +6,7 @@
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "serve": "ng serve",
-    "build": "ng build",
+    "build": "ionic build --prod --release",
     "prod": "ng build -prod",
     "test": "ng test",
     "lint": "ng lint",
@@ -21,6 +21,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/service-worker": "~9.1.6",
     "electron-installer-dmg": "^3.0.0",
     "@angular/common": "~9.1.6",
     "@angular/core": "~9.1.6",
