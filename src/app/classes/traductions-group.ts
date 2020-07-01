@@ -1,20 +1,8 @@
 import { Traduction } from './traduction';
+import { Structure } from './structure';
 
-export class TraductionsGroup {
-  private path: string;
+export class TraductionsGroup extends Structure {
   public tradList: Traduction[];
-
-  public getPath(): string {
-      return this.path;
-  }
-
-  public getName(): string {
-    return this.path;
-  }
-
-  public setPath(path: string): void {
-      this.path = path;
-  }
 
   public getTradList(): Traduction[] {
       return this.tradList;
@@ -28,8 +16,8 @@ export class TraductionsGroup {
     this.tradList.push(traduction);
   }
 
-  constructor(path: string, tradList: Traduction[]) {
-    this.path = path;
+  constructor(name: string, tradList: Traduction[]) {
+    super(name);
     this.tradList = tradList;
   }
 

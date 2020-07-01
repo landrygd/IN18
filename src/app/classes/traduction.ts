@@ -1,7 +1,8 @@
-export class Traduction {
+import { Structure } from './structure';
+
+export class Traduction extends Structure {
     public language: string;
     public value: string;
-    public path: string;
     public checked: boolean;
 
     public getLanguage(): string {
@@ -20,18 +21,6 @@ export class Traduction {
         this.value = value;
     }
 
-    public getPath(): string {
-        return this.path;
-    }
-
-    public getPathWithLanguage(): string {
-        return this.path + '.' + this.language;
-    }
-
-    public setPath(path: string): void {
-        this.path = path;
-    }
-
     public isChecked(): boolean {
         return this.checked;
     }
@@ -41,10 +30,10 @@ export class Traduction {
     }
 
 
-  constructor(path: string, value: string, language: string, checked = false) {
-    this.language = language;
-    this.value = value;
-    this.path = path;
-    this.checked = checked;
-  }
+    constructor(name: string, value: string, language: string, checked = false) {
+        super(name);
+        this.language = language;
+        this.value = value;
+        this.checked = checked;
+    }
 }

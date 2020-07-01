@@ -2,9 +2,9 @@
   <ion-col [size]="level"></ion-col>
   <ion-col>
     <ion-item button (click)="toggleCollapse()">
-      <ion-icon slot="start" [name]="chevronIcon()"></ion-icon>
-      <ion-icon slot="start" name="folder"></ion-icon>
-      <ion-label>
+      <ion-icon slot="start" [name]="chevronIcon()" [color]="getColor(true)"></ion-icon>
+      <ion-icon slot="start" name="folder" [color]="getColor(true)"></ion-icon>
+      <ion-label [color]="getColor(true)">
         <p>
           {{folder.getName()}}
         </p>
@@ -16,9 +16,9 @@
   <ion-row *ngFor="let file of folder.tradGroupList">
     <ion-col [size]="level+1"></ion-col>
     <ion-col>
-      <ion-item button>
-        <ion-icon slot="start" name="document"></ion-icon>
-        <ion-label>
+      <ion-item button (click)="select(file)">
+        <ion-icon slot="start" name="document" [color]="getColor(false,file)"></ion-icon>
+        <ion-label [color]="getColor(false,file)">
           <p>
             {{file.getName()}}
           </p>

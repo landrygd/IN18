@@ -30,7 +30,7 @@ export class NewTradModalComponent implements OnInit {
     this.traduction.setValue(value);
   }
   onPathChange(value){
-    this.traduction.setPath(value);
+    // this.traduction.setPath(value);
   }
 
   import() {

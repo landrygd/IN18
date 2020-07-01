@@ -6,6 +6,7 @@ import { Subject, BehaviorSubject } from 'rxjs';
 import { Traduction } from '../classes/traduction';
 import { Folder } from '../classes/folder';
 import { TraductionsGroup } from '../classes/traductions-group';
+import { Structure } from '../classes/structure';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ import { TraductionsGroup } from '../classes/traductions-group';
 export class GlobalService {
 
   structure: Folder = new Folder('root');
+  selectedStructure: Structure;
   languages: any;
   paths: any;
   observablestructure = new BehaviorSubject<Folder>(this.structure);
@@ -33,7 +35,7 @@ export class GlobalService {
   }
 
   test() {
-    this.importJsonFiles([{"default":{"test": {"test": 'oui'}}}, {"default":{"test": {"test": 'yes'}}}], ['fr', 'en']);
+    this.importJsonFiles([{"default":{"test": {"y": 'oui','n':'non'}}}, {"default":{"test": {"y": 'yes','n':'no'}}}], ['fr', 'en']);
   }
 
   importJsonFiles(files: object[], languages: string[]) {
@@ -106,9 +108,8 @@ export class GlobalService {
   }
 
   updatePath(traduction: Traduction) {
-    console.log(traduction.getPath());
     const structureCopy = this.structure;
-    this.modifyJson(structureCopy, traduction.getPathWithLanguage(), traduction.getValue());
+    // this.modifyJson(structureCopy, traduction.getPathWithLanguage(), traduction.getValue());
     // this.setStructure(structureCopy)
     this.structure = structureCopy;
     return this.structure;
