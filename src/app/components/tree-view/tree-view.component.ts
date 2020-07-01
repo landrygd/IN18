@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global.service';
 import { NewTradModalComponent } from './new-trad-modal/new-trad-modal.component';
+import { Folder } from 'src/app/classes/folder';
 
 @Component({
   selector: 'app-tree-view',
@@ -20,17 +21,19 @@ export class TreeViewComponent implements OnInit {
   opened: any[];
   visible: string[];
   selectedPath: string;
+  structure: Folder;
 
   constructor(
     private modalController: ModalController,
     private global: GlobalService
   ) {
-
+      this.structure = this.global.structure;
+      console.log(this.structure);
    }
 
   ngOnInit(){
     this.global.observablestructure.subscribe((value) => {
-      this.updateTree(value);
+      // this.updateTree(value);
     });
   }
 

@@ -90,7 +90,7 @@ export class TopMenuComponent implements OnInit {
       const language = nameArray.join('.');
       languages.push(language);
     }
-    this.global.loadProjectStructure(files, languages);
+    this.global.importJsonFiles(files, languages);
     this.update.emit();
   }
 

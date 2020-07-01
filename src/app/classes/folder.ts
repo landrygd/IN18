@@ -11,6 +11,10 @@ export class Folder {
         return this.path;
     }
 
+    public getName(): string {
+        return this.path;
+    }
+
 
     public addTraductionGroup(traductionGroup: TraductionsGroup){
         this.tradGroupList.push(traductionGroup);

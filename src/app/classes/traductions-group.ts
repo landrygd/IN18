@@ -8,6 +8,10 @@ export class TraductionsGroup {
       return this.path;
   }
 
+  public getName(): string {
+    return this.path;
+  }
+
   public setPath(path: string): void {
       this.path = path;
   }

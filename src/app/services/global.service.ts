@@ -13,9 +13,13 @@ import { TraductionsGroup } from '../classes/traductions-group';
 export class GlobalService {
 
   structure: Folder = new Folder('root');
+  languages: any;
+  paths: any;
   observablestructure = new BehaviorSubject<Folder>(this.structure);
 
-  constructor() {}
+  constructor() {
+    this.test();
+  }
 
   setStructure(newStructure) {
     this.structure = newStructure;
@@ -29,7 +33,7 @@ export class GlobalService {
   }
 
   test() {
-    //this.importJsonFiles([de, en, es, fr, it, ja, nl, pt], ['de', 'en', 'es', 'fr', 'it', 'ja', 'nl', 'pt']);
+    this.importJsonFiles([{"default":{"test": {"test": 'oui'}}}, {"default":{"test": {"test": 'yes'}}}], ['fr', 'en']);
   }
 
   importJsonFiles(files: object[], languages: string[]) {
@@ -39,7 +43,7 @@ export class GlobalService {
       this.walkInJson(files[i], 'default', newStructure, languages[i]);
 
     }
-
+    this.structure = newStructure;
     console.log(newStructure);
   }
 
@@ -148,9 +152,9 @@ export class GlobalService {
     saveAs(blob, 'save.zip');
   }
 
-  /*setPaths(paths) {
+  setPaths(paths) {
     this.paths = paths;
-  }*/
+  }
 
   setPath(path, value) {
     console.log(path, value);

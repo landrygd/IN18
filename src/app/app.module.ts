@@ -21,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NewTradModalComponent } from './components/tree-view/new-trad-modal/new-trad-modal.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { FolderTreeComponent } from './components/tree-view/folder-tree/folder-tree.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { environment } from '../environments/environment';
     TreeViewComponent,
     UploadModalComponent,
     NewTradModalComponent,
+    FolderTreeComponent
   ],
   entryComponents: [],
   imports: [

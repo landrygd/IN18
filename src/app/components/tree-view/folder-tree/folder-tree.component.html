@@ -1,0 +1,34 @@
+<ion-row *ngIf="level>=0">
+  <ion-col [size]="level"></ion-col>
+  <ion-col>
+    <ion-item button (click)="toggleCollapse()">
+      <ion-icon slot="start" [name]="chevronIcon()"></ion-icon>
+      <ion-icon slot="start" name="folder"></ion-icon>
+      <ion-label>
+        <p>
+          {{folder.getName()}}
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-col>
+</ion-row>
+<div *ngIf="(!collapsed || level < 0)">
+  <ion-row *ngFor="let file of folder.tradGroupList">
+    <ion-col [size]="level+1"></ion-col>
+    <ion-col>
+      <ion-item button>
+        <ion-icon slot="start" name="document"></ion-icon>
+        <ion-label>
+          <p>
+            {{file.getName()}}
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</div>
+<div *ngIf="(!collapsed || level < 0)">
+  <ion-row *ngFor="let f of folder.folderList">
+    <app-folder-tree [folder]="f" [level]="level+1"></app-folder-tree>
+  </ion-row>
+</div>
