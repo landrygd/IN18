@@ -17,6 +17,10 @@ import { ModalPage } from './components/top-menu/template-modal.component';
 import { TreeViewComponent } from './components/tree-view/tree-view.component';
 import { UploadModalComponent } from './components/top-menu/upload-modal/upload-modal.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { HttpClientModule } from '@angular/common/http';
+import { NewTradModalComponent } from './components/tree-view/new-trad-modal/new-trad-modal.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -28,7 +32,8 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     PopoverPage,
     ModalPage,
     TreeViewComponent,
-    UploadModalComponent
+    UploadModalComponent,
+    NewTradModalComponent,
   ],
   entryComponents: [],
   imports: [
@@ -36,7 +41,9 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     IonicModule.forRoot(),
     AppRoutingModule,
     CommonModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    HttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
   providers: [
     StatusBar,

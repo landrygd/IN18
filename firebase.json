@@ -1,0 +1,11 @@
+{
+  "hosting": [ {
+      "target": "landing", 
+      "public": "landing-page"
+    },
+    {
+      "target": "app", 
+      "public": "www"
+    }
+  ]
+}

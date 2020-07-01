@@ -2,15 +2,6 @@ import { Injectable } from '@angular/core';
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
-// Fichiers tests //
-import * as  de from '../../assets/examples/de.json';
-import * as  en from '../../assets/examples/en.json';
-import * as  es from '../../assets/examples/es.json';
-import * as  fr from '../../assets/examples/fr.json';
-import * as  it from '../../assets/examples/it.json';
-import * as  ja from '../../assets/examples/ja.json';
-import * as  nl from '../../assets/examples/nl.json';
-import * as  pt from '../../assets/examples/pt.json';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { Traduction } from '../classes/traduction';
 import { Folder } from '../classes/folder';
@@ -24,9 +15,7 @@ export class GlobalService {
   structure: Folder = new Folder('root');
   observablestructure = new BehaviorSubject<Folder>(this.structure);
 
-  constructor() {
-    this.test();
-  }
+  constructor() {}
 
   setStructure(newStructure) {
     this.structure = newStructure;
@@ -40,7 +29,7 @@ export class GlobalService {
   }
 
   test() {
-    this.importJsonFiles([de, en, es, fr, it, ja, nl, pt], ['de', 'en', 'es', 'fr', 'it', 'ja', 'nl', 'pt']);
+    //this.importJsonFiles([de, en, es, fr, it, ja, nl, pt], ['de', 'en', 'es', 'fr', 'it', 'ja', 'nl', 'pt']);
   }
 
   importJsonFiles(files: object[], languages: string[]) {
@@ -108,6 +97,10 @@ export class GlobalService {
     return this.modifyJson(obj, path);
   }
 
+  getJSON(path: string) {
+    return this.modifyJson(this.structure, path);
+  }
+
   updatePath(traduction: Traduction) {
     console.log(traduction.getPath());
     const structureCopy = this.structure;
@@ -153,5 +146,15 @@ export class GlobalService {
     const data = await zip.generateAsync({type: 'blob'});
     const blob = new Blob([data], { type: 'application/zip' });
     saveAs(blob, 'save.zip');
+  }
+
+  /*setPaths(paths) {
+    this.paths = paths;
+  }*/
+
+  setPath(path, value) {
+    console.log(path, value);
+    this.modifyJson(this.structure, path, value);
+    this.observablestructure.next(this.structure);
   }
 }

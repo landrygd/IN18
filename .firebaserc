@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "in18-aba0c"
+  },
+  "targets": {
+    "in18-aba0c": {
+      "hosting": {
+        "app": [
+          "in18-app"
+        ],
+        "landing": [
+          "in18-aba0c"
+        ]
+      }
+    }
+  }
+}

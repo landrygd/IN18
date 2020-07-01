@@ -28,6 +28,8 @@ import { GlobalService } from 'src/app/services/global.service';
 
     }
 
+    quit() {}
+
     import(files){
       this.popoverCtrl.dismiss();
     }
@@ -40,6 +42,8 @@ import { GlobalService } from 'src/app/services/global.service';
       this.presentNewProject();
       this.popoverCtrl.dismiss();
     }
+
+    close() {}
 
     async presentNewProject() {
       const alert = await this.alertController.create({
