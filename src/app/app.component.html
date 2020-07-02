@@ -10,6 +10,7 @@
     <div class="ion-page" id="main-content">
       <ion-content class="ion-padding">
         <ion-list style="background-color: rgba(0,0,0,0);">
+          
           <div *ngIf="!global.isSelectedStructureFolder()">
             <app-trads-group [tradGroup]="global.getSelectedStructureAsTradGroup()"></app-trads-group>
           </div>
@@ -18,6 +19,25 @@
             <app-trads-group *ngFor="let t of global.getSelectedFolder().tradGroupList" [tradGroup]="t"></app-trads-group>
             <app-trad-folder *ngFor="let f of global.getSelectedFolder().folderList" [folder]="f" [canExpand]="true"></app-trad-folder>
           </div>
+          <ion-card>
+            
+            
+            <ion-row>
+              <ion-col>
+                <ion-button (click)="addTraduction()" expand="block" fill="clear" shape="round">
+                  <ion-icon slot="start" name="add"></ion-icon>
+                  Create an item
+                </ion-button>
+              </ion-col>
+              <ion-col>
+                <ion-button (click)="addTraduction(true)" expand="block" fill="clear" shape="round">
+                  <ion-icon slot="start" name="add"></ion-icon>
+                  Create a folder
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-card>
+          
         </ion-list>
       </ion-content>
     </div>

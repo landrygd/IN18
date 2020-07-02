@@ -1,6 +1,12 @@
 <ion-card>
   <ion-card-header>
-    <ion-card-subtitle><ion-textarea [value]="tradGroup.getName()" (ionChange)= "onNameUpdate($event.target.value)"></ion-textarea></ion-card-subtitle>
+    <ion-card-subtitle>
+      <ion-item>
+        <ion-textarea slot="start" [value]="tradGroup.getName()" (ionChange)= "onNameUpdate($event.target.value)"></ion-textarea>
+        <ion-button slot="end" expand="block" shape="round" (click)="presentDeleteConfirm()" color="danger">
+          Delete
+        </ion-button>
+      </ion-item></ion-card-subtitle>
   </ion-card-header>
 
   <ion-card-content>

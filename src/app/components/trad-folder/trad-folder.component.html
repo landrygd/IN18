@@ -8,6 +8,9 @@
       <ion-button slot="end" expand="block" shape="round" (click)="select()" *ngIf="canExpand">
       Expand
     </ion-button>
+    <ion-button slot="end" expand="block" shape="round" (click)="presentDeleteConfirm()" *ngIf="!canExpand" color="danger">
+      Delete
+    </ion-button>
   </ion-item></ion-card-subtitle>
   </ion-card-header>
 

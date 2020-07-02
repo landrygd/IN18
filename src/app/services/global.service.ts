@@ -24,7 +24,7 @@ export class GlobalService {
     this.test();
   }
 
-  setSelectedStructure(structure) {
+  setSelectedStructure(structure: Structure = this.structure) {
     if (structure instanceof TraductionsGroup){
       this.setSelectedFolder(structure.parentFolder);
     }else if (structure instanceof Folder){

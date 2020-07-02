@@ -27,6 +27,18 @@ export class Folder extends Structure {
 
     }
 
+    public removeFolder(folder: Folder): boolean{
+        const l = this.folderList.length;
+        this.folderList = this.folderList.filter(e => e !== folder);
+        return l > this.folderList.length;
+    }
+
+    public removeTradGroup(TradGroup: TraductionsGroup): boolean{
+        const l = this.tradGroupList.length;
+        this.tradGroupList = this.tradGroupList.filter(e => e !== TradGroup);
+        return l > this.tradGroupList.length;
+    }
+
     public findTraductionGroup(path: string) {
         return this.tradGroupList.find(element => element.getName() === path);
     }

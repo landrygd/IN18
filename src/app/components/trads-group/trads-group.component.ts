@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { GlobalService } from 'src/app/services/global.service';
-import { Traduction } from 'src/app/classes/traduction';
 import { TraductionsGroup } from 'src/app/classes/traductions-group';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-trads-group',
@@ -12,13 +12,42 @@ export class TradsGroupComponent implements OnInit {
 
   @Input() tradGroup: TraductionsGroup;
 
-  constructor(private global: GlobalService) { }
+  constructor(private global: GlobalService, public alertController: AlertController) { }
 
   ngOnInit() {
   }
 
   onNameUpdate(value: string) {
     this.tradGroup.setName(value);
+  }
+
+  delete(){
+    this.tradGroup.parentFolder.removeTradGroup(this.tradGroup);
+  }
+
+  async presentDeleteConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: '',
+      header: 'Attention',
+      subHeader: '',
+      message: 'Are you sure to delete this item?',
+      buttons: [{
+        text: 'No',
+        role: 'cancel',
+        cssClass: 'danger',
+        handler: (blah) => {
+          console.log('Confirm Cancel: blah');
+        }
+      }, {
+        text: 'Yes',
+        cssClass: 'primary',
+        handler: () => {
+          this.delete();
+        }
+      }]
+    });
+
+    await alert.present();
   }
 
 }

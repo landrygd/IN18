@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { Platform, ModalController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { GlobalService } from './services/global.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { NewTradModalComponent } from './components/tree-view/new-trad-modal/new-trad-modal.component';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ export class AppComponent {
   fileUrl: SafeResourceUrl;
 
   constructor(
+    private modalController: ModalController,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
@@ -61,8 +63,13 @@ export class AppComponent {
 
 
 
-  addTraduction(traduction: any) {
-    console.log(traduction);
-    // this.tree = this.global.updatePath(traduction.path, traduction.value, traduction.lang);
+  async addTraduction(isFolder = false) {
+    const modal = await this.modalController.create({
+      component: NewTradModalComponent,
+      componentProps: {parentFolder: this.global.getSelectedFolder(), isFolder}
+    });
+    await modal.present();
   }
+
+  
 }

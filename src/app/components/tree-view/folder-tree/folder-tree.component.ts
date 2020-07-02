@@ -48,7 +48,8 @@ export class FolderTreeComponent implements OnInit {
     if (this.global.selectedStructure === structure) {
       return 'primary';
     }else if (this.global.selectedFolder === structure ||
-      (this.global.selectedFolder === this.folder && this.global.selectedStructure === this.folder) ||
+      (this.global.selectedFolder === this.folder && this.global.selectedStructure === this.folder
+      && this.global.selectedFolder !== this.global.structure) ||
       (this.folder.parentFolder === this.global.selectedFolder && this.global.selectedFolder !== this.global.structure)){
       return 'secondary';
     }
