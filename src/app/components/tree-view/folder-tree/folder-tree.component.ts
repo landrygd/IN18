@@ -3,6 +3,8 @@ import { Folder } from 'src/app/classes/folder';
 import { Structure } from 'src/app/classes/structure';
 import { GlobalService } from 'src/app/services/global.service';
 import { TraductionsGroup } from 'src/app/classes/traductions-group';
+import { ModalController } from '@ionic/angular';
+import { NewTradModalComponent } from '../new-trad-modal/new-trad-modal.component';
 
 @Component({
   selector: 'app-folder-tree',
@@ -18,7 +20,7 @@ export class FolderTreeComponent implements OnInit {
 
   collapsed = true;
 
-  constructor(private global: GlobalService) {
+  constructor(private modalController: ModalController, private global: GlobalService) {
   }
 
   ngOnInit() { }
@@ -53,10 +55,22 @@ export class FolderTreeComponent implements OnInit {
       (this.folder.parentFolder === this.global.selectedFolder && this.global.selectedFolder !== this.global.structure)){
       return 'secondary';
     }
-    if (!this.collapsed || !folder) {
+    else if (structure.isValidated()){
+      return 'success';
+    }
+
+    else if (!this.collapsed || !folder) {
       return 'dark';
     }
     return 'medium';
+  }
+
+  async addTraduction(isFolder = false) {
+    const modal = await this.modalController.create({
+      component: NewTradModalComponent,
+      componentProps: {parentFolder: this.folder, isFolder}
+    });
+    await modal.present();
   }
 
 

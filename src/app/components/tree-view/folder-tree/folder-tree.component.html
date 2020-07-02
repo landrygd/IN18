@@ -1,5 +1,5 @@
 <ion-row *ngIf="level>=0">
-  <ion-col [size]="level" ></ion-col>
+  <ion-col [size]="level*2"></ion-col>
   <ion-col>
     <ion-item button (click)="toggleCollapse()">
       <ion-icon slot="start" [name]="chevronIcon()" [color]="getColor(true)"></ion-icon>
@@ -9,12 +9,28 @@
           {{folder.getName()}}
         </p>
       </ion-label>
+      <ion-icon slot="end" name="checkmark-circle" color="success" *ngIf="folder.isValidated()"></ion-icon>
     </ion-item>
+  </ion-col>
+</ion-row>
+<ion-row *ngIf="isExpanded() && level==-1">
+  <ion-col [size]="(level+1)*2"></ion-col>
+    <ion-col>
+    <ion-button (click)="addTraduction()" expand="block" fill="clear" shape="round">
+      <ion-icon slot="start" name="add"></ion-icon>
+      Item
+    </ion-button>
+  </ion-col>
+  <ion-col>
+    <ion-button (click)="addTraduction(true)" expand="block" fill="clear" shape="round">
+      <ion-icon slot="start" name="add"></ion-icon>
+      Folder
+    </ion-button>
   </ion-col>
 </ion-row>
 <div *ngIf="isExpanded()">
   <ion-row *ngFor="let file of folder.tradGroupList">
-    <ion-col [size]="level+1"></ion-col>
+    <ion-col [size]="(level+1)*2"></ion-col>
     <ion-col>
       <ion-item button (click)="select(file)">
         <ion-icon slot="start" name="document" [color]="getColor(false,file)"></ion-icon>
@@ -23,6 +39,7 @@
             {{file.getName()}}
           </p>
         </ion-label>
+        <ion-icon slot="end" name="checkmark-circle" color="success" *ngIf="file.isValidated()"></ion-icon>
       </ion-item>
     </ion-col>
   </ion-row>

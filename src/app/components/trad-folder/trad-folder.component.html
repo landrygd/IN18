@@ -3,19 +3,24 @@
     <ion-card-subtitle>
       <ion-item>
 
-      
-      <ion-textarea slot="start" [value]="folder.getName()" (ionChange)= "onNameUpdate($event.target.value)"></ion-textarea>
-      <ion-button slot="end" expand="block" shape="round" (click)="select()" *ngIf="canExpand">
-      Expand
-    </ion-button>
-    <ion-button slot="end" expand="block" shape="round" (click)="presentDeleteConfirm()" *ngIf="!canExpand" color="danger">
-      Delete
-    </ion-button>
-  </ion-item></ion-card-subtitle>
+        
+        <ion-icon slot="start" [name]="canExpand?'folder':'folder-open'" [color]="folder.isValidated()?'success':''"></ion-icon>
+        <ion-icon slot="start" name="checkmark-circle" color="success" *ngIf="folder.isValidated()"></ion-icon>
+        <ion-textarea slot="start" [value]="folder.getName()" (ionChange)="onNameUpdate($event.target.value)"
+          [color]="folder.isValidated()?'success':''"></ion-textarea>
+        <ion-button slot="end" expand="block" shape="round" (click)="select()" *ngIf="canExpand">
+          Expand
+        </ion-button>
+        <ion-button slot="end" expand="block" shape="round" (click)="presentDeleteConfirm()" *ngIf="!canExpand"
+          color="danger">
+          Delete
+        </ion-button>
+      </ion-item>
+    </ion-card-subtitle>
   </ion-card-header>
 
   <ion-card-content>
-    
+
   </ion-card-content>
-  
+
 </ion-card>

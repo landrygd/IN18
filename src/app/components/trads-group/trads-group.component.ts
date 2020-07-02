@@ -22,7 +22,9 @@ export class TradsGroupComponent implements OnInit {
   }
 
   delete(){
-    this.tradGroup.parentFolder.removeTradGroup(this.tradGroup);
+    if (this.tradGroup.parentFolder.removeTradGroup(this.tradGroup)){
+      this.global.setSelectedStructure(this.global.selectedFolder);
+    }
   }
 
   async presentDeleteConfirm() {

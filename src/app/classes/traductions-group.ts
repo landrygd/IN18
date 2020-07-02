@@ -7,20 +7,27 @@ export class TraductionsGroup extends Structure {
 
 
   public getTradList(): Traduction[] {
-      return this.tradList;
+    return this.tradList;
   }
 
   public setTradList(tradList: Traduction[]): void {
-      this.tradList = tradList;
+    this.tradList = tradList;
   }
 
-  public addTraduction(traduction: Traduction){
+  public addTraduction(traduction: Traduction) {
     this.tradList.push(traduction);
   }
 
-  constructor(name: string, parentFolder: Folder, tradList: Traduction[]=[]) {
-    super(name, parentFolder);
-    this.tradList = tradList;
+  public isValidated(): boolean {
+    for (const k of this.tradList) {
+      if (!k.checked) {
+        return false;
+      }
+    }
+    if (this.tradList.length === 0){
+      return false;
+    }
+    return true;
   }
 
   public setTrad(traduction: Traduction) {
@@ -32,4 +39,11 @@ export class TraductionsGroup extends Structure {
       }
     }
   }
+
+  constructor(name: string, parentFolder: Folder, tradList: Traduction[] = []) {
+    super(name, parentFolder);
+    this.tradList = tradList;
+  }
+
+
 }

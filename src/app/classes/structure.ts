@@ -12,6 +12,10 @@ export class Structure {
         this.name = name;
     }
 
+    public isValidated(): boolean{
+        return true;
+    }
+
     constructor(name: string, parentFolder: Folder) {
         this.name = name;
         this.parentFolder = parentFolder;

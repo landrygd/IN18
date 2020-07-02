@@ -19,7 +19,8 @@ export class GlobalService {
   languages: any;
   paths: any;
 
-  selectedTragGroup$: Observable<TraductionsGroup[]>;
+  selectedTragGroups$: Observable<TraductionsGroup[]>;
+  selectedFolders$: Observable<Folder[]>;
 
   constructor() {
     this.test();
@@ -31,7 +32,8 @@ export class GlobalService {
     }else if (structure instanceof Folder){
       this.setSelectedFolder(structure);
     }
-    this.selectedTragGroup$ = of(this.getSelectedFolder().tradGroupList);
+    this.selectedTragGroups$ = of(this.getSelectedFolder().tradGroupList);
+    this.selectedFolders$ = of(this.getSelectedFolder().folderList);
     this.selectedStructure = structure;
   }
 

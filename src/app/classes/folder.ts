@@ -47,6 +47,23 @@ export class Folder extends Structure {
         return this.folderList.find(element => element.getName() === path);
     }
 
+    public isValidated(): boolean{
+        for (const k of this.tradGroupList){
+            if (!k.isValidated()){
+                return false;
+            }
+        }
+        for (const k of this.folderList){
+            if (!k.isValidated()){
+                return false;
+            }
+        }
+        if (this.folderList.length === 0 && this.tradGroupList.length === 0){
+            return false;
+        }
+        return true;
+    }
+
     constructor(name: string, parentFolder: Folder) {
         super(name, parentFolder);
         this.folderList = [];
