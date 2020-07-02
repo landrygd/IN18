@@ -29,7 +29,7 @@ export class FolderTreeComponent implements OnInit {
   }
 
   isExpanded(): boolean{
-    return !this.collapsed || this.level < 0 || this.global.selectedFolder === this.folder;
+    return !this.collapsed || this.level < 0 || this.global.selectedFolder === this.folder || this.global.OneChildIsSelected(this.folder);
   }
 
   select(structure: Structure) {
@@ -47,7 +47,9 @@ export class FolderTreeComponent implements OnInit {
   getColor(folder: boolean, structure: Structure = this.folder) {
     if (this.global.selectedStructure === structure) {
       return 'primary';
-    }else if (this.global.selectedFolder === structure){
+    }else if (this.global.selectedFolder === structure ||
+      (this.global.selectedFolder === this.folder && this.global.selectedStructure === this.folder) ||
+      (this.folder.parentFolder === this.global.selectedFolder && this.global.selectedFolder !== this.global.structure)){
       return 'secondary';
     }
     if (!this.collapsed || !folder) {

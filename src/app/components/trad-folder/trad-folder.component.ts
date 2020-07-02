@@ -10,6 +10,7 @@ import { GlobalService } from 'src/app/services/global.service';
 export class TradFolderComponent implements OnInit {
 
   @Input() folder: Folder;
+  @Input() canExpand = false;
 
   constructor(private global: GlobalService) { }
 

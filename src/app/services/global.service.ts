@@ -45,6 +45,23 @@ export class GlobalService {
     return this.selectedStructure instanceof Folder;
   }
 
+  OneChildIsSelected(folder: Folder): boolean{
+    for (const k of folder.folderList){
+      if (k === this.selectedStructure) {
+        return true;
+      }else{
+        return this.OneChildIsSelected(k);
+      }
+    }
+    for (const k of folder.tradGroupList){
+      if (k === this.selectedStructure) {
+        return true;
+      }
+    }
+    return false;
+
+  }
+
   getSelectedFolder() {
     return this.selectedFolder === undefined ? this.structure : this.selectedFolder;
   }
@@ -65,7 +82,7 @@ export class GlobalService {
   }
 
   test() {
-    this.importJsonFiles([{ 'default': { 'test': { 'y': 'oui', n: 'non' } } }, { 'default': { 'test': { 'y': 'yes', n: 'no' } } }], ['fr', 'en']);
+    this.importJsonFiles([{ default: { test: { y: 'oui', n: 'non' } } }, { default: { test: { y: 'yes', n: 'no' } } }], ['fr', 'en']);
   }
 
   importJsonFiles(files: object[], languages: string[]) {

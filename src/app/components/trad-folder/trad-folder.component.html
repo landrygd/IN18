@@ -1,12 +1,18 @@
 <ion-card>
   <ion-card-header>
-    <ion-card-subtitle><ion-textarea [value]="folder.getName()" (ionChange)= "onNameUpdate($event.target.value)"></ion-textarea></ion-card-subtitle>
+    <ion-card-subtitle>
+      <ion-item>
+
+      
+      <ion-textarea slot="start" [value]="folder.getName()" (ionChange)= "onNameUpdate($event.target.value)"></ion-textarea>
+      <ion-button slot="end" expand="block" shape="round" (click)="select()" *ngIf="canExpand">
+      Expand
+    </ion-button>
+  </ion-item></ion-card-subtitle>
   </ion-card-header>
 
   <ion-card-content>
-    <ion-button slot="end" (click)="select()">
-      Expand
-    </ion-button>
+    
   </ion-card-content>
   
 </ion-card>
