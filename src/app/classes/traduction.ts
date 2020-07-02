@@ -1,6 +1,4 @@
-import { Structure } from './structure';
-
-export class Traduction extends Structure {
+export class Traduction {
     public language: string;
     public value: string;
     public checked: boolean;
@@ -30,8 +28,7 @@ export class Traduction extends Structure {
     }
 
 
-    constructor(name: string, value: string, language: string, checked = false) {
-        super(name);
+    constructor(value: string, language: string, checked = false) {
         this.language = language;
         this.value = value;
         this.checked = checked;

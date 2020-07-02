@@ -9,8 +9,14 @@
 
     <div class="ion-page" id="main-content">
       <ion-content class="ion-padding">
-        <ion-list>
-          <app-trads-group *ngFor="let itemGroup of itemGroupList" [path]="itemGroup.path" [trads]="itemGroup.trads"></app-trads-group>
+        <ion-list style="background-color: rgba(0,0,0,0);">
+          <div *ngIf="!global.isSelectedStructureFolder()">
+            <app-trads-group [tradGroup]="global.getSelectedStructureAsTradGroup()"></app-trads-group>
+          </div>
+          <div *ngIf="global.isSelectedStructureFolder()">
+            <app-trads-group *ngFor="let t of global.getSelectedFolder().tradGroupList" [tradGroup]="t"></app-trads-group>
+            <app-trad-folder *ngFor="let f of global.getSelectedFolder().folderList" [folder]="f"></app-trad-folder>
+          </div>
         </ion-list>
       </ion-content>
     </div>

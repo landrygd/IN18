@@ -12,23 +12,27 @@ export class NewTradModalComponent implements OnInit {
 
   tradGroup: TraductionsGroup;
 
-  folder: Folder;
+  newFolder: Folder;
 
-  folderName: String = "";
+  parentFolder: Folder;
 
-  fileName: String = "";
+  parentFolderName = '';
+
+  fileName = '';
+
+  isFolder = false;
 
 
   constructor(
     private modalController: ModalController
   ) {
-    
+
   }
 
   ngOnInit() {
-    this.folderName = this.folder.getName(); 
-    console.log(this.folderName);
-    this.tradGroup =  new TraductionsGroup("",this.folder);
+    this.parentFolderName = this.parentFolder.getName();
+    this.tradGroup = new TraductionsGroup('', this.parentFolder);
+    this.newFolder = new Folder('', this.parentFolder);
   }
 
   cancel() {
@@ -37,14 +41,25 @@ export class NewTradModalComponent implements OnInit {
 
   onNameChange(value) {
     this.tradGroup.setName(value);
+    this.newFolder.setName(value);
     this.fileName = value;
   }
   onFolderChange(value) {
     // this.traduction.setPath(value);
   }
 
+  onIsFolderChange(value) {
+    this.isFolder = value;
+  }
+
   import() {
-    let result = this.folder.addTraductionGroup(this.tradGroup);
+    let result = false;
+    if (this.isFolder) {
+      result = this.parentFolder.addFolder(this.newFolder);
+    } else {
+      result = this.parentFolder.addTraductionGroup(this.tradGroup);
+    }
+
     console.log(result);
     this.modalController.dismiss();
   }

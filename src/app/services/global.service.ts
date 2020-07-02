@@ -13,7 +13,7 @@ import { Structure } from '../classes/structure';
 })
 export class GlobalService {
 
-  structure: Folder = new Folder('root');
+  structure: Folder = new Folder('root', undefined);
   selectedStructure: Structure;
   selectedFolder: Folder;
   languages: any;
@@ -25,14 +25,32 @@ export class GlobalService {
   }
 
   setSelectedStructure(structure) {
+    if (structure instanceof TraductionsGroup){
+      this.setSelectedFolder(structure.parentFolder);
+    }else if (structure instanceof Folder){
+      this.setSelectedFolder(structure);
+    }
     this.selectedStructure = structure;
-    if (structure instanceof Folder) {
-      this.selectedFolder = structure;
+  }
+
+  getSelectedStructureAsTradGroup(): TraductionsGroup{
+    if (this.selectedStructure instanceof TraductionsGroup){
+      return this.selectedStructure;
+    }else{
+      return undefined;
     }
   }
 
+  isSelectedStructureFolder(){
+    return this.selectedStructure instanceof Folder;
+  }
+
   getSelectedFolder() {
-    return this.selectedFolder === undefined?this.structure: this.selectedFolder
+    return this.selectedFolder === undefined ? this.structure : this.selectedFolder;
+  }
+
+  setSelectedFolder(folder: Folder){
+    this.selectedFolder = folder;
   }
 
   setStructure(newStructure) {
@@ -42,22 +60,23 @@ export class GlobalService {
   }
 
   newProject() {
-    this.setStructure(new Folder('root'));
+    this.setStructure(new Folder('root', undefined));
     console.log('new project');
   }
 
   test() {
-    this.importJsonFiles([{ "default": { "test": { "y": 'oui', 'n': 'non' } } }, { "default": { "test": { "y": 'yes', 'n': 'no' } } }], ['fr', 'en']);
+    this.importJsonFiles([{ 'default': { 'test': { 'y': 'oui', n: 'non' } } }, { 'default': { 'test': { 'y': 'yes', n: 'no' } } }], ['fr', 'en']);
   }
 
   importJsonFiles(files: object[], languages: string[]) {
-    const newStructure = new Folder('root');
+    const newStructure = new Folder('root', undefined);
     for (let i = 0; i < languages.length; i++) {
 
       this.walkInJson(files[i], 'default', newStructure, languages[i]);
 
     }
     this.structure = newStructure;
+    this.setSelectedStructure(this.structure);
   }
 
   walkInJson(holder: object, key: string, structure: Folder, language: string) {
@@ -71,7 +90,7 @@ export class GlobalService {
           const keys = Object.keys(json[k]);
           if (typeof json[k] === 'string') {
             const tradGroup = structure.findTraductionGroup(k);
-            const trad = new Traduction(k, json[k], language);
+            const trad = new Traduction(json[k], language);
             if (tradGroup !== undefined) {
               tradGroup.addTraduction(trad);
             } else {
@@ -82,7 +101,7 @@ export class GlobalService {
           else if (json[k] !== undefined) {
             let folder = structure.findFolder(k);
             if (folder === undefined) {
-              folder = new Folder(k);
+              folder = new Folder(k, structure);
               structure.addFolder(folder);
             }
             this.walkInJson(json, k, folder, language);

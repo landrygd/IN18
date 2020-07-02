@@ -1,11 +1,15 @@
 <ion-content>
   <ion-item>
-    <ion-label position="floating">Folder</ion-label>
-    <ion-input [value]="folderName" (ionChange)="onFolderChange($event.detail.value)" disabled="true"></ion-input>
+    <ion-label position="floating">Parent folder</ion-label>
+    <ion-input [value]="parentFolderName" (ionChange)="onFolderChange($event.detail.value)" disabled="true"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label position="floating">ID</ion-label>
+    <ion-label position="floating">Name</ion-label>
     <ion-input [value]="fileName" (ionChange)="onNameChange($event.detail.value)"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">This is a folder</ion-label>
+    <ion-checkbox [value]="isFolder" (ionChange)="onIsFolderChange($event.detail.value)"></ion-checkbox>
   </ion-item>
 </ion-content>
 

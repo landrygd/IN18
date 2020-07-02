@@ -1,7 +1,10 @@
-<ion-item-group>
-  <ion-item-divider>
-    <ion-label>{{path}}</ion-label>
-  </ion-item-divider>
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle><ion-textarea [value]="tradGroup.getName()" (ionChange)= "onNameUpdate($event.target.value)"></ion-textarea></ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <app-trad-field *ngFor="let trad of tradGroup.tradList" [trad]="trad"></app-trad-field>
+  </ion-card-content>
   
-  <app-trad-field *ngFor="let trad of tradGroup.tradList" [language]="trad.language" [value]="trad.value" [path]="trad.path" (update)="onUpdate($event)"></app-trad-field>
-</ion-item-group>
+</ion-card>

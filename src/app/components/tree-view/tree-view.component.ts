@@ -160,7 +160,7 @@ export class TreeViewComponent implements OnInit {
   async addTraduction() {
     const modal = await this.modalController.create({
       component: NewTradModalComponent,
-      componentProps: {folder: this.global.getSelectedFolder()}
+      componentProps: {parentFolder: this.global.getSelectedFolder()}
     });
     await modal.present();
   }

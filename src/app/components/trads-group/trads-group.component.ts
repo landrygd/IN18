@@ -10,26 +10,15 @@ import { TraductionsGroup } from 'src/app/classes/traductions-group';
 })
 export class TradsGroupComponent implements OnInit {
 
-  @Input() path: string;
-  @Input() trads: any;
-
-  tradGroup: TraductionsGroup = new TraductionsGroup(this.path, []);
+  @Input() tradGroup: TraductionsGroup;
 
   constructor(private global: GlobalService) { }
 
   ngOnInit() {
-    const tradList = this.tradGroup.tradList;
-    Object.keys(this.trads).forEach((key) => {
-      if (typeof this.trads[key] !== 'object') {
-        this.tradGroup.addTraduction(
-          new Traduction(this.path, this.trads[key], key)
-        );
-      }
-    });
   }
 
-  onUpdate(event: Traduction) {
-    this.global.updatePath(event);
+  onNameUpdate(value: string) {
+    this.tradGroup.setName(value);
   }
 
 }
