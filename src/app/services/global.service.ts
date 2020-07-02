@@ -15,6 +15,7 @@ export class GlobalService {
 
   structure: Folder = new Folder('root');
   selectedStructure: Structure;
+  selectedFolder: Folder;
   languages: any;
   paths: any;
   observablestructure = new BehaviorSubject<Folder>(this.structure);
@@ -23,19 +24,30 @@ export class GlobalService {
     this.test();
   }
 
+  setSelectedStructure(structure) {
+    this.selectedStructure = structure;
+    if (structure instanceof Folder) {
+      this.selectedFolder = structure;
+    }
+  }
+
+  getSelectedFolder() {
+    return this.selectedFolder === undefined?this.structure: this.selectedFolder
+  }
+
   setStructure(newStructure) {
     this.structure = newStructure;
     this.observablestructure.next(this.structure);
     console.log(this.observablestructure);
-    }
+  }
 
-  newProject(){
+  newProject() {
     this.setStructure(new Folder('root'));
     console.log('new project');
   }
 
   test() {
-    this.importJsonFiles([{"default":{"test": {"y": 'oui','n':'non'}}}, {"default":{"test": {"y": 'yes','n':'no'}}}], ['fr', 'en']);
+    this.importJsonFiles([{ "default": { "test": { "y": 'oui', 'n': 'non' } } }, { "default": { "test": { "y": 'yes', 'n': 'no' } } }], ['fr', 'en']);
   }
 
   importJsonFiles(files: object[], languages: string[]) {
@@ -46,42 +58,41 @@ export class GlobalService {
 
     }
     this.structure = newStructure;
-    console.log(newStructure);
   }
 
   walkInJson(holder: object, key: string, structure: Folder, language: string) {
 
-      let k;
-      const json = holder[key];
-      if (json && typeof json === 'object') {
-          for (k in json) {
-              if (Object.prototype.hasOwnProperty.call(json, k)) {
-                  // obj = this.walk(json, k, structure, language);
-                  const keys = Object.keys(json[k]);
-                  if (typeof json[k] === 'string'){
-                    const tradGroup = structure.findTraductionGroup(k);
-                    const trad = new Traduction(k, json[k], language);
-                    if (tradGroup !== undefined){
-                      tradGroup.addTraduction(trad);
-                    }else{
-                      structure.addTraductionGroup(new TraductionsGroup(k, [trad]) );
-                    }
+    let k;
+    const json = holder[key];
+    if (json && typeof json === 'object') {
+      for (k in json) {
+        if (Object.prototype.hasOwnProperty.call(json, k)) {
+          // obj = this.walk(json, k, structure, language);
+          const keys = Object.keys(json[k]);
+          if (typeof json[k] === 'string') {
+            const tradGroup = structure.findTraductionGroup(k);
+            const trad = new Traduction(k, json[k], language);
+            if (tradGroup !== undefined) {
+              tradGroup.addTraduction(trad);
+            } else {
+              structure.addTraductionGroup(new TraductionsGroup(k, structure, [trad]));
+            }
 
-                  }
-                  else if (json[k] !== undefined) {
-                    let folder = structure.findFolder(k);
-                    if (folder === undefined){
-                      folder = new Folder(k);
-                      structure.addFolder(folder);
-                    }
-                    this.walkInJson(json, k, folder, language);
-
-                  } else {
-                      delete json[k];
-                  }
-              }
           }
+          else if (json[k] !== undefined) {
+            let folder = structure.findFolder(k);
+            if (folder === undefined) {
+              folder = new Folder(k);
+              structure.addFolder(folder);
+            }
+            this.walkInJson(json, k, folder, language);
+
+          } else {
+            delete json[k];
+          }
+        }
       }
+    }
   }
 
   modifyJson(obj, is, value = '') {
@@ -148,7 +159,7 @@ export class GlobalService {
     for (const key of Object.keys(exp)) {
       zip.file(key + '.json', JSON.stringify(exp[key].default));
     }
-    const data = await zip.generateAsync({type: 'blob'});
+    const data = await zip.generateAsync({ type: 'blob' });
     const blob = new Blob([data], { type: 'application/zip' });
     saveAs(blob, 'save.zip');
   }

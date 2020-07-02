@@ -1,8 +1,11 @@
 import { Traduction } from './traduction';
 import { Structure } from './structure';
+import { Folder } from './folder';
 
 export class TraductionsGroup extends Structure {
   public tradList: Traduction[];
+
+  private parentFolder: Folder;
 
   public getTradList(): Traduction[] {
       return this.tradList;
@@ -16,8 +19,9 @@ export class TraductionsGroup extends Structure {
     this.tradList.push(traduction);
   }
 
-  constructor(name: string, tradList: Traduction[]) {
+  constructor(name: string, parentFolder: Folder, tradList: Traduction[]=[]) {
     super(name);
+    this.parentFolder = parentFolder;
     this.tradList = tradList;
   }
 

@@ -7,8 +7,14 @@ export class Folder extends Structure {
     public tradGroupList: TraductionsGroup[];
     public folderList: Folder[];
 
-    public addTraductionGroup(traductionGroup: TraductionsGroup) {
-        this.tradGroupList.push(traductionGroup);
+    public addTraductionGroup(traductionGroup: TraductionsGroup): Boolean {
+        if (this.tradGroupList.findIndex(e => e.getName() === traductionGroup.getName())==-1){
+            this.tradGroupList.push(traductionGroup);
+            return true;
+        }else{
+           return false;
+        }
+        
     }
 
     public addFolder(folder: Folder) {

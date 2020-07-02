@@ -156,29 +156,12 @@ export class TreeViewComponent implements OnInit {
     return this.selectedPath === path;
   }
 
-  getColor(path: string) {
-    if (this.isSelected(path)) {
-      return 'primary';
-    }
-    if ((this.isFolder(path) && this.isOpened(path)) || !this.isFolder(path)) {
-      return 'dark';
-    }
-    return 'medium';
-  }
 
   async addTraduction() {
     const modal = await this.modalController.create({
       component: NewTradModalComponent,
+      componentProps: {folder: this.global.getSelectedFolder()}
     });
     await modal.present();
-    const traduction = (await modal.onDidDismiss()).data;
-    // this.newTrad.emit(traduction);
-    if (traduction.path !== ''){
-      traduction.path = 'default.' + traduction.path;
-      this.global.updatePath(traduction);
-      console.log('eh');
-      console.log(this.global.structure);
-      this.updateTree(this.global.structure);
-    }
   }
 }

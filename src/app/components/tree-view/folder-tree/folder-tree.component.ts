@@ -14,7 +14,6 @@ export class FolderTreeComponent implements OnInit {
 
   @Input() level: number;
 
-  selectedStructure: Structure;
 
   collapsed = true;
 
@@ -29,8 +28,7 @@ export class FolderTreeComponent implements OnInit {
   }
 
   select(structure: Structure) {
-    this.selectedStructure = structure;
-    this.global.selectedStructure = structure;
+    this.global.setSelectedStructure(structure);
   }
 
   chevronIcon() {
@@ -38,8 +36,10 @@ export class FolderTreeComponent implements OnInit {
   }
 
   getColor(folder: boolean, structure: Structure = this.folder) {
-    if (this.selectedStructure === structure || this.selectedStructure === this.folder) {
+    if (this.global.selectedStructure === structure) {
       return 'primary';
+    }else if (this.global.selectedStructure === this.folder || this.global.selectedFolder === this.folder){
+      return 'secondary';
     }
     if (!this.collapsed || !folder) {
       return 'dark';
