@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject, Observable, of } from 'rxjs';
 import { Traduction } from '../classes/traduction';
 import { Folder } from '../classes/folder';
 import { TraductionsGroup } from '../classes/traductions-group';
@@ -18,7 +18,8 @@ export class GlobalService {
   selectedFolder: Folder;
   languages: any;
   paths: any;
-  observablestructure = new BehaviorSubject<Folder>(this.structure);
+
+  selectedTragGroup$: Observable<TraductionsGroup[]>;
 
   constructor() {
     this.test();
@@ -30,6 +31,7 @@ export class GlobalService {
     }else if (structure instanceof Folder){
       this.setSelectedFolder(structure);
     }
+    this.selectedTragGroup$ = of(this.getSelectedFolder().tradGroupList);
     this.selectedStructure = structure;
   }
 
@@ -72,8 +74,6 @@ export class GlobalService {
 
   setStructure(newStructure) {
     this.structure = newStructure;
-    this.observablestructure.next(this.structure);
-    console.log(this.observablestructure);
   }
 
   newProject() {
@@ -154,14 +154,6 @@ export class GlobalService {
     return this.modifyJson(this.structure, path);
   }
 
-  updatePath(traduction: Traduction) {
-    const structureCopy = this.structure;
-    // this.modifyJson(structureCopy, traduction.getPathWithLanguage(), traduction.getValue());
-    // this.setStructure(structureCopy)
-    this.structure = structureCopy;
-    return this.structure;
-  }
-
   export(): any[] {
     const docs: any = {};
     const paths = ['default'];
@@ -200,13 +192,4 @@ export class GlobalService {
     saveAs(blob, 'save.zip');
   }
 
-  setPaths(paths) {
-    this.paths = paths;
-  }
-
-  setPath(path, value) {
-    console.log(path, value);
-    this.modifyJson(this.structure, path, value);
-    this.observablestructure.next(this.structure);
-  }
 }

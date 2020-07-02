@@ -132,9 +132,9 @@ export class TranslatorService {
             }
           }
           console.log({paths, translated});
-          for (let i = 0; i < translated.length; i++) {
+          /*for (let i = 0; i < translated.length; i++) {
             this.global.setPath(paths[i] + '.' + lang, translated[i]);
-          }
+          }*/
           console.log(this.global.structure);
         }
       }

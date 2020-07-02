@@ -16,7 +16,7 @@
           </div>
           <div *ngIf="global.isSelectedStructureFolder()">
             <app-trad-folder [folder]="global.getSelectedFolder()" *ngIf="global.getSelectedFolder()!=global.structure"></app-trad-folder>
-            <app-trads-group *ngFor="let t of global.getSelectedFolder().tradGroupList" [tradGroup]="t"></app-trads-group>
+            <app-trads-group *ngFor="let t of global.selectedTragGroup$ | async" [tradGroup]="t"></app-trads-group>
             <app-trad-folder *ngFor="let f of global.getSelectedFolder().folderList" [folder]="f" [canExpand]="true"></app-trad-folder>
           </div>
           <ion-card>

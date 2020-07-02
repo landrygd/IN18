@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { TraductionsGroup } from 'src/app/classes/traductions-group';
 import { Folder } from 'src/app/classes/folder';
 
@@ -24,7 +24,7 @@ export class NewTradModalComponent implements OnInit {
 
 
   constructor(
-    private modalController: ModalController
+    private modalController: ModalController, public alertController: AlertController
   ) {
 
   }
@@ -60,7 +60,29 @@ export class NewTradModalComponent implements OnInit {
       result = this.parentFolder.addTraductionGroup(this.tradGroup);
     }
 
-    console.log(result);
-    this.modalController.dismiss();
+    if (!result){
+      this.presentExistDialog();
+    }else{
+      this.modalController.dismiss();
+    }
+  }
+
+  async presentExistDialog() {
+    const alert = await this.alertController.create({
+      cssClass: '',
+      header: 'Attention',
+      subHeader: '',
+      message: this.isFolder ? 'This folder already exist in this folder.' : 'This item already exist in this folder.',
+      buttons: [{
+        text: 'Ok',
+        role: 'cancel',
+        cssClass: 'danger',
+        handler: (blah) => {
+          console.log('Confirm Cancel: blah');
+        }
+      }]
+    });
+
+    await alert.present();
   }
 }

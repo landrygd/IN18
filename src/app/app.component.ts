@@ -37,32 +37,6 @@ export class AppComponent {
     });
   }
 
-  selected(event) {
-    this.path = event;
-    this.subStructure = this.global.getSubJSON(this.global.structure, event);
-    this.itemGroupList = [];
-    for (const key of Object.keys(this.subStructure)) {
-      if (typeof this.subStructure[key] === 'object') {
-        this.itemGroupList.push(
-          {
-            path: this.path + '.' + key,
-            trads: this.subStructure[key]
-          }
-        );
-      } else {
-        return this.itemGroupList.push(
-          {
-            path: this.path,
-            trads: this.subStructure,
-          }
-        );
-      }
-    }
-    console.log(this.subStructure);
-  }
-
-
-
   async addTraduction(isFolder = false) {
     const modal = await this.modalController.create({
       component: NewTradModalComponent,
@@ -71,5 +45,4 @@ export class AppComponent {
     await modal.present();
   }
 
-  
 }
