@@ -1,23 +1,33 @@
-import { Component } from '@angular/core';
-import { Platform, ModalController } from '@ionic/angular';
+import { Component, ViewChild, OnInit, Directive } from '@angular/core';
+import { Platform, ModalController, IonVirtualScroll } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { GlobalService } from './services/global.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NewTradModalComponent } from './components/tree-view/new-trad-modal/new-trad-modal.component';
+import { Observable, Subject, of } from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import { TraductionsGroup } from './classes/traductions-group';
+import { Folder } from './classes/folder';
+import { Structure } from './classes/structure';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
 
   path: string;
   subStructure: any;
   itemGroupList: any[];
 
   fileUrl: SafeResourceUrl;
+
+  selectedStructure: Structure[];
 
   constructor(
     private modalController: ModalController,
@@ -35,6 +45,15 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+  ngOnInit(){
+    /*this.global.selectedStructure$.subscribe(value => {
+      console.log(value)
+      this.selectedStructure = value;
+      // this.virtualScroll.checkEnd();
+    }
+      );*/
   }
 
   async addTraduction(isFolder = false) {

@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import * as JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
-import { Subject, BehaviorSubject, Observable, of } from 'rxjs';
+import { Subject, BehaviorSubject, Observable, of, interval } from 'rxjs';
 import { Traduction } from '../classes/traduction';
 import { Folder } from '../classes/folder';
 import { TraductionsGroup } from '../classes/traductions-group';
 import { Structure } from '../classes/structure';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,12 +20,14 @@ export class GlobalService {
   languages: string[] = [];
   paths: any;
 
-  selectedTragGroups$: Observable<TraductionsGroup[]>;
-  selectedFolders$: Observable<Folder[]>;
+  selectedTradGroups$: Observable<TraductionsGroup[]>;
+  selectedFolders$: Observable<Structure[]>;
+
 
   constructor() {
     this.setSelectedStructure();
   }
+
 
   async setSelectedStructure(structure: Structure = this.structure) {
     if (structure instanceof TraductionsGroup){
@@ -32,7 +35,7 @@ export class GlobalService {
     }else if (structure instanceof Folder){
       this.setSelectedFolder(structure);
     }
-    this.selectedTragGroups$ = of(this.getSelectedFolder().tradGroupList);
+    this.selectedTradGroups$ = of(this.getSelectedFolder().tradGroupList);
     this.selectedFolders$ = of(this.getSelectedFolder().folderList);
     this.selectedStructure = structure;
   }
@@ -70,7 +73,7 @@ export class GlobalService {
     return this.selectedFolder === undefined ? this.structure : this.selectedFolder;
   }
 
-  setSelectedFolder(folder: Folder){
+  async setSelectedFolder(folder: Folder){
     this.selectedFolder = folder;
   }
 
@@ -88,20 +91,20 @@ export class GlobalService {
   }
 
   removeLanguage(language: string): boolean{
-    let exist = this.languages.find(e => e == language)
+    const exist = this.languages.find(e => e === language);
     if (exist){
-      this.languages=this.languages.filter(l => l !== exist)
+      this.languages = this.languages.filter(l => l !== exist);
       this.majLanguages(this.structure);
       return true;
     }else{
       return false;
     }
   }
-  
-  
+
+
 
   addLanguage(language: string): boolean{
-    let exist = this.languages.find(e => e == language)
+    const exist = this.languages.find(e => e === language);
     if (exist){
       return false;
     }else{
@@ -114,10 +117,10 @@ export class GlobalService {
   majLanguages(structure: Structure){
     if (structure instanceof Folder){
       for (const k of structure.folderList){
-        this.majLanguages(k)
+        this.majLanguages(k);
       }
       for (const k of structure.tradGroupList){
-        this.majLanguages(k)
+        this.majLanguages(k);
       }
     }else if (structure instanceof TraductionsGroup){
       structure.removeTradWrongLanguage(this.languages);
@@ -126,8 +129,8 @@ export class GlobalService {
 
   }
 
-  importJsonFiles(files: object[], languages: string[]) {
-    this.languages = languages.filter((e,i)=>{return languages.indexOf(e) === i});
+  async importJsonFiles(files: object[], languages: string[]) {
+    this.languages = languages.filter((e, i) => languages.indexOf(e) === i);
     const newStructure = new Folder('root', undefined);
     for (let i = 0; i < this.languages.length; i++) {
 
@@ -136,6 +139,7 @@ export class GlobalService {
     }
     this.structure = newStructure;
     this.setSelectedStructure(this.structure);
+    this.majLanguages(this.structure);
   }
 
   walkInJson(holder: object, key: string, structure: Folder, language: string) {
@@ -197,17 +201,17 @@ export class GlobalService {
   }
 
   exportToJsons(structure: Structure, language: string): object {
-    let json: object = {}
+    const json: object = {};
     if (structure instanceof Folder){
       for (const folder of structure.folderList){
         json[folder.getName()] = this.exportToJsons(folder, language);
       }
       for (const trad of structure.tradGroupList){
         for (const t of trad.tradList){
-          if (t.language == language){
+          if (t.language === language){
             json[trad.getName()] = t.getValue();
           }
-          
+
         }
       }
     }
@@ -216,18 +220,41 @@ export class GlobalService {
 
   async downloadJsons() {
     const zip = new JSZip();
-    let jsons = {};
+    const jsons = {};
     for (const language of this.languages){
-      jsons[language] = this.exportToJsons(this.structure,language);
-      console.log(jsons[language])
+      jsons[language] = this.exportToJsons(this.structure, language);
+      console.log(jsons[language]);
     }
-    
+
     for (const key of Object.keys(jsons)) {
       zip.file(key + '.json', JSON.stringify(jsons[key]));
     }
     const data = await zip.generateAsync({ type: 'blob' });
     const blob = new Blob([data], { type: 'application/zip' });
     saveAs(blob, 'save.zip');
+  }
+
+  savein18(structure: Structure): object {
+    const json: object = {};
+    if (structure instanceof Folder){
+      for (const folder of structure.folderList){
+        json[folder.getName()] = this.savein18(folder);
+      }
+      for (const trad of structure.tradGroupList){
+        json[trad.getName()] = {};
+        for (const t of trad.tradList){
+            json[trad.getName()][t.language] = {value : t.value, checked : t.checked};
+
+        }
+      }
+    }
+    return json;
+  }
+
+  async download(){
+    const jsons = this.savein18(this.structure);
+    const blob = new Blob([JSON.stringify(jsons)], { type: 'application/json' });
+    saveAs(blob, 'project.in18');
   }
 
 }

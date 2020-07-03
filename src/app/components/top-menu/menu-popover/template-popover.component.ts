@@ -35,6 +35,7 @@ import { GlobalService } from 'src/app/services/global.service';
     }
 
     save(){
+      this.global.download();
       this.popoverCtrl.dismiss();
     }
 

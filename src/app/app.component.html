@@ -16,8 +16,22 @@
           </div>
           <div *ngIf="global.isSelectedStructureFolder()">
             <app-trad-folder [folder]="global.getSelectedFolder()" *ngIf="global.getSelectedFolder()!=global.structure"></app-trad-folder>
-            <app-trads-group *ngFor="let t of global.selectedTragGroups$ | async" [tradGroup]="t"></app-trads-group>
+            <app-trads-group *ngFor="let t of global.selectedTradGroups$ | async" [tradGroup]="t"></app-trads-group>
             <app-trad-folder *ngFor="let f of global.selectedFolders$ | async" [folder]="f" [canExpand]="true"></app-trad-folder>
+
+            <!--<ion-virtual-scroll [items]="selectedStructure">
+              <div *virtualItem="let struct">
+                  <div *ngIf="struct instance of Folder">
+                    <app-trad-folder [folder]="struct" [canExpand]="true">
+                    </app-trad-folder>
+                  </div>
+                  <div *ngIf="struct instance of TraductionGroup">
+                    <app-trads-group  [tradGroup]="struct">
+                    </app-trads-group>
+                  </div>
+              </div>
+              
+            </ion-virtual-scroll>-->
           </div>
           <ion-card>
             
