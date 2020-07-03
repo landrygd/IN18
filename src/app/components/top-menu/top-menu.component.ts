@@ -70,8 +70,8 @@ export class TopMenuComponent implements OnInit {
     await alert.present();
   }
 
-  async download() {
-    this.global.download();
+  async export() {
+    this.global.downloadJsons();
   }
 
   async upload() {

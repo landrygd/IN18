@@ -26,7 +26,7 @@ export class GlobalService {
     this.setSelectedStructure();
   }
 
-  setSelectedStructure(structure: Structure = this.structure) {
+  async setSelectedStructure(structure: Structure = this.structure) {
     if (structure instanceof TraductionsGroup){
       this.setSelectedFolder(structure.parentFolder);
     }else if (structure instanceof Folder){
@@ -80,7 +80,7 @@ export class GlobalService {
 
   newProject() {
     this.setStructure(new Folder('root', undefined));
-    console.log('new project');
+    this.setSelectedStructure();
   }
 
   test() {
@@ -122,9 +122,6 @@ export class GlobalService {
     }else if (structure instanceof TraductionsGroup){
       structure.removeTradWrongLanguage(this.languages);
       structure.addMissingTrad(this.languages);
-      for (let k of structure.tradList){
-        this.languages.find(l => l == k.language)
-      }
     }
 
   }
@@ -199,38 +196,34 @@ export class GlobalService {
     return this.modifyJson(this.structure, path);
   }
 
-  export(): any[] {
-    const docs: any = {};
-    const paths = ['default'];
-    const structureCopy = this.structure;
-    while (paths.length > 0) {
-      const path = paths.shift();
-      const obj = this.modifyJson(structureCopy, path);
-      for (const key of Object.keys(obj)) {
-        let subPath = path + '.' + key;
-        const subObj = this.modifyJson(structureCopy, subPath);
-        if (typeof subObj === 'object') {
-          paths.push(subPath);
-        } else {
-          if (!Object.keys(docs).includes(key)) {
-            docs[key] = {};
+  exportToJsons(structure: Structure, language: string): object {
+    let json: object = {}
+    if (structure instanceof Folder){
+      for (const folder of structure.folderList){
+        json[folder.getName()] = this.exportToJsons(folder, language);
+      }
+      for (const trad of structure.tradGroupList){
+        for (const t of trad.tradList){
+          if (t.language == language){
+            json[trad.getName()] = t.getValue();
           }
-          const subPathArr = subPath.split('.');
-          subPathArr.pop();
-          subPath = subPathArr.join('.');
-          this.modifyJson(docs[key], subPath, subObj);
+          
         }
       }
     }
-    console.log(docs);
-    return docs;
+    return json;
   }
 
-  async download() {
+  async downloadJsons() {
     const zip = new JSZip();
-    const exp = this.export();
-    for (const key of Object.keys(exp)) {
-      zip.file(key + '.json', JSON.stringify(exp[key].default));
+    let jsons = {};
+    for (const language of this.languages){
+      jsons[language] = this.exportToJsons(this.structure,language);
+      console.log(jsons[language])
+    }
+    
+    for (const key of Object.keys(jsons)) {
+      zip.file(key + '.json', JSON.stringify(jsons[key]));
     }
     const data = await zip.generateAsync({ type: 'blob' });
     const blob = new Blob([data], { type: 'application/zip' });
