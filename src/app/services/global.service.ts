@@ -16,7 +16,7 @@ export class GlobalService {
   structure: Folder = new Folder('root', undefined);
   selectedStructure: Structure;
   selectedFolder: Folder;
-  languages: any;
+  languages: string[] = [];
   paths: any;
 
   selectedTragGroups$: Observable<TraductionsGroup[]>;
@@ -87,7 +87,37 @@ export class GlobalService {
     this.importJsonFiles([{ default: { test: { y: 'oui', n: 'non' } } }, { default: { test: { y: 'yes', n: 'no' } } }], ['fr', 'en']);
   }
 
+  addLanguage(language: string): boolean{
+    let exist = this.languages.find(e => e == language)
+    if (exist){
+      return false;
+    }else{
+      this.languages.push(language);
+      this.majLanguages(this.structure);
+      return true;
+    }
+  }
+
+  majLanguages(structure: Structure){
+    if (structure instanceof Folder){
+      for (const k of structure.folderList){
+        this.majLanguages(k)
+      }
+      for (const k of structure.tradGroupList){
+        this.majLanguages(k)
+      }
+    }else if (structure instanceof TraductionsGroup){
+      structure.removeTradWrongLanguage(this.languages);
+      structure.addMissingTrad(this.languages);
+      for (let k of structure.tradList){
+        this.languages.find(l => l == k.language)
+      }
+    }
+
+  }
+
   importJsonFiles(files: object[], languages: string[]) {
+    this.languages = languages;
     const newStructure = new Folder('root', undefined);
     for (let i = 0; i < languages.length; i++) {
 

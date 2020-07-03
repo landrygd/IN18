@@ -18,6 +18,22 @@ export class TraductionsGroup extends Structure {
     this.tradList.push(traduction);
   }
 
+  public hasLanguage(language: string){
+    return this.tradList.find(t => t.language == language) !== undefined;
+  }
+
+  public removeTradWrongLanguage(languages: string[]){
+    this.tradList.filter(t => languages.find(l => l==t.language) !== undefined)
+  }
+
+  public addMissingTrad(languages: string[]){
+    for (let l of languages){
+      if (!this.hasLanguage(l)){
+        this.addTraduction(new Traduction("", l))
+      }
+    }
+  }
+
   public isValidated(): boolean {
     for (const k of this.tradList) {
       if (!k.checked) {

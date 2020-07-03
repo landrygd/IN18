@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 import { TraductionsGroup } from 'src/app/classes/traductions-group';
 import { Folder } from 'src/app/classes/folder';
+import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-new-trad-modal',
@@ -24,7 +25,7 @@ export class NewTradModalComponent implements OnInit {
 
 
   constructor(
-    private modalController: ModalController, public alertController: AlertController
+    private modalController: ModalController, public alertController: AlertController, private global: GlobalService
   ) {
 
   }
@@ -58,6 +59,7 @@ export class NewTradModalComponent implements OnInit {
       result = this.parentFolder.addFolder(this.newFolder);
     } else {
       result = this.parentFolder.addTraductionGroup(this.tradGroup);
+      this.tradGroup.addMissingTrad(this.global.languages)
     }
 
     if (!result){
