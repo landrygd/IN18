@@ -13,7 +13,7 @@ import { TradFieldComponent } from './components/trad-field/trad-field.component
 import { TradsGroupComponent } from './components/trads-group/trads-group.component';
 import { CommonModule } from '@angular/common';
 import { PopoverPage } from './components/top-menu/template-popover.component';
-import { ModalPage } from './components/top-menu/template-modal.component';
+import { LanguagesModalPage } from './components/top-menu/languages-modal/languages-modal.component';
 import { TreeViewComponent } from './components/tree-view/tree-view.component';
 import { UploadModalComponent } from './components/top-menu/upload-modal/upload-modal.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
@@ -32,7 +32,7 @@ import { TradFolderComponent } from './components/trad-folder/trad-folder.compon
     TradFieldComponent,
     TradsGroupComponent,
     PopoverPage,
-    ModalPage,
+    LanguagesModalPage,
     TreeViewComponent,
     UploadModalComponent,
     NewTradModalComponent,

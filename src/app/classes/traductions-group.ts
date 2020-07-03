@@ -40,6 +40,10 @@ export class TraductionsGroup extends Structure {
     }
   }
 
+  public emptyTrad() {
+    return this.tradList.length==0;
+  }
+
   constructor(name: string, parentFolder: Folder, tradList: Traduction[] = []) {
     super(name, parentFolder);
     this.tradList = tradList;

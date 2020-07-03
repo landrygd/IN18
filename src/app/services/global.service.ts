@@ -23,7 +23,7 @@ export class GlobalService {
   selectedFolders$: Observable<Folder[]>;
 
   constructor() {
-    this.test();
+    this.setSelectedStructure();
   }
 
   setSelectedStructure(structure: Structure = this.structure) {

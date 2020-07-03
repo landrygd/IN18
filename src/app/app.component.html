@@ -9,7 +9,7 @@
 
     <div class="ion-page" id="main-content">
       <ion-content class="ion-padding">
-        <ion-list style="background-color: rgba(0,0,0,0);">
+        <ion-list class="no-background">
           
           <div *ngIf="!global.isSelectedStructureFolder()">
             <app-trads-group [tradGroup]="global.getSelectedStructureAsTradGroup()"></app-trads-group>

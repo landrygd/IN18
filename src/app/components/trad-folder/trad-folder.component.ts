@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Folder } from 'src/app/classes/folder';
 import { GlobalService } from 'src/app/services/global.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
+import { NewTradModalComponent } from '../tree-view/new-trad-modal/new-trad-modal.component';
 
 @Component({
   selector: 'app-trad-folder',
@@ -13,7 +14,9 @@ export class TradFolderComponent implements OnInit {
   @Input() folder: Folder;
   @Input() canExpand = false;
 
-  constructor(private global: GlobalService, public alertController: AlertController) { }
+  invisible = false;
+
+  constructor(private modalController: ModalController, private global: GlobalService, public alertController: AlertController) { }
 
   ngOnInit() {}
 
@@ -54,6 +57,14 @@ export class TradFolderComponent implements OnInit {
 
   onNameUpdate(value: string) {
     this.folder.setName(value);
+  }
+
+  async addTraduction(isFolder = false) {
+    const modal = await this.modalController.create({
+      component: NewTradModalComponent,
+      componentProps: {parentFolder: this.folder, isFolder}
+    });
+    await modal.present();
   }
 
 }

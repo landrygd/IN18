@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { GlobalService } from 'src/app/services/global.service';
 import { TraductionsGroup } from 'src/app/classes/traductions-group';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
+import { LanguagesModalPage } from '../top-menu/languages-modal/languages-modal.component';
 
 @Component({
   selector: 'app-trads-group',
@@ -12,7 +13,7 @@ export class TradsGroupComponent implements OnInit {
 
   @Input() tradGroup: TraductionsGroup;
 
-  constructor(private global: GlobalService, public alertController: AlertController) { }
+  constructor(public modalController: ModalController, private global: GlobalService, public alertController: AlertController) { }
 
   ngOnInit() {
   }
@@ -50,6 +51,15 @@ export class TradsGroupComponent implements OnInit {
     });
 
     await alert.present();
+  }
+
+  async presentLanguagesModal(id: number = 0) {
+    const modal = await this.modalController.create({
+      component: LanguagesModalPage,
+      componentProps: {id},
+      cssClass: ''
+    });
+    return await modal.present();
   }
 
 }

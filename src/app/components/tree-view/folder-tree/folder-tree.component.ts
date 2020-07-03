@@ -25,9 +25,12 @@ export class FolderTreeComponent implements OnInit {
 
   ngOnInit() { }
 
-  toggleCollapse() {
+  toggleCollapse(select = false) {
     this.collapsed = !this.collapsed;
-    this.select(this.collapsed ? this.global.structure : this.folder);
+    if (select){
+      this.select(this.collapsed ? this.global.structure : this.folder);
+    }
+    
   }
 
   isExpanded(): boolean{

@@ -1,8 +1,13 @@
 <ion-row *ngIf="level>=0">
   <ion-col [size]="level*2"></ion-col>
-  <ion-col>
+  <ion-col size="sizeXs"> 
     <ion-item button (click)="toggleCollapse()">
-      <ion-icon slot="start" [name]="chevronIcon()" [color]="getColor(true)"></ion-icon>
+      <ion-icon [name]="chevronIcon()" [color]="getColor(true)"></ion-icon>
+      
+    </ion-item>
+  </ion-col>
+  <ion-col>
+    <ion-item button  (click)="toggleCollapse(true)">
       <ion-icon slot="start" [name]="folderIcon()" [color]="getColor(true)"></ion-icon>
       <ion-label [color]="getColor(true)">
         <p>

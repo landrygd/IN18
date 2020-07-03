@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { PopoverController, AlertController, ModalController } from '@ionic/angular';
 import { PopoverPage } from './template-popover.component';
-import { ModalPage } from './template-modal.component';
+import { LanguagesModalPage } from './languages-modal/languages-modal.component';
 import { GlobalService } from 'src/app/services/global.service';
 import { UploadModalComponent } from './upload-modal/upload-modal.component';
 import { TranslatorService } from 'src/app/services/translator.service';
@@ -36,9 +36,9 @@ export class TopMenuComponent implements OnInit {
     return await popover.present();
   }
 
-  async presentModal(id: number) {
+  async presentLanguagesModal(id: number) {
     const modal = await this.modalController.create({
-      component: ModalPage,
+      component: LanguagesModalPage,
       componentProps: {id},
       cssClass: ''
     });

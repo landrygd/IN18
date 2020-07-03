@@ -2,9 +2,9 @@ import { Component, Input } from '@angular/core';
 import {  ModalController } from '@ionic/angular';
 
 @Component({
-  templateUrl: './template-modal.component.html',
+  templateUrl: './languages-modal.component.html',
   })
-  export class ModalPage {
+  export class LanguagesModalPage {
 
     @Input() id = 10;
 

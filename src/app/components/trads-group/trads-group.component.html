@@ -6,13 +6,16 @@
         <ion-icon slot="start" name="checkmark-circle" color="success" *ngIf="tradGroup.isValidated()"></ion-icon>
         <ion-textarea slot="start" [value]="tradGroup.getName()" (ionChange)= "onNameUpdate($event.target.value)" [color]="tradGroup.isValidated()?'success':''"></ion-textarea>
         <ion-button slot="end" expand="block" shape="round" (click)="presentDeleteConfirm()" color="danger">
-          Delete
+          <ion-icon name="trash"></ion-icon>
         </ion-button>
       </ion-item></ion-card-subtitle>
   </ion-card-header>
 
   <ion-card-content>
     <app-trad-field *ngFor="let trad of tradGroup.tradList" [trad]="trad"></app-trad-field>
+      <ion-button (click)="presentLanguagesModal()" expand="block" fill="clear" shape="round" *ngIf="tradGroup.emptyTrad()">
+        <ion-icon name="globe"></ion-icon> Add languages
+      </ion-button>
   </ion-card-content>
   
 </ion-card>
