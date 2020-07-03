@@ -1,10 +1,23 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Import</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()"><ion-icon name="close"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  
+  
+</ion-header>
+
 <ion-content>
-  <ngx-dropzone (change)="onSelect($event)" style="height: 200px;">
+  <ion-button expand="block" fill="clear" shape="round"><ion-icon slot="start" name="arrow-down"></ion-icon> Download a template</ion-button>
+  <ngx-dropzone (change)="onSelect($event)" style="height: 200px; background: rgba(0,0,0,0);">
     <ngx-dropzone-label>Drop your JSON files</ngx-dropzone-label>
       <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
         <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
       </ngx-dropzone-preview>
   </ngx-dropzone>
+  
 </ion-content>
 
 <ion-footer>

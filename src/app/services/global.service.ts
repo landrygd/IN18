@@ -127,11 +127,11 @@ export class GlobalService {
   }
 
   importJsonFiles(files: object[], languages: string[]) {
-    this.languages = languages;
+    this.languages = languages.filter((e,i)=>{return languages.indexOf(e) === i});
     const newStructure = new Folder('root', undefined);
-    for (let i = 0; i < languages.length; i++) {
+    for (let i = 0; i < this.languages.length; i++) {
 
-      this.walkInJson(files[i], 'default', newStructure, languages[i]);
+      this.walkInJson(files[i], 'default', newStructure, this.languages[i]);
 
     }
     this.structure = newStructure;
