@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { PopoverController, AlertController, ModalController } from '@ionic/angular';
-import { PopoverPage } from './template-popover.component';
+import { PopoverPage } from './menu-popover/template-popover.component';
 import { LanguagesModalPage } from './languages-modal/languages-modal.component';
 import { GlobalService } from 'src/app/services/global.service';
 import { UploadModalComponent } from './upload-modal/upload-modal.component';

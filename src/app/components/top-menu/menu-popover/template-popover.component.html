@@ -14,16 +14,19 @@
             
        Load <ion-note slot="end">Ctrl+I</ion-note><ion-icon name="folder-open" slot="end"></ion-icon>
     </ion-item>
-    <ion-item button (click)="save()">
+    <ion-item button lines="none" (click)="save()">
       Save <ion-note slot="end">Ctrl+S</ion-note><ion-icon name="save" slot="end"></ion-icon>
       </ion-item>
-    
+      <ion-item button (click)="save()">
+        Save as <ion-note slot="end">Ctrl+shift+S</ion-note><ion-icon name="save" slot="end"></ion-icon>
+        </ion-item>
+    <!--
     <ion-item button lines="none" (click)="import.click()">
       Import <ion-note slot="end">Ctrl+Shift+I</ion-note><ion-icon name="share" slot="end"></ion-icon>
       </ion-item>
     <ion-item button (click)="testClick()">
       Export <ion-note slot="end">Ctrl+Shift+S</ion-note><ion-icon name="download" slot="end"></ion-icon>
-    </ion-item>
+    </ion-item>-->
 
     <ion-item button lines="none" (click)="quit()">
       Exit

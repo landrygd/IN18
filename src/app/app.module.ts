@@ -12,7 +12,7 @@ import { TopMenuComponent } from './components/top-menu/top-menu.component';
 import { TradFieldComponent } from './components/trad-field/trad-field.component';
 import { TradsGroupComponent } from './components/trads-group/trads-group.component';
 import { CommonModule } from '@angular/common';
-import { PopoverPage } from './components/top-menu/template-popover.component';
+import { PopoverPage } from './components/top-menu/menu-popover/template-popover.component';
 import { LanguagesModalPage } from './components/top-menu/languages-modal/languages-modal.component';
 import { TreeViewComponent } from './components/tree-view/tree-view.component';
 import { UploadModalComponent } from './components/top-menu/upload-modal/upload-modal.component';
