@@ -87,6 +87,19 @@ export class GlobalService {
     this.importJsonFiles([{ default: { test: { y: 'oui', n: 'non' } } }, { default: { test: { y: 'yes', n: 'no' } } }], ['fr', 'en']);
   }
 
+  removeLanguage(language: string): boolean{
+    let exist = this.languages.find(e => e == language)
+    if (exist){
+      this.languages=this.languages.filter(l => l !== exist)
+      this.majLanguages(this.structure);
+      return true;
+    }else{
+      return false;
+    }
+  }
+  
+  
+
   addLanguage(language: string): boolean{
     let exist = this.languages.find(e => e == language)
     if (exist){

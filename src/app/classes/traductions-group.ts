@@ -23,7 +23,7 @@ export class TraductionsGroup extends Structure {
   }
 
   public removeTradWrongLanguage(languages: string[]){
-    this.tradList.filter(t => languages.find(l => l==t.language) !== undefined)
+    this.tradList = this.tradList.filter(t => languages.find(l => l==t.language) !== undefined)
   }
 
   public addMissingTrad(languages: string[]){
