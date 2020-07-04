@@ -15,6 +15,7 @@ import { map } from 'rxjs/operators';
 export class GlobalService {
 
   structure: Folder = new Folder('root', undefined);
+  lastSavedStrcture = JSON.stringify({});
   selectedStructure: Structure;
   selectedFolder: Folder;
   languages: string[] = [];
@@ -251,10 +252,67 @@ export class GlobalService {
     return json;
   }
 
+  loadin18(holder: object, key: string, structure: Folder) {
+
+    let k;
+    const json = holder[key];
+    if (json && typeof json === 'object') {
+      for (k in json) {
+        if (Object.prototype.hasOwnProperty.call(json, k)) {
+          const keys = Object.keys(json[k]);
+          if (typeof json[k] === 'object' && json[k][keys[0]].hasOwnProperty('value') && typeof json[k][keys[0]].value === 'string') {
+            for (const i of keys){
+              if (this.languages.indexOf(i) === -1){
+                this.languages.push(i);
+              }
+              const tradGroup = structure.findTraductionGroup(k);
+              const trad = new Traduction(json[k][i].value, i, json[k][i].checked);
+              if (tradGroup !== undefined) {
+                tradGroup.addTraduction(trad);
+              } else {
+                structure.addTraductionGroup(new TraductionsGroup(k, structure, [trad]));
+              }
+            }
+
+
+          }
+          else if (json[k] !== undefined) {
+            let folder = structure.findFolder(k);
+            if (folder === undefined) {
+              folder = new Folder(k, structure);
+              structure.addFolder(folder);
+            }
+            this.loadin18(json, k, folder);
+
+          } else {
+            delete json[k];
+          }
+        }
+      }
+    }
+  }
+
+
+  async load(file){
+    const obj = {default: JSON.parse(await file.text())};
+    console.log(obj);
+    const newStructure = new Folder('root', undefined);
+    this.languages = [];
+    this.loadin18(obj, 'default', newStructure);
+    console.log(newStructure);
+    this.structure = newStructure;
+    this.setSelectedStructure(this.structure);
+    this.majLanguages(this.structure);
+  }
+
   async download(){
-    const jsons = this.savein18(this.structure);
-    const blob = new Blob([JSON.stringify(jsons)], { type: 'application/json' });
-    saveAs(blob, 'project.in18');
+    const obj = this.savein18(this.structure);
+    const json = JSON.stringify(obj);
+    if (json !== this.lastSavedStrcture){
+      this.lastSavedStrcture = json;
+      const blob = new Blob([], { type: 'application/json' });
+      saveAs(blob, 'project.in18');
+    }
   }
 
 }

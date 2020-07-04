@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter} from '@angular/core';
 import {  PopoverController, AlertController } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global.service';
 
@@ -19,13 +19,10 @@ import { GlobalService } from 'src/app/services/global.service';
       this.popoverCtrl.dismiss();
     }
 
-    load(files){
-      console.log(files);
-      // var myBlob = new Blob([new Uint8Array(file)], {type: "octet/stream"});
-
-
+    public onFileSelected(event) {
+      const file: File = event.target.files[0];
+      this.global.load(file)
       this.popoverCtrl.dismiss();
-
     }
 
     quit() {}

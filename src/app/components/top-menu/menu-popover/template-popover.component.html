@@ -34,6 +34,6 @@
     
   </ion-list>
 
-  <input type="file" (change)="load(load.files)" #load accept=".in18" style="display: none;"/>
+  <input type="file" (change)="onFileSelected($event)" #load accept=".in18" style="display: none;"/>
   <input type="file" (change)="import(import.files)" accept=".json,.csv,.xml" #import style="display: none;"/>
 
