@@ -12,10 +12,10 @@
 </ion-header>
 
 <ion-content fullscreen>
-  <ion-button expand="block" fill="clear" shape="round">
+  <ion-button expand="block" fill="clear" shape="round" (click)="downloadTemplate()">
     <ion-icon slot="start" name="arrow-down"></ion-icon> Download a template
   </ion-button>
-  <ngx-dropzone (change)="onSelect($event)" style="height: 175px; background: rgba(0,0,0,0);">
+  <ngx-dropzone [accept]="'.'+type" (change)="onSelect($event)" style="height: 175px; background: rgba(0,0,0,0);">
     <ngx-dropzone-label *ngIf="type=='json'">Drop your JSON files</ngx-dropzone-label>
     <ngx-dropzone-label *ngIf="type=='csv'">Drop your CSV file</ngx-dropzone-label>
     <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
@@ -23,8 +23,8 @@
     </ngx-dropzone-preview>
   </ngx-dropzone>
 
-  <ion-text color="secondary">
-    <h1>Example</h1>
+  <ion-text color="primary">
+    <h2 style="text-align: center;">Example</h2>
   </ion-text>
   <ion-row *ngIf="type=='json'">
     <ion-col>

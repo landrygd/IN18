@@ -310,7 +310,7 @@ export class GlobalService {
     const json = JSON.stringify(obj);
     if (json !== this.lastSavedStrcture){
       this.lastSavedStrcture = json;
-      const blob = new Blob([], { type: 'application/json' });
+      const blob = new Blob([json], { type: 'application/json' });
       saveAs(blob, 'project.in18');
     }
   }

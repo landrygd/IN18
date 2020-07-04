@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-upload-modal',
@@ -49,6 +50,28 @@ export class UploadModalComponent implements OnInit {
   }
 
   import() {
-    this.modalController.dismiss(this.files);
+    this.modalController.dismiss({type: this.type, files: this.files});
+  }
+
+  downloadTemplate(){
+    switch (this.type){
+      case 'json':
+        this.downloadJsonTemplate();
+        break;
+      case 'csv':
+        this.downloadCsvTemplate();
+        break;
+    }
+  }
+
+  downloadJsonTemplate(){
+    let blob = new Blob([this.exampleJsonEn], { type: 'application/json' });
+    saveAs(blob, 'en.json');
+    blob = new Blob([this.exampleJsonFr], { type: 'application/json' });
+    saveAs(blob, 'fr.json');
+  }
+
+  downloadCsvTemplate(){
+
   }
 }
