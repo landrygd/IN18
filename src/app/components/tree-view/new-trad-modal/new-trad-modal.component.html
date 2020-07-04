@@ -1,12 +1,33 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>New {{isFolder?'Folder':'Item'}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()"><ion-icon name="close"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  
+  
+</ion-header>
+
 <ion-content>
   <ion-item>
     <ion-label position="floating">Parent folder</ion-label>
     <ion-input [value]="parentFolderName" (ionChange)="onFolderChange($event.detail.value)" disabled="true"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label position="floating">Name</ion-label>
+    <ion-label position="floating">Name *</ion-label>
     <ion-input [value]="fileName" (ionChange)="onNameChange($event.detail.value)"></ion-input>
   </ion-item>
+
+  <ion-title *ngIf="!isFolder" style="margin: 10px auto;">Fill traductions</ion-title>
+  <div *ngIf="!isFolder" >
+
+    <app-trad-field *ngFor="let trad of tradGroup.tradList" [trad]="trad"></app-trad-field>
+  </div>
+  
+  <ion-button (click)="presentLanguagesModal()" expand="block" fill="clear" shape="round" *ngIf="!isFolder">
+    <ion-icon name="globe"></ion-icon> Add languages
+  </ion-button>
   <!--<ion-item>
     <ion-label position="floating">This is a folder</ion-label>
     <ion-checkbox [value]="isFolder" (ionChange)="onIsFolderChange($event.detail.value)"></ion-checkbox>

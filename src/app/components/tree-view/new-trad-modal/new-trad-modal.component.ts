@@ -3,6 +3,8 @@ import { ModalController, AlertController } from '@ionic/angular';
 import { TraductionsGroup } from 'src/app/classes/traductions-group';
 import { Folder } from 'src/app/classes/folder';
 import { GlobalService } from 'src/app/services/global.service';
+import { LanguagesModalPage } from '../../top-menu/languages-modal/languages-modal.component';
+import { Traduction } from 'src/app/classes/traduction';
 
 @Component({
   selector: 'app-new-trad-modal',
@@ -34,6 +36,7 @@ export class NewTradModalComponent implements OnInit {
     this.parentFolderName = this.parentFolder.getName();
     this.tradGroup = new TraductionsGroup('', this.parentFolder);
     this.newFolder = new Folder('', this.parentFolder);
+    this.tradGroup.addMissingTrad(this.global.languages);
   }
 
   cancel() {
@@ -52,6 +55,7 @@ export class NewTradModalComponent implements OnInit {
   onIsFolderChange(value) {
     this.isFolder = value;
   }
+
 
   import() {
     let result = false;
@@ -86,5 +90,17 @@ export class NewTradModalComponent implements OnInit {
     });
 
     await alert.present();
+  }
+
+  async presentLanguagesModal(id: number = 0) {
+    const modal = await this.modalController.create({
+      component: LanguagesModalPage,
+      componentProps: {id},
+      cssClass: ''
+    });
+    await modal.present();
+    await modal.onDidDismiss();
+    this.tradGroup.addMissingTrad(this.global.languages);
+    console.log(this.tradGroup.tradList);
   }
 }

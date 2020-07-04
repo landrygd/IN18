@@ -21,7 +21,7 @@ import { GlobalService } from 'src/app/services/global.service';
 
     public onFileSelected(event) {
       const file: File = event.target.files[0];
-      this.global.load(file)
+      this.global.load(file);
       this.popoverCtrl.dismiss();
     }
 

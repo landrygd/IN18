@@ -10,6 +10,20 @@ export class UploadModalComponent implements OnInit {
 
   files: File[] = [];
 
+  type = 'json';
+
+  exampleJsonEn = `
+  {"folder" :
+        {"id_yes" : "yes"}
+      }
+  `;
+
+  exampleJsonFr = `
+  {"folder" :
+        {"id_yes" : "oui"}
+      }
+  `;
+
   constructor(
     private modalController: ModalController
   ) { }
@@ -19,6 +33,10 @@ export class UploadModalComponent implements OnInit {
   onSelect(event) {
     console.log(event);
     this.files.push(...event.addedFiles);
+  }
+
+  typeChanged(value){
+    this.type = value;
   }
 
   onRemove(event) {

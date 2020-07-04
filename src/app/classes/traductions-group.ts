@@ -14,22 +14,26 @@ export class TraductionsGroup extends Structure {
     this.tradList = tradList;
   }
 
+  public getTradByLanguage(language: string): Traduction{
+    return this.tradList.find(t => t.language === language);
+  }
+
   public addTraduction(traduction: Traduction) {
     this.tradList.push(traduction);
   }
 
   public hasLanguage(language: string){
-    return this.tradList.find(t => t.language == language) !== undefined;
+    return this.getTradByLanguage(language) !== undefined;
   }
 
   public removeTradWrongLanguage(languages: string[]){
-    this.tradList = this.tradList.filter(t => languages.find(l => l==t.language) !== undefined)
+    this.tradList = this.tradList.filter(t => languages.find(l => l === t.language) !== undefined);
   }
 
   public addMissingTrad(languages: string[]){
-    for (let l of languages){
+    for (const l of languages){
       if (!this.hasLanguage(l)){
-        this.addTraduction(new Traduction("", l))
+        this.addTraduction(new Traduction('', l));
       }
     }
   }
@@ -57,7 +61,7 @@ export class TraductionsGroup extends Structure {
   }
 
   public emptyTrad() {
-    return this.tradList.length==0;
+    return this.tradList.length === 0;
   }
 
   constructor(name: string, parentFolder: Folder, tradList: Traduction[] = []) {
