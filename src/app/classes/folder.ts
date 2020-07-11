@@ -8,7 +8,7 @@ export class Folder extends Structure {
     public folderList: Folder[];
 
     public addTraductionGroup(traductionGroup: TraductionsGroup): boolean {
-        if (this.tradGroupList.findIndex(e => e.getName() === traductionGroup.getName()) === -1) {
+        if (!this.hasTraductionGroup(traductionGroup.getName())) {
             this.tradGroupList.push(traductionGroup);
             return true;
         } else {
@@ -16,6 +16,7 @@ export class Folder extends Structure {
         }
 
     }
+
 
     public addFolder(folder: Folder): boolean {
         if (this.folderList.findIndex(e => e.getName() === folder.getName()) === -1) {
@@ -39,8 +40,12 @@ export class Folder extends Structure {
         return l > this.tradGroupList.length;
     }
 
-    public findTraductionGroup(path: string) {
+    public findTraductionGroup(path: string): TraductionsGroup {
         return this.tradGroupList.find(element => element.getName() === path);
+    }
+
+    public hasTraductionGroup(path: string): boolean {
+        return this.findTraductionGroup(path) !== undefined;
     }
 
     public findFolder(path: string) {

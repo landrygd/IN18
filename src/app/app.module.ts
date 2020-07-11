@@ -23,6 +23,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { FolderTreeComponent } from './components/tree-view/folder-tree/folder-tree.component';
 import { TradFolderComponent } from './components/trad-folder/trad-folder.component';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { TradFolderComponent } from './components/trad-folder/trad-folder.compon
     UploadModalComponent,
     NewTradModalComponent,
     FolderTreeComponent,
-    TradFolderComponent
+    TradFolderComponent,
+    BreadcrumbComponent
   ],
   entryComponents: [],
   imports: [

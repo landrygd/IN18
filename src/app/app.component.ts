@@ -10,6 +10,7 @@ import {takeUntil} from 'rxjs/operators';
 import { TraductionsGroup } from './classes/traductions-group';
 import { Folder } from './classes/folder';
 import { Structure } from './classes/structure';
+import { LanguagesModalPage } from './components/top-menu/languages-modal/languages-modal.component';
 
 
 @Component({
@@ -62,6 +63,15 @@ export class AppComponent implements OnInit {
       componentProps: {parentFolder: this.global.getSelectedFolder(), isFolder}
     });
     await modal.present();
+  }
+
+  async presentLanguagesModal(id: number = 0) {
+    const modal = await this.modalController.create({
+      component: LanguagesModalPage,
+      componentProps: {id},
+      cssClass: ''
+    });
+    return await modal.present();
   }
 
 }

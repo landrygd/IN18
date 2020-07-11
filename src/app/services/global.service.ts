@@ -212,19 +212,42 @@ export class GlobalService {
 
   async importCsvFile(file: File, separator = '.') {
     const  csvArray: string[][] = this.CSVToArray(await file.text());
-
+    const newStructure: Folder = new Folder('root', undefined);
+    console.log(csvArray);
     if (csvArray.length > 1){
-      let languages: string[] = [];
+      const languages: string[] = [];
       for (let k = 1; k < csvArray[0].length; k++){
         languages.push(csvArray[0][k]);
       }
       if (languages.length > 0){
         for (let k = 1; k < csvArray.length; k++){
-          // csvArray[k]
+          const res: string[] = csvArray[k][0].split(separator);
+          let currentFolder: Folder = newStructure;
+          let currentTrad: TraductionsGroup;
+          console.log(res)
+          for (let i = 0; i < res.length; i++){
+            if (i === res.length - 1){
+              currentFolder.addTraductionGroup(new TraductionsGroup(res[i], currentFolder, []));
+              currentTrad = currentFolder.findTraductionGroup(res[i]);
+              console.log(currentFolder)
+              console.log(currentTrad)
+            }else{
+              currentFolder.addFolder(new Folder(res[i], currentFolder));
+              currentFolder = currentFolder.findFolder(res[i]);
+            }
+          }
+          for (let i = 1; i < csvArray[k].length; i++){
+            console.log( csvArray[0][i])
+            currentTrad.addTraduction(new Traduction(csvArray[k][i], csvArray[0][i]));
+            console.log(currentTrad.tradList);
+          }
         }
       }
+      this.languages = languages;
+      this.structure = newStructure;
+      this.setSelectedStructure(this.structure);
+      this.majLanguages(this.structure);
     }
-
   }
 
   async importJsonFiles(files: object[], languages: string[]) {

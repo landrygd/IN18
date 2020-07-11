@@ -16,6 +16,10 @@ export class Structure {
         return true;
     }
 
+    public hasParent(): boolean{
+        return this.parentFolder !== undefined;
+    }
+
     constructor(name: string, parentFolder: Folder) {
         this.name = name;
         this.parentFolder = parentFolder;

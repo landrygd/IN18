@@ -9,6 +9,18 @@
 
     <div class="ion-page" id="main-content">
       <ion-content class="ion-padding">
+        <ion-item class="no-background">
+          <ion-buttons slot="end">
+            <ion-button fill="clear" shape="round" (click)="presentLanguagesModal()">
+              <ion-label slot="start">+</ion-label><ion-icon slot="start" name="globe-outline"></ion-icon>
+            </ion-button>
+            <div *ngFor = "let language of global.languages; let index=index">
+              <ion-chip (click)="presentLanguagesModal()" *ngIf="index<3">{{language}}</ion-chip>
+              <ion-chip (click)="presentLanguagesModal()" *ngIf="index==3">...</ion-chip>
+            </div>
+          </ion-buttons>
+          <ion-title size="small"><app-breadcrumb [structure]="global.selectedStructure"></app-breadcrumb></ion-title>
+        </ion-item>
         <ion-list class="no-background">
           
           <div *ngIf="!global.isSelectedStructureFolder()">

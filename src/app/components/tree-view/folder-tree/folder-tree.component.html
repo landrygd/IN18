@@ -18,7 +18,7 @@
     </ion-item>
   </ion-col>
 </ion-row>
-<ion-row *ngIf="isExpanded() && level==-1">
+<!--<ion-row *ngIf="isExpanded() && level==-1">
   <ion-col [size]="(level+1)*2"></ion-col>
     <ion-col>
     <ion-button (click)="addTraduction()" expand="block" fill="clear" shape="round">
@@ -32,7 +32,7 @@
       Folder
     </ion-button>
   </ion-col>
-</ion-row>
+</ion-row>-->
 <div *ngIf="isExpanded()">
   <ion-row *ngFor="let file of folder.tradGroupList">
     <ion-col [size]="(level+1)*2"></ion-col>
