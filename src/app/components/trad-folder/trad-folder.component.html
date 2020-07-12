@@ -4,10 +4,11 @@
       <ion-item [class]="canExpand?'':'opened-folder'">
 
         
-        <ion-icon slot="start" [name]="canExpand?'folder':'folder-open'" [color]="folder.isValidated()?'success':''"></ion-icon>
+        <ion-icon slot="start" [name]="canExpand?'folder':'folder-open'" [color]="folder.isValidated()?'success':folder.isFilled()?'primary':''"></ion-icon>
+        <ion-icon slot="start" name="checkmark-circle-outline" color="primary" *ngIf="folder.isFilled() && !folder.isValidated()"></ion-icon>
         <ion-icon slot="start" name="checkmark-circle" color="success" *ngIf="folder.isValidated()"></ion-icon>
         <ion-textarea slot="start" [value]="folder.getName()" (ionChange)="onNameUpdate($event.target.value)"
-          [color]="folder.isValidated()?'success':''"></ion-textarea>
+          [color]="folder.isValidated()?'success':folder.isFilled()?'primary':''"></ion-textarea>
         <ion-button fill="clear" slot="end" expand="block" shape="round" (click)="addTraduction()" *ngIf="canExpand">
           <ion-icon name="add"></ion-icon><ion-icon name="document"></ion-icon>
         </ion-button>

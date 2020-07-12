@@ -12,6 +12,7 @@
       <ion-label [color]="getColor(true)">
           {{folder.getName()}}
       </ion-label>
+      <ion-icon slot="end" name="checkmark-circle-outline" color="primary" *ngIf="folder.isFilled() && !folder.isValidated()"></ion-icon>
       <ion-icon slot="end" name="checkmark-circle" color="success" *ngIf="folder.isValidated()"></ion-icon>
     </ion-item>
   </ion-col>
@@ -34,12 +35,13 @@
 <div *ngIf="isExpanded()">
   <ion-row *ngFor="let file of folder.tradGroupList">
     <ion-col [size]="(level+1)*2"></ion-col>
-    <ion-col>
+    <ion-col style="min-width: 0px;">
       <ion-item button (click)="select(file)">
         <ion-icon slot="start" name="document" [color]="getColor(false,file)"></ion-icon>
         <ion-label [color]="getColor(false,file)">
             {{file.getName()}}
         </ion-label>
+        <ion-icon slot="end" name="checkmark-circle-outline" color="primary" *ngIf="file.isFilled() && !file.isValidated()"></ion-icon>
         <ion-icon slot="end" name="checkmark-circle" color="success" *ngIf="file.isValidated()"></ion-icon>
       </ion-item>
     </ion-col>

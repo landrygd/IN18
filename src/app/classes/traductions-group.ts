@@ -40,7 +40,19 @@ export class TraductionsGroup extends Structure {
 
   public isValidated(): boolean {
     for (const k of this.tradList) {
-      if (!k.checked) {
+      if (!k.isChecked()) {
+        return false;
+      }
+    }
+    if (this.tradList.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
+  public isFilled(): boolean {
+    for (const k of this.tradList) {
+      if (!k.isFilled()) {
         return false;
       }
     }

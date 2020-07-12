@@ -2,9 +2,10 @@
   <ion-card-header>
     <ion-card-subtitle>
       <ion-item>
-        <ion-icon slot="start" name="document" [color]="tradGroup.isValidated()?'success':''"></ion-icon>
+        <ion-icon slot="start" name="document" [color]="tradGroup.isValidated()?'success':tradGroup.isFilled()?'primary':''"></ion-icon>
+        <ion-icon slot="start" name="checkmark-circle-outline" color="primary" *ngIf="!tradGroup.isValidated() && tradGroup.isFilled()"></ion-icon>
         <ion-icon slot="start" name="checkmark-circle" color="success" *ngIf="tradGroup.isValidated()"></ion-icon>
-        <ion-textarea slot="start" [value]="tradGroup.getName()" (ionChange)= "onNameUpdate($event.target.value)" [color]="tradGroup.isValidated()?'success':''"></ion-textarea>
+        <ion-textarea slot="start" [value]="tradGroup.getName()" (ionChange)= "onNameUpdate($event.target.value)" [color]="tradGroup.isValidated()?'success':tradGroup.isFilled()?'primary':''"></ion-textarea>
         <ion-button slot="end" expand="block" shape="round" (click)="presentDeleteConfirm()" color="danger">
           <ion-icon name="trash"></ion-icon>
         </ion-button>

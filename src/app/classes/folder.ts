@@ -69,6 +69,23 @@ export class Folder extends Structure {
         return true;
     }
 
+    public isFilled(): boolean{
+        for (const k of this.tradGroupList){
+            if (!k.isFilled()){
+                return false;
+            }
+        }
+        for (const k of this.folderList){
+            if (!k.isFilled()){
+                return false;
+            }
+        }
+        if (this.folderList.length === 0 && this.tradGroupList.length === 0){
+            return false;
+        }
+        return true;
+    }
+
     public rateValidation(): number[]{
         let count = [0.0, 0.0];
         for (const k of this.tradGroupList){

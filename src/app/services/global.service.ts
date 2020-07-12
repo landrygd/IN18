@@ -84,6 +84,7 @@ export class GlobalService {
 
   newProject() {
     this.setStructure(new Folder('root', undefined));
+    this.languages = [];
     this.setSelectedStructure();
   }
 
