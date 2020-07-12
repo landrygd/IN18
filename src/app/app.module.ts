@@ -24,6 +24,7 @@ import { environment } from '../environments/environment';
 import { FolderTreeComponent } from './components/tree-view/folder-tree/folder-tree.component';
 import { TradFolderComponent } from './components/trad-folder/trad-folder.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
     NewTradModalComponent,
     FolderTreeComponent,
     TradFolderComponent,
-    BreadcrumbComponent
+    BreadcrumbComponent,
+    ProgressBarComponent
   ],
   entryComponents: [],
   imports: [

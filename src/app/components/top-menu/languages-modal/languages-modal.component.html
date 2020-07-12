@@ -7,9 +7,8 @@
     </ion-toolbar>
   </ion-header>
   <ion-content fullscreen>
-    <ion-content>
-      <ion-item *ngFor="let language of global.languages">
-        {{language}}
+      <ion-item *ngFor="let language of global.languages; let index = index">
+        <ion-input [value]="language" [id]="index" (ionChange)="onLanguageChange($event.detail.value,id)"></ion-input>
         <ion-button slot="end" (click)="presentDeleteConfirm(language)" shape="round" color="danger"><ion-icon name="trash"></ion-icon></ion-button>
       </ion-item>
       
@@ -17,7 +16,6 @@
         <ion-label position="floating">This is a folder</ion-label>
         <ion-checkbox [value]="isFolder" (ionChange)="onIsFolderChange($event.detail.value)"></ion-checkbox>
       </ion-item>-->
-    </ion-content>
     
   </ion-content>
   <ion-footer class="ion-no-border">

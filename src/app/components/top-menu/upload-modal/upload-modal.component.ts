@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { saveAs } from 'file-saver';
+import { SettingsModalComponent } from '../settings-modal/settings-modal.component';
 
 @Component({
   selector: 'app-upload-modal',
@@ -73,5 +74,14 @@ export class UploadModalComponent implements OnInit {
 
   downloadCsvTemplate(){
 
+  }
+
+  async presentSettingsModal() {
+    const modal = await this.modalController.create({
+      component: SettingsModalComponent,
+      componentProps: {tab: 'import'},
+      cssClass: ''
+    });
+    return await modal.present();
   }
 }

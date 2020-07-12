@@ -69,6 +69,37 @@ export class Folder extends Structure {
         return true;
     }
 
+    public rateValidation(): number[]{
+        let count = [0.0, 0.0];
+        for (const k of this.tradGroupList){
+            const tmp = k.rateValidation();
+            count[0] += tmp[0];
+            count[1] += tmp[1];
+        }
+        for (const k of this.folderList){
+            const tmp = k.rateValidation();
+            count[0] += tmp[0];
+            count[1] += tmp[1];
+        }
+        return count;
+    }
+
+    public rateFill(): number[]{
+        let count = [0.0, 0.0];
+        for (const k of this.tradGroupList){
+            const tmp = k.rateFill();
+            count[0] += tmp[0];
+            count[1] += tmp[1];
+        }
+        for (const k of this.folderList){
+            const tmp = k.rateFill();
+            count[0] += tmp[0];
+            count[1] += tmp[1];
+        }
+        return count;
+    }
+
+
     constructor(name: string, parentFolder: Folder) {
         super(name, parentFolder);
         this.folderList = [];

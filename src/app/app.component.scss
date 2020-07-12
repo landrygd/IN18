@@ -5,5 +5,18 @@
 .no-background {
     background-color: rgba(0,0,0,0);
     --background: rgba(0,0,0,0);
+}
+
+.special{
+    --background: #121212;
+    background-color: #181818;
+    border-radius: 4px;
 
 }
+
+.breadcrumb{
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+
+

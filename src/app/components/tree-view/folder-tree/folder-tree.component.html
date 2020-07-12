@@ -6,13 +6,11 @@
       
     </ion-item>
   </ion-col>
-  <ion-col>
+  <ion-col style="min-width: 0px;">
     <ion-item button  (click)="toggleCollapse(true)">
       <ion-icon slot="start" [name]="folderIcon()" [color]="getColor(true)"></ion-icon>
       <ion-label [color]="getColor(true)">
-        <p>
           {{folder.getName()}}
-        </p>
       </ion-label>
       <ion-icon slot="end" name="checkmark-circle" color="success" *ngIf="folder.isValidated()"></ion-icon>
     </ion-item>
@@ -40,9 +38,7 @@
       <ion-item button (click)="select(file)">
         <ion-icon slot="start" name="document" [color]="getColor(false,file)"></ion-icon>
         <ion-label [color]="getColor(false,file)">
-          <p>
             {{file.getName()}}
-          </p>
         </ion-label>
         <ion-icon slot="end" name="checkmark-circle" color="success" *ngIf="file.isValidated()"></ion-icon>
       </ion-item>

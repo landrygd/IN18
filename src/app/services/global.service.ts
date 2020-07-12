@@ -224,22 +224,17 @@ export class GlobalService {
           const res: string[] = csvArray[k][0].split(separator);
           let currentFolder: Folder = newStructure;
           let currentTrad: TraductionsGroup;
-          console.log(res)
           for (let i = 0; i < res.length; i++){
             if (i === res.length - 1){
               currentFolder.addTraductionGroup(new TraductionsGroup(res[i], currentFolder, []));
               currentTrad = currentFolder.findTraductionGroup(res[i]);
-              console.log(currentFolder)
-              console.log(currentTrad)
             }else{
               currentFolder.addFolder(new Folder(res[i], currentFolder));
               currentFolder = currentFolder.findFolder(res[i]);
             }
           }
           for (let i = 1; i < csvArray[k].length; i++){
-            console.log( csvArray[0][i])
             currentTrad.addTraduction(new Traduction(csvArray[k][i], csvArray[0][i]));
-            console.log(currentTrad.tradList);
           }
         }
       }
@@ -270,7 +265,6 @@ export class GlobalService {
     if (json && typeof json === 'object') {
       for (k in json) {
         if (Object.prototype.hasOwnProperty.call(json, k)) {
-          // obj = this.walk(json, k, structure, language);
           const keys = Object.keys(json[k]);
           if (typeof json[k] === 'string') {
             const tradGroup = structure.findTraductionGroup(k);

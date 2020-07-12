@@ -22,27 +22,27 @@
         <ion-label>Project</ion-label>
       </ion-button>
       <ion-button slot="start" (click)="presentLanguagesModal(0)">
-        <ion-icon size="large" slot="start" name="globe"></ion-icon> Languages
+        <ion-icon size="large" slot="start" name="globe"></ion-icon> <ion-label>Languages</ion-label>
       </ion-button>
 
       <ion-button slot="start" (click)="translate()">
-        <ion-icon size="large" slot="start" name="language"></ion-icon> Translate
+        <ion-icon size="large" slot="start" name="language"></ion-icon> <ion-label>Translate</ion-label>
       </ion-button>
     </ion-buttons>
-    <ion-buttons>
+    <ion-buttons slot="secondary" class="top-buttons">
       <ion-button (click)="export()">
-        <ion-icon size="large" slot="start" name="download"></ion-icon> Export
+        <ion-icon size="large" slot="start" name="download"></ion-icon> <ion-label>Export</ion-label>
       </ion-button>
       <ion-button (click)="upload()">
-        <ion-icon size="large" slot="start" name="share"></ion-icon> Import
+        <ion-icon size="large" slot="start" name="share"></ion-icon> <ion-label>Import</ion-label>
       </ion-button>
     </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button slot="end">
-        <ion-icon size="large" slot="start" name="settings"></ion-icon> Settings
+    <ion-buttons slot="end" class="top-buttons">
+      <ion-button slot="end" (click)="presentSettingsModal()">
+        <ion-icon size="large" slot="start" name="settings"></ion-icon> <ion-label>Settings</ion-label>
       </ion-button>
       <ion-button slot="end">
-        <ion-icon size="large" slot="start" name="information-circle"></ion-icon> About
+        <ion-icon size="large" slot="start" name="information-circle"></ion-icon> <ion-label>About</ion-label>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

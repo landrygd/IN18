@@ -1,0 +1,8 @@
+<ion-progress-bar color="primary" [value]="percentValidation" [buffer]="percentFill"></ion-progress-bar>
+<ion-item>
+  <ion-badge slot="start" color="success">Validate {{(percentValidation*100).toFixed(1)}}%</ion-badge>
+  <ion-badge color="primary">Fill {{(percentFill*100).toFixed(1)}}%</ion-badge>
+  <ion-button slot="end" fill="clear" shape="round">
+    <ion-icon name="stats-chart" slot="start"></ion-icon>Stats
+  </ion-button>
+</ion-item>

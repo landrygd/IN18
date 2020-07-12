@@ -14,7 +14,7 @@ export class TraductionsGroup extends Structure {
     this.tradList = tradList;
   }
 
-  public getTradByLanguage(language: string): Traduction{
+  public getTradByLanguage(language: string): Traduction {
     return this.tradList.find(t => t.language === language);
   }
 
@@ -22,17 +22,17 @@ export class TraductionsGroup extends Structure {
     this.tradList.push(traduction);
   }
 
-  public hasLanguage(language: string){
+  public hasLanguage(language: string) {
     return this.getTradByLanguage(language) !== undefined;
   }
 
-  public removeTradWrongLanguage(languages: string[]){
+  public removeTradWrongLanguage(languages: string[]) {
     this.tradList = this.tradList.filter(t => languages.find(l => l === t.language) !== undefined);
   }
 
-  public addMissingTrad(languages: string[]){
-    for (const l of languages){
-      if (!this.hasLanguage(l)){
+  public addMissingTrad(languages: string[]) {
+    for (const l of languages) {
+      if (!this.hasLanguage(l)) {
         this.addTraduction(new Traduction('', l));
       }
     }
@@ -44,11 +44,33 @@ export class TraductionsGroup extends Structure {
         return false;
       }
     }
-    if (this.tradList.length === 0){
+    if (this.tradList.length === 0) {
       return false;
     }
     return true;
   }
+
+  public rateValidation(): number[] {
+    let count = 0.0;
+    for (const k of this.tradList) {
+      if (k.isChecked()) {
+        count += 1.0;
+      }
+    }
+    return [count, this.tradList.length];
+  }
+
+  public rateFill(): number[] {
+    let count = 0.0;
+    for (const k of this.tradList) {
+      if (k.isFilled()) {
+        count += 1.0;
+      }
+    }
+    return [count, this.tradList.length];
+  }
+
+
 
   public setTrad(traduction: Traduction) {
     const language = traduction.getLanguage();

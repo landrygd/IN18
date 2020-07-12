@@ -23,6 +23,10 @@ export class Traduction {
         return this.checked;
     }
 
+    public isFilled(): boolean {
+        return this.value !== '';
+    }
+
     public setChecked(checked: boolean): void {
         this.checked = checked;
     }

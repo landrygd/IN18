@@ -5,6 +5,7 @@ import { LanguagesModalPage } from './languages-modal/languages-modal.component'
 import { GlobalService } from 'src/app/services/global.service';
 import { UploadModalComponent } from './upload-modal/upload-modal.component';
 import { TranslatorService } from 'src/app/services/translator.service';
+import { SettingsModalComponent } from './settings-modal/settings-modal.component';
 
 interface Import {
   type?: string;
@@ -44,6 +45,15 @@ export class TopMenuComponent implements OnInit {
     const modal = await this.modalController.create({
       component: LanguagesModalPage,
       componentProps: {id},
+      cssClass: ''
+    });
+    return await modal.present();
+  }
+
+  async presentSettingsModal() {
+    const modal = await this.modalController.create({
+      component: SettingsModalComponent,
+      componentProps: {},
       cssClass: ''
     });
     return await modal.present();
