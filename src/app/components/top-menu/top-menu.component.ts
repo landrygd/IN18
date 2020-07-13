@@ -9,6 +9,7 @@ import { SettingsModalComponent } from './settings-modal/settings-modal.componen
 import { settings } from 'cluster';
 import { SettingsService } from 'src/app/services/settings.service';
 import { ImportExportService } from 'src/app/services/import-export.service';
+import { AboutModalComponent } from './about-modal/about-modal.component';
 
 interface Import {
   type?: string;
@@ -58,6 +59,15 @@ export class TopMenuComponent implements OnInit {
   async presentSettingsModal() {
     const modal = await this.modalController.create({
       component: SettingsModalComponent,
+      componentProps: {},
+      cssClass: ''
+    });
+    return await modal.present();
+  }
+
+  async aboutModal() {
+    const modal = await this.modalController.create({
+      component: AboutModalComponent,
       componentProps: {},
       cssClass: ''
     });

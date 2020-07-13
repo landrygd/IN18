@@ -27,15 +27,16 @@ export class FolderTreeComponent implements OnInit {
 
   toggleCollapse(select = false) {
     if (!this.global.OneChildIsSelected(this.folder) || select){
-      this.collapsed = !this.collapsed;
       if (select){
-        this.select(this.collapsed ? this.global.structure : this.folder);
+        this.select(this.folder);
+      }else{
+        this.collapsed = !this.collapsed;
       }
     }
   }
 
   isExpanded(): boolean{
-    return !this.collapsed || this.level < 0 || this.global.selectedFolder === this.folder || this.global.OneChildIsSelected(this.folder);
+    return !this.collapsed || this.level < 0 || this.global.OneChildIsSelected(this.folder);
   }
 
   select(structure: Structure) {
