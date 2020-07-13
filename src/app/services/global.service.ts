@@ -23,13 +23,13 @@ export class GlobalService {
   selectedFolder: Folder;
   languages: string[] = [];
   paths: any;
- 
+
 
   selectedTradGroups$: Observable<TraductionsGroup[]>;
   selectedFolders$: Observable<Structure[]>;
 
 
-  constructor(private settings: SettingsService) {
+  constructor(private setting: SettingsService) {
     this.setSelectedStructure();
   }
 
