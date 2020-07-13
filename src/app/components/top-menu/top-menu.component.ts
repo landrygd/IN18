@@ -96,7 +96,7 @@ export class TopMenuComponent implements OnInit {
 async upload() {
     const modal = await this.modalController.create({
     component: UploadModalComponent,
-    componentProps: {tab: this.settings.tabImport},
+    componentProps: {tab: this.settings.tabImportExport},
     });
     await modal.present();
     const docs: Import = (await modal.onDidDismiss()).data;

@@ -22,6 +22,10 @@ export class TraductionsGroup extends Structure {
     this.tradList.push(traduction);
   }
 
+  public removeTraduction(traduction: Traduction) {
+    this.tradList = this.tradList.filter(trad => trad !== traduction);
+  }
+
   public hasLanguage(language: string) {
     return this.getTradByLanguage(language) !== undefined;
   }

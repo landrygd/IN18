@@ -6,8 +6,9 @@ import { Injectable } from '@angular/core';
 export class SettingsService {
 
   extendTrad = false;
-  tabImport = 'json';
-  tabExport = 'json';
+  tabImportExport = 'json';
+  folderCharCsv = '.';
+  importFusion = 'no';
 
   constructor() { }
 }

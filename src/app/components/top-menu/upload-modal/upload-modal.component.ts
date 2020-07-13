@@ -81,7 +81,7 @@ export class UploadModalComponent implements OnInit {
   async presentSettingsModal() {
     const modal = await this.modalController.create({
       component: SettingsModalComponent,
-      componentProps: {tab: 'import'},
+      componentProps: {tab: 'import_export'},
       cssClass: ''
     });
     return await modal.present();

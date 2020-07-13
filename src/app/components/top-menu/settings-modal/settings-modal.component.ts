@@ -12,8 +12,9 @@ export class SettingsModalComponent implements OnInit {
   @Input() tab = 'general';
 
   extendTrad = this.settings.extendTrad;
-  tabImport = this.settings.tabImport;
-  tabExport = this.settings.tabExport;
+  tabImportExport = this.settings.tabImportExport;
+  folderCharCsv = this.settings.folderCharCsv;
+  importFusion = this.settings.importFusion;
 
   change = false;
 
@@ -32,13 +33,18 @@ export class SettingsModalComponent implements OnInit {
     this.change = true;
   }
 
-  tabImportChanged(value){
-    this.tabImport = value;
+  tabImportExportChanged(value){
+    this.tabImportExport = value;
     this.change = true;
   }
 
-  tabExportChanged(value){
-    this.tabExport = value;
+  importFusionChanged(value){
+    this.importFusion = value;
+    this.change = true;
+  }
+
+  folderCharCsvChanged(value){
+    this.folderCharCsv = value;
     this.change = true;
   }
 
@@ -87,8 +93,9 @@ export class SettingsModalComponent implements OnInit {
 
   save(){
     this.settings.extendTrad = this.extendTrad;
-    this.settings.tabExport = this.tabExport;
-    this.settings.tabImport = this.tabImport;
+    this.settings.tabImportExport = this.tabImportExport;
+    this.settings.folderCharCsv = this.folderCharCsv;
+    this.settings.importFusion = this.importFusion;
     this.change = false;
   }
 

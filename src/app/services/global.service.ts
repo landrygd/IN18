@@ -8,6 +8,8 @@ import { Folder } from '../classes/folder';
 import { TraductionsGroup } from '../classes/traductions-group';
 import { Structure } from '../classes/structure';
 import { map } from 'rxjs/operators';
+import { settings } from 'cluster';
+import { SettingsService } from './settings.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +27,7 @@ export class GlobalService {
   selectedFolders$: Observable<Structure[]>;
 
 
-  constructor() {
+  constructor(private settings: SettingsService) {
     this.setSelectedStructure();
   }
 
@@ -213,8 +215,10 @@ export class GlobalService {
 
   async importCsvFile(file: File, separator = '.') {
     const  csvArray: string[][] = this.CSVToArray(await file.text());
-    const newStructure: Folder = new Folder('root', undefined);
-    console.log(csvArray);
+    let newStructure: Folder = new Folder('root', undefined);
+    if (this.settings.importFusion !== 'no'){
+      newStructure = this.structure;
+    }
     if (csvArray.length > 1){
       const languages: string[] = [];
       for (let k = 1; k < csvArray[0].length; k++){
@@ -235,7 +239,16 @@ export class GlobalService {
             }
           }
           for (let i = 1; i < csvArray[k].length; i++){
-            currentTrad.addTraduction(new Traduction(csvArray[k][i], csvArray[0][i]));
+            const actualTrad = currentTrad.getTradByLanguage(csvArray[0][i]);
+            const trad = new Traduction(csvArray[k][i], csvArray[0][i]);
+            if (actualTrad !== undefined){
+              if (this.settings.importFusion === 'yes_new'){
+                currentTrad.removeTraduction(actualTrad);
+                currentTrad.addTraduction(trad);
+              }
+            }else{
+              currentTrad.addTraduction(trad);
+            }
           }
         }
       }
@@ -248,7 +261,10 @@ export class GlobalService {
 
   async importJsonFiles(files: object[], languages: string[]) {
     this.languages = languages.filter((e, i) => languages.indexOf(e) === i);
-    const newStructure = new Folder('root', undefined);
+    let newStructure = new Folder('root', undefined);
+    if (this.settings.importFusion !== 'no'){
+      newStructure = this.structure;
+    }
     for (let i = 0; i < this.languages.length; i++) {
 
       this.walkInJson(files[i], 'default', newStructure, this.languages[i]);
@@ -271,7 +287,15 @@ export class GlobalService {
             const tradGroup = structure.findTraductionGroup(k);
             const trad = new Traduction(json[k], language);
             if (tradGroup !== undefined) {
-              tradGroup.addTraduction(trad);
+              const actualTrad = tradGroup.getTradByLanguage(language);
+              if (actualTrad !== undefined){
+                if (this.settings.importFusion === 'yes_new'){
+                  tradGroup.removeTraduction(actualTrad);
+                  tradGroup.addTraduction(trad);
+                }
+              }else{
+                tradGroup.addTraduction(trad);
+              }
             } else {
               structure.addTraductionGroup(new TraductionsGroup(k, structure, [trad]));
             }
