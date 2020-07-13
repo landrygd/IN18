@@ -7,7 +7,7 @@
     </ion-item>
   </ion-col>
   <ion-col style="min-width: 0px;">
-    <ion-item button  (click)="toggleCollapse(true)" [class]="getBgColor(false,file)?'selected':''">
+    <ion-item button  (click)="toggleCollapse(true)" [class]="getBgColor(true)?'selected':''">
       <ion-icon slot="start" [name]="folderIcon()" [color]="getColor(true)"></ion-icon>
       <ion-label [color]="getColor(true)">
           {{folder.getName()}}

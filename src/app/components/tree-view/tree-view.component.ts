@@ -12,7 +12,7 @@ import { Folder } from 'src/app/classes/folder';
 export class TreeViewComponent{
   constructor(
     private modalController: ModalController,
-    private global: GlobalService
+    public global: GlobalService
   ) {
    }
 

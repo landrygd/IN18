@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private global: GlobalService,
+    public global: GlobalService,
     private sanitizer: DomSanitizer,
     private settings: SettingsService
   ) {
