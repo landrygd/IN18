@@ -1,6 +1,7 @@
 import { Component, Input, EventEmitter} from '@angular/core';
 import {  PopoverController, AlertController } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global.service';
+import { ImportExportService } from 'src/app/services/import-export.service';
 
 @Component({
   templateUrl: './template-popover.component.html',
@@ -11,7 +12,8 @@ import { GlobalService } from 'src/app/services/global.service';
 
     constructor(public popoverCtrl: PopoverController,
                 public alertController: AlertController,
-                public global: GlobalService) {
+                public global: GlobalService,
+                private importExport: ImportExportService) {
     }
 
 
@@ -21,7 +23,7 @@ import { GlobalService } from 'src/app/services/global.service';
 
     public onFileSelected(event) {
       const file: File = event.target.files[0];
-      this.global.load(file);
+      this.importExport.load(file);
       this.popoverCtrl.dismiss();
     }
 
@@ -32,7 +34,7 @@ import { GlobalService } from 'src/app/services/global.service';
     }
 
     save(){
-      this.global.download();
+      this.importExport.download();
       this.popoverCtrl.dismiss();
     }
 

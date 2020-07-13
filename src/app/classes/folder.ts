@@ -116,6 +116,10 @@ export class Folder extends Structure {
         return count;
     }
 
+    public isRoot(): boolean{
+        return this.parentFolder === undefined;
+    }
+
 
     constructor(name: string, parentFolder: Folder) {
         super(name, parentFolder);

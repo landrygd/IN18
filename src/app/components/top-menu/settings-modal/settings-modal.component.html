@@ -38,6 +38,10 @@
     <ion-label position="floating">Folder character separator in CSV</ion-label>
     <ion-input [value]="folderCharCsv" (ionChange)="folderCharCsvChanged($event.detail.value)"></ion-input>
   </ion-item>
+  <ion-item>
+    <ion-label>Auto validate filled translations</ion-label>
+    <ion-checkbox slot="end" [value]="autoValidate" (ionChange)="autoValidateChanged($event.detail.value)"></ion-checkbox>
+  </ion-item>
 </ion-content>
 
 

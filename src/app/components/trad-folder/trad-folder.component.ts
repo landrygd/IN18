@@ -24,6 +24,10 @@ export class TradFolderComponent implements OnInit {
     this.global.setSelectedStructure(this.folder);
   }
 
+  selectParent(){
+    this.global.setSelectedStructure(this.folder.parentFolder);
+  }
+
   delete(){
     if (this.folder.parentFolder.removeFolder(this.folder)){
       this.global.setSelectedStructure();
@@ -57,6 +61,9 @@ export class TradFolderComponent implements OnInit {
 
   onNameUpdate(value: string) {
     this.folder.setName(value);
+    if (this.folder.isRoot()){
+      this.global.projectName = this.folder.getName();
+    }
   }
 
   async addTraduction(isFolder = false) {

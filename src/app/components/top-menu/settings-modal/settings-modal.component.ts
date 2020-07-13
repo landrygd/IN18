@@ -15,6 +15,7 @@ export class SettingsModalComponent implements OnInit {
   tabImportExport = this.settings.tabImportExport;
   folderCharCsv = this.settings.folderCharCsv;
   importFusion = this.settings.importFusion;
+  autoValidate = this.settings.autoValidate;
 
   change = false;
 
@@ -59,6 +60,11 @@ export class SettingsModalComponent implements OnInit {
 
   }
 
+  autoValidateChanged(value){
+    this.autoValidate = value;
+    this.change = true;
+  }
+
   async presentTradConfirm() {
     const alert = await this.alertController.create({
       cssClass: '',
@@ -96,6 +102,7 @@ export class SettingsModalComponent implements OnInit {
     this.settings.tabImportExport = this.tabImportExport;
     this.settings.folderCharCsv = this.folderCharCsv;
     this.settings.importFusion = this.importFusion;
+    this.settings.autoValidate = this.autoValidate;
     this.change = false;
   }
 

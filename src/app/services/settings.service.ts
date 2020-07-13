@@ -9,6 +9,7 @@ export class SettingsService {
   tabImportExport = 'json';
   folderCharCsv = '.';
   importFusion = 'no';
+  autoValidate = false;
 
   constructor() { }
 }

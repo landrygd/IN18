@@ -8,6 +8,7 @@ import { TranslatorService } from 'src/app/services/translator.service';
 import { SettingsModalComponent } from './settings-modal/settings-modal.component';
 import { settings } from 'cluster';
 import { SettingsService } from 'src/app/services/settings.service';
+import { ImportExportService } from 'src/app/services/import-export.service';
 
 interface Import {
   type?: string;
@@ -28,7 +29,8 @@ export class TopMenuComponent implements OnInit {
     public alertController: AlertController,
     public global: GlobalService,
     public translator: TranslatorService,
-    private settings: SettingsService
+    private settings: SettingsService,
+    private importExport: ImportExportService
     ) { }
 
   ngOnInit() {}
@@ -88,7 +90,11 @@ export class TopMenuComponent implements OnInit {
   }
 
   async export() {
-    this.global.downloadJsons();
+    if (this.settings.tabImportExport === 'json'){
+      this.importExport.downloadJsons();
+    }else{
+      this.importExport.downloadCsv();
+    }
   }
 
 
@@ -112,11 +118,11 @@ async upload() {
           const language = nameArray.join('.');
           languages.push(language);
         }
-        this.global.importJsonFiles(files, languages);
+        this.importExport.importJsonFiles(files, languages);
         break;
       case 'csv':
         for (const doc of docs.files) {
-          this.global.importCsvFile(doc);
+          this.importExport.importCsvFile(doc);
         }
         break;
       }

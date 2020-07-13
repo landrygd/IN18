@@ -37,6 +37,10 @@ export class TradsGroupComponent implements OnInit {
     this.global.setSelectedStructure(this.tradGroup);
   }
 
+  selectParent(){
+    this.global.setSelectedStructure(this.tradGroup.parentFolder);
+  }
+
   async presentDeleteConfirm() {
     const alert = await this.alertController.create({
       cssClass: '',
