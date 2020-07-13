@@ -16,6 +16,10 @@ export class Structure {
         return true;
     }
 
+    public isFilled(): boolean {
+        return true;
+    }
+
     public hasParent(): boolean {
         return this.parentFolder !== undefined;
     }

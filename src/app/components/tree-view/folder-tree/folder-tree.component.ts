@@ -50,14 +50,22 @@ export class FolderTreeComponent implements OnInit {
     return this.collapsed ? 'folder' : 'folder-open';
   }
 
-  getColor(folder: boolean, structure: Structure = this.folder) {
-    if (this.global.selectedStructure === structure) {
-      return 'primary';
-    }else if (this.global.selectedFolder === structure ||
+  getBgColor(folder: boolean, structure: Structure = this.folder): boolean {
+    /*if (this.global.selectedFolder === structure ||
       (this.global.selectedFolder === this.folder && this.global.selectedStructure === this.folder
       && this.global.selectedFolder !== this.global.structure) ||
       (this.folder.parentFolder === this.global.selectedFolder && this.global.selectedFolder !== this.global.structure)){
-      return 'secondary';
+      return true;
+    }*/
+    if (structure === this.global.selectedStructure){
+      return true;
+    }
+    return false;
+  }
+
+  getColor(folder: boolean, structure: Structure = this.folder): string {
+    if (structure.isFilled()) {
+      return 'primary';
     }
     else if (structure.isValidated()){
       return 'success';

@@ -7,7 +7,7 @@
     </ion-item>
   </ion-col>
   <ion-col style="min-width: 0px;">
-    <ion-item button  (click)="toggleCollapse(true)">
+    <ion-item button  (click)="toggleCollapse(true)" [class]="getBgColor(false,file)?'selected':''">
       <ion-icon slot="start" [name]="folderIcon()" [color]="getColor(true)"></ion-icon>
       <ion-label [color]="getColor(true)">
           {{folder.getName()}}
@@ -36,7 +36,7 @@
   <ion-row *ngFor="let file of folder.tradGroupList">
     <ion-col [size]="(level+1)*2"></ion-col>
     <ion-col style="min-width: 0px;">
-      <ion-item button (click)="select(file)">
+      <ion-item button (click)="select(file)" [class]="getBgColor(false,file)?'selected':''">
         <ion-icon slot="start" name="document" [color]="getColor(false,file)"></ion-icon>
         <ion-label [color]="getColor(false,file)">
             {{file.getName()}}
