@@ -1,0 +1,75 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Settings</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+
+</ion-header>
+
+<ion-content fullscreen *ngIf="tab=='general'">
+  <ion-item>
+    <ion-label>In a folder, extend all traductions of an item</ion-label>
+    <ion-checkbox slot="end" [value]="extendTrad" (ionChange)="extendTradChanged($event.detail.value)"></ion-checkbox>
+  </ion-item>
+</ion-content>
+
+<ion-content fullscreen *ngIf="tab=='import_export'">
+  <ion-item>
+    <ion-label>Fusion with actual project</ion-label>
+    <ion-select [value]="importFusion" okText="Okay" cancelText="Dismiss" (ionChange)="importFusionChanged($event.detail.value)">
+      <ion-select-option value="no">No, erase actual project</ion-select-option>
+      <ion-select-option value="yes_actual">Yes, but take actual values in case of conflict</ion-select-option>
+      <ion-select-option value="yes_new">Yes, take new values in case of conflict</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Default file type</ion-label>
+    <ion-select [value]="tabImportExport" okText="Okay" cancelText="Dismiss" (ionChange)="tabImportExportChanged($event.detail.value)">
+      <ion-select-option value="json">Json</ion-select-option>
+      <ion-select-option value="csv">Csv</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Folder character separator in CSV</ion-label>
+    <ion-input [value]="folderCharCsv" (ionChange)="folderCharCsvChanged($event.detail.value)"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Auto validate filled translations</ion-label>
+    <ion-checkbox slot="end" [value]="autoValidate" (ionChange)="autoValidateChanged($event.detail.value)"></ion-checkbox>
+  </ion-item>
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-segment (ionChange)="tabChanged($event.detail.value)" [value]="tab">
+      <ion-segment-button value="general">General</ion-segment-button>
+      <ion-segment-button value="import_export">Import and export</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <ion-toolbar>
+    <!--<ion-buttons slot="start">
+      <ion-button (click)="reset()" color="primary">
+        <ion-icon slot="start" name="refresh"></ion-icon>
+        Reset
+      </ion-button>
+    </ion-buttons>-->
+    <ion-buttons slot="secondary">
+      <ion-button (click)="close()" color="medium">
+        <ion-icon slot="start" name="close"></ion-icon>
+        Close
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button (click)="save()" slot="primary" color="success">
+        <ion-icon slot="start" name="checkmark"></ion-icon>
+        Save
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

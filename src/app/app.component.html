@@ -3,14 +3,67 @@
   <ion-split-pane when="sm" content-id="main-content" class="main-content">
     <ion-menu content-id="main-content">
       <ion-content>
-        <app-tree-view (selected)="selected($event)" (newTrad)="addTraduction($event)"></app-tree-view>
+        <app-tree-view></app-tree-view>
       </ion-content>
     </ion-menu>
 
     <div class="ion-page" id="main-content">
       <ion-content class="ion-padding">
-        <ion-list>
-          <app-trads-group *ngFor="let itemGroup of itemGroupList" [path]="itemGroup.path" [trads]="itemGroup.trads"></app-trads-group>
+        <ion-item class="no-background">
+          <ion-buttons slot="end">
+            <ion-button fill="clear" shape="round" (click)="presentLanguagesModal()">
+              <ion-label slot="start">+</ion-label><ion-icon slot="start" name="globe-outline"></ion-icon>
+            </ion-button>
+            <div *ngFor = "let language of global.languages; let index=index">
+              <ion-chip (click)="presentLanguagesModal()" *ngIf="index<3">{{language}}</ion-chip>
+              <ion-chip (click)="presentLanguagesModal()" *ngIf="index==3">...</ion-chip>
+            </div>
+          </ion-buttons>
+          <div class="breadcrumb" size="small"><app-breadcrumb [structure]="global.selectedStructure"></app-breadcrumb></div>
+        </ion-item>
+        <ion-list class="special">
+          
+          <div *ngIf="!global.isSelectedStructureFolder()">
+            <app-trads-group [tradGroup]="global.getSelectedStructureAsTradGroup()"></app-trads-group>
+          </div>
+          <div *ngIf="global.isSelectedStructureFolder()">
+            <app-trad-folder [folder]="global.getSelectedFolder()"></app-trad-folder>
+            <app-trads-group *ngFor="let t of global.selectedTradGroups$ | async" [tradGroup]="t" [canExpand]="true"></app-trads-group>
+            <app-trad-folder *ngFor="let f of global.selectedFolders$ | async" [folder]="f" [canExpand]="true"></app-trad-folder>
+
+            <!--<ion-virtual-scroll [items]="selectedStructure">
+              <div *virtualItem="let struct">
+                  <div *ngIf="struct instance of Folder">
+                    <app-trad-folder [folder]="struct" [canExpand]="true">
+                    </app-trad-folder>
+                  </div>
+                  <div *ngIf="struct instance of TraductionGroup">
+                    <app-trads-group  [tradGroup]="struct">
+                    </app-trads-group>
+                  </div>
+              </div>
+              
+            </ion-virtual-scroll>-->
+          </div>
+          <ion-card>
+            
+            
+            <ion-row>
+              <ion-col>
+                <ion-button (click)="addTraduction()" expand="block" fill="clear" shape="round">
+                  <ion-icon slot="start" name="add"></ion-icon>
+                  Create an item
+                </ion-button>
+              </ion-col>
+              <ion-col>
+                <ion-button (click)="addTraduction(true)" expand="block" fill="clear" shape="round">
+                  <ion-icon slot="start" name="add"></ion-icon>
+                  Create a folder
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-card>
+          
         </ion-list>
       </ion-content>
     </div>

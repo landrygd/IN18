@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter} from '@angular/core';
 import {  PopoverController, AlertController } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global.service';
+import { ImportExportService } from 'src/app/services/import-export.service';
 
 @Component({
   templateUrl: './template-popover.component.html',
@@ -11,7 +12,8 @@ import { GlobalService } from 'src/app/services/global.service';
 
     constructor(public popoverCtrl: PopoverController,
                 public alertController: AlertController,
-                public global: GlobalService) {
+                public global: GlobalService,
+                private importExport: ImportExportService) {
     }
 
 
@@ -19,13 +21,10 @@ import { GlobalService } from 'src/app/services/global.service';
       this.popoverCtrl.dismiss();
     }
 
-    load(files){
-      console.log(files);
-      // var myBlob = new Blob([new Uint8Array(file)], {type: "octet/stream"});
-
-
+    public onFileSelected(event) {
+      const file: File = event.target.files[0];
+      this.importExport.load(file);
       this.popoverCtrl.dismiss();
-
     }
 
     quit() {}
@@ -35,6 +34,7 @@ import { GlobalService } from 'src/app/services/global.service';
     }
 
     save(){
+      this.importExport.download();
       this.popoverCtrl.dismiss();
     }
 

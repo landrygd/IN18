@@ -1,16 +1,27 @@
-import { Component } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { Component, ViewChild, OnInit, Directive } from '@angular/core';
+import { Platform, ModalController, IonVirtualScroll } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { GlobalService } from './services/global.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { NewTradModalComponent } from './components/tree-view/new-trad-modal/new-trad-modal.component';
+import { Observable, Subject, of } from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
+import { TraductionsGroup } from './classes/traductions-group';
+import { Folder } from './classes/folder';
+import { Structure } from './classes/structure';
+import { LanguagesModalPage } from './components/top-menu/languages-modal/languages-modal.component';
+import { SettingsService } from './services/settings.service';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
 
   path: string;
   subStructure: any;
@@ -18,12 +29,16 @@ export class AppComponent {
 
   fileUrl: SafeResourceUrl;
 
+  selectedStructure: Structure[];
+
   constructor(
+    private modalController: ModalController,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private global: GlobalService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private settings: SettingsService
   ) {
     this.initializeApp();
   }
@@ -35,34 +50,30 @@ export class AppComponent {
     });
   }
 
-  selected(event) {
-    this.path = event;
-    this.subStructure = this.global.getSubJSON(this.global.structure, event);
-    this.itemGroupList = [];
-    for (const key of Object.keys(this.subStructure)) {
-      if (typeof this.subStructure[key] === 'object') {
-        this.itemGroupList.push(
-          {
-            path: this.path + '.' + key,
-            trads: this.subStructure[key]
-          }
-        );
-      } else {
-        return this.itemGroupList.push(
-          {
-            path: this.path,
-            trads: this.subStructure,
-          }
-        );
-      }
+  ngOnInit(){
+    /*this.global.selectedStructure$.subscribe(value => {
+      console.log(value)
+      this.selectedStructure = value;
+      // this.virtualScroll.checkEnd();
     }
-    console.log(this.subStructure);
+      );*/
   }
 
-
-
-  addTraduction(traduction: any) {
-    console.log(traduction);
-    // this.tree = this.global.updatePath(traduction.path, traduction.value, traduction.lang);
+  async addTraduction(isFolder = false) {
+    const modal = await this.modalController.create({
+      component: NewTradModalComponent,
+      componentProps: {parentFolder: this.global.getSelectedFolder(), isFolder}
+    });
+    await modal.present();
   }
+
+  async presentLanguagesModal(id: number = 0) {
+    const modal = await this.modalController.create({
+      component: LanguagesModalPage,
+      componentProps: {id},
+      cssClass: ''
+    });
+    return await modal.present();
+  }
+
 }

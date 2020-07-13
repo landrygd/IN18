@@ -1,10 +1,20 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { PopoverController, AlertController, ModalController } from '@ionic/angular';
-import { PopoverPage } from './template-popover.component';
-import { ModalPage } from './template-modal.component';
+import { PopoverPage } from './menu-popover/template-popover.component';
+import { LanguagesModalPage } from './languages-modal/languages-modal.component';
 import { GlobalService } from 'src/app/services/global.service';
 import { UploadModalComponent } from './upload-modal/upload-modal.component';
 import { TranslatorService } from 'src/app/services/translator.service';
+import { SettingsModalComponent } from './settings-modal/settings-modal.component';
+import { settings } from 'cluster';
+import { SettingsService } from 'src/app/services/settings.service';
+import { ImportExportService } from 'src/app/services/import-export.service';
+import { AboutModalComponent } from './about-modal/about-modal.component';
+
+interface Import {
+  type?: string;
+  files?: File[];
+}
 
 @Component({
   selector: 'app-top-menu',
@@ -13,14 +23,15 @@ import { TranslatorService } from 'src/app/services/translator.service';
 })
 export class TopMenuComponent implements OnInit {
 
-  @Output() update = new EventEmitter();
 
   constructor(
     public popoverCtrl: PopoverController,
     public modalController: ModalController,
     public alertController: AlertController,
     public global: GlobalService,
-    public translator: TranslatorService
+    public translator: TranslatorService,
+    private settings: SettingsService,
+    private importExport: ImportExportService
     ) { }
 
   ngOnInit() {}
@@ -36,10 +47,28 @@ export class TopMenuComponent implements OnInit {
     return await popover.present();
   }
 
-  async presentModal(id: number) {
+  async presentLanguagesModal(id: number) {
     const modal = await this.modalController.create({
-      component: ModalPage,
+      component: LanguagesModalPage,
       componentProps: {id},
+      cssClass: ''
+    });
+    return await modal.present();
+  }
+
+  async presentSettingsModal() {
+    const modal = await this.modalController.create({
+      component: SettingsModalComponent,
+      componentProps: {},
+      cssClass: ''
+    });
+    return await modal.present();
+  }
+
+  async aboutModal() {
+    const modal = await this.modalController.create({
+      component: AboutModalComponent,
+      componentProps: {},
       cssClass: ''
     });
     return await modal.present();
@@ -70,31 +99,56 @@ export class TopMenuComponent implements OnInit {
     await alert.present();
   }
 
-  async download() {
-    this.global.download();
+  async export() {
+    if (this.settings.tabImportExport === 'json'){
+      this.importExport.downloadJsons();
+    }else{
+      this.importExport.downloadCsv();
+    }
   }
 
-  async upload() {
+
+
+async upload() {
     const modal = await this.modalController.create({
     component: UploadModalComponent,
+    componentProps: {tab: this.settings.tabImportExport},
     });
     await modal.present();
-    const docs: File[] = (await modal.onDidDismiss()).data;
-    const files = [];
-    const languages = [];
-    for (const doc of docs) {
-      files.push({default: JSON.parse(await doc.text())});
-      const name = doc.name;
-      const nameArray = name.split('.');
-      nameArray.pop();
-      const language = nameArray.join('.');
-      languages.push(language);
-    }
-    this.global.loadProjectStructure(files, languages);
-    this.update.emit();
+    const docs: Import = (await modal.onDidDismiss()).data;
+    switch (docs.type){
+      case 'json':
+        const files = [];
+        const languages = [];
+        for (const doc of docs.files) {
+          files.push({default: JSON.parse(await doc.text())});
+          const name = doc.name;
+          const nameArray = name.split('.');
+          nameArray.pop();
+          const language = nameArray.join('.');
+          languages.push(language);
+        }
+        this.importExport.importJsonFiles(files, languages);
+        break;
+      case 'csv':
+        for (const doc of docs.files) {
+          this.importExport.importCsvFile(doc);
+        }
+        break;
+      }
+
   }
 
-  translate() {
+translate() {
     this.translator.translate();
+  }
+
+fileNameToISO(fileName: string) {
+    const isoLanguages = ['aa', 'ab', 'ae', 'af', 'ak', 'am', 'an', 'ar', 'as', 'av', 'ay', 'az', 'ba', 'be', 'bg', 'bh', 'bi', 'bm', 'bn', 'bo', 'br', 'bs', 'ca', 'ce', 'ch', 'co', 'cr', 'cs', 'cu', 'cv', 'cy', 'da', 'de', 'dv', 'dz', 'ee', 'el', 'en', 'eo', 'es', 'et', 'eu', 'fa', 'ff', 'fi', 'fj', 'fo', 'fr', 'fy', 'ga', 'gd', 'gl', 'gn', 'gu', 'gv', 'ha', 'he', 'hi', 'ho', 'hr', 'ht', 'hu', 'hy', 'hz', 'ia', 'id', 'ie', 'ig', 'ii', 'ik', 'io', 'is', 'it', 'iu', 'ja', 'jv', 'ka', 'kg', 'ki', 'kj', 'kk', 'kl', 'km', 'kn', 'ko', 'kr', 'ks', 'ku', 'kv', 'kw', 'ky', 'la', 'lb', 'lg', 'li', 'ln', 'lo', 'lt', 'lu', 'lv', 'mg', 'mh', 'mi', 'mk', 'ml', 'mn', 'mo', 'mr', 'ms', 'mt', 'my', 'na', 'nb', 'nd', 'ne', 'ng', 'nl', 'nn', 'no', 'nr', 'nv', 'ny', 'oc', 'oj', 'om', 'or', 'os', 'pa', 'pi', 'pl', 'ps', 'pt', 'qu', 'rc', 'rm', 'rn', 'ro', 'ru', 'rw', 'sa', 'sc', 'sd', 'se', 'sg', 'sh', 'si', 'sk', 'sl', 'sm', 'sn', 'so', 'sq', 'sr', 'ss', 'st', 'su', 'sv', 'sw', 'ta', 'te', 'tg', 'th', 'ti', 'tk', 'tl', 'tn', 'to', 'tr', 'ts', 'tt', 'tw', 'ty', 'ug', 'uk', 'ur', 'uz', 've', 'vi', 'vo', 'wa', 'wo', 'xh', 'yi', 'yo', 'za', 'zh', 'zu'];
+    for (const lang of isoLanguages) {
+      if (fileName.includes(lang)) {
+        return lang;
+      }
+    }
   }
 }

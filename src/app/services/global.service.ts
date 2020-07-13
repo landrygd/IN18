@@ -1,54 +1,140 @@
 import { Injectable } from '@angular/core';
-import * as JSZip from 'jszip';
-import { saveAs } from 'file-saver';
 
-import { Subject, BehaviorSubject } from 'rxjs';
+
+
+import { Subject, BehaviorSubject, Observable, of, interval } from 'rxjs';
 import { Traduction } from '../classes/traduction';
+import { Folder } from '../classes/folder';
+import { TraductionsGroup } from '../classes/traductions-group';
+import { Structure } from '../classes/structure';
+import { map } from 'rxjs/operators';
+import { settings } from 'cluster';
+import { SettingsService } from './settings.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GlobalService {
+  projectName = 'project_name';
 
-  structure = {};
-  languages = [];
-  paths = [];
-  observablestructure = new BehaviorSubject<object>(this.structure);
+  structure: Folder = new Folder(this.projectName, undefined);
 
-  constructor() {}
+  selectedStructure: Structure;
+  selectedFolder: Folder;
+  languages: string[] = [];
+  paths: any;
+ 
+
+  selectedTradGroups$: Observable<TraductionsGroup[]>;
+  selectedFolders$: Observable<Structure[]>;
+
+
+  constructor(private settings: SettingsService) {
+    this.setSelectedStructure();
+  }
+
+
+  async setSelectedStructure(structure: Structure = this.structure) {
+    if (structure instanceof TraductionsGroup) {
+      this.setSelectedFolder(structure.parentFolder);
+    } else if (structure instanceof Folder) {
+      this.setSelectedFolder(structure);
+    }
+    this.selectedTradGroups$ = of(this.getSelectedFolder().tradGroupList);
+    this.selectedFolders$ = of(this.getSelectedFolder().folderList);
+    this.selectedStructure = structure;
+  }
+
+  getSelectedStructureAsTradGroup(): TraductionsGroup {
+    if (this.selectedStructure instanceof TraductionsGroup) {
+      return this.selectedStructure;
+    } else {
+      return undefined;
+    }
+  }
+
+  isSelectedStructureFolder() {
+    return this.selectedStructure instanceof Folder;
+  }
+
+  OneChildIsSelected(folder: Folder): boolean {
+    for (const k of folder.folderList) {
+      if (k === this.selectedStructure) {
+        return true;
+      } else {
+        return this.OneChildIsSelected(k);
+      }
+    }
+    for (const k of folder.tradGroupList) {
+      if (k === this.selectedStructure) {
+        return true;
+      }
+    }
+    return false;
+
+  }
+
+  getSelectedFolder() {
+    return this.selectedFolder === undefined ? this.structure : this.selectedFolder;
+  }
+
+  async setSelectedFolder(folder: Folder) {
+    this.selectedFolder = folder;
+  }
 
   setStructure(newStructure) {
     this.structure = newStructure;
-    this.observablestructure.next(this.structure);
-    console.log(this.observablestructure);
-    }
-
-  newProject(){
-    this.setStructure({});
-    console.log('new project');
+    this.setSelectedStructure(this.structure);
+    this.majLanguages(this.structure);
   }
 
-  loadProjectStructure(files: any[], languages: string[]) {
-    console.log(files, languages);
-    const structureCopy = {};
-    this.languages = languages;
-    for (let i = 0; i < languages.length; i++) {
-      const paths = ['default'];
-      while (paths.length > 0) {
-        const path = paths.shift();
-        const obj = this.modifyJson(files[i], path);
-        for (const key of Object.keys(obj)) {
-          const subPath = path + '.' + key;
-          const subObj = this.modifyJson(files[i], subPath);
-          if (typeof subObj === 'object') {
-            paths.push(subPath);
-          } else {
-            this.modifyJson(structureCopy, subPath + '.' + languages[i], subObj);
-          }
-        }
-      }
+  newProject() {
+    this.setStructure(new Folder(this.projectName, undefined));
+    this.languages = [];
+    this.setSelectedStructure();
+  }
+
+  /*test() {
+    this.importJsonFiles([{ default: { test: { y: 'oui', n: 'non' } } }, { default: { test: { y: 'yes', n: 'no' } } }], ['fr', 'en']);
+  }*/
+
+  removeLanguage(language: string): boolean {
+    const exist = this.languages.find(e => e === language);
+    if (exist) {
+      this.languages = this.languages.filter(l => l !== exist);
+      this.majLanguages(this.structure);
+      return true;
+    } else {
+      return false;
     }
-    this.setStructure(structureCopy);
+  }
+
+
+
+  addLanguage(language: string): boolean {
+    const exist = this.languages.find(e => e === language);
+    if (exist) {
+      return false;
+    } else {
+      this.languages.push(language);
+      this.majLanguages(this.structure);
+      return true;
+    }
+  }
+
+  majLanguages(structure: Structure) {
+    if (structure instanceof Folder) {
+      for (const k of structure.folderList) {
+        this.majLanguages(k);
+      }
+      for (const k of structure.tradGroupList) {
+        this.majLanguages(k);
+      }
+    } else if (structure instanceof TraductionsGroup) {
+      structure.removeTradWrongLanguage(this.languages);
+      structure.addMissingTrad(this.languages);
+    }
+
   }
 
   modifyJson(obj, is, value = '') {
@@ -74,60 +160,6 @@ export class GlobalService {
     return this.modifyJson(this.structure, path);
   }
 
-  updatePath(traduction: Traduction) {
-    console.log(traduction.getPath());
-    const structureCopy = this.structure;
-    this.modifyJson(structureCopy, traduction.getPathWithLanguage(), traduction.getValue());
-    // this.setStructure(structureCopy)
-    this.structure = structureCopy;
-    return this.structure;
-  }
 
-  export(): any[] {
-    const docs: any = {};
-    const paths = ['default'];
-    const structureCopy = this.structure;
-    while (paths.length > 0) {
-      const path = paths.shift();
-      const obj = this.modifyJson(structureCopy, path);
-      for (const key of Object.keys(obj)) {
-        let subPath = path + '.' + key;
-        const subObj = this.modifyJson(structureCopy, subPath);
-        if (typeof subObj === 'object') {
-          paths.push(subPath);
-        } else {
-          if (!Object.keys(docs).includes(key)) {
-            docs[key] = {};
-          }
-          const subPathArr = subPath.split('.');
-          subPathArr.pop();
-          subPath = subPathArr.join('.');
-          this.modifyJson(docs[key], subPath, subObj);
-        }
-      }
-    }
-    console.log(docs);
-    return docs;
-  }
 
-  async download() {
-    const zip = new JSZip();
-    const exp = this.export();
-    for (const key of Object.keys(exp)) {
-      zip.file(key + '.json', JSON.stringify(exp[key].default));
-    }
-    const data = await zip.generateAsync({type: 'blob'});
-    const blob = new Blob([data], { type: 'application/zip' });
-    saveAs(blob, 'save.zip');
-  }
-
-  setPaths(paths) {
-    this.paths = paths;
-  }
-
-  setPath(path, value) {
-    console.log(path, value);
-    this.modifyJson(this.structure, path, value);
-    this.observablestructure.next(this.structure);
-  }
 }
