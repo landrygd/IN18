@@ -28,7 +28,7 @@
           </div>
           <div *ngIf="global.isSelectedStructureFolder()">
             <app-trad-folder [folder]="global.getSelectedFolder()"></app-trad-folder>
-            <app-trads-group *ngFor="let t of global.selectedTradGroups$ | async" [tradGroup]="t"></app-trads-group>
+            <app-trads-group *ngFor="let t of global.selectedTradGroups$ | async" [tradGroup]="t" [canExpand]="true"></app-trads-group>
             <app-trad-folder *ngFor="let f of global.selectedFolders$ | async" [folder]="f" [canExpand]="true"></app-trad-folder>
 
             <!--<ion-virtual-scroll [items]="selectedStructure">

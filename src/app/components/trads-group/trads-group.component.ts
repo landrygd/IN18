@@ -3,6 +3,7 @@ import { GlobalService } from 'src/app/services/global.service';
 import { TraductionsGroup } from 'src/app/classes/traductions-group';
 import { AlertController, ModalController } from '@ionic/angular';
 import { LanguagesModalPage } from '../top-menu/languages-modal/languages-modal.component';
+import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
   selector: 'app-trads-group',
@@ -12,8 +13,12 @@ import { LanguagesModalPage } from '../top-menu/languages-modal/languages-modal.
 export class TradsGroupComponent implements OnInit {
 
   @Input() tradGroup: TraductionsGroup;
+  @Input() canExpand: boolean;
 
-  constructor(public modalController: ModalController, private global: GlobalService, public alertController: AlertController) { }
+  constructor(public modalController: ModalController,
+              private settings: SettingsService,
+              private global: GlobalService,
+              public alertController: AlertController) { }
 
   ngOnInit() {
   }
@@ -26,6 +31,10 @@ export class TradsGroupComponent implements OnInit {
     if (this.tradGroup.parentFolder.removeTradGroup(this.tradGroup)){
       this.global.setSelectedStructure(this.global.selectedFolder);
     }
+  }
+
+  select(){
+    this.global.setSelectedStructure(this.tradGroup);
   }
 
   async presentDeleteConfirm() {

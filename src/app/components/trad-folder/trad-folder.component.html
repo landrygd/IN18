@@ -25,11 +25,13 @@
         
       </ion-item>
     </ion-card-subtitle>
+    <app-progress-bar [showText]="false" [percentValidation]="folder.percentValidation()" [percentFill]="folder.percentFill()"></app-progress-bar>
+
   </ion-card-header>
 
-  <ion-card-content>
+  <ion-card-content *ngIf="!canExpand">
     
-    <app-progress-bar [percentValidation]="folder.percentValidation()" [percentFill]="folder.percentFill()"></app-progress-bar>
+    <app-progress-bar [showBar]="false" [percentValidation]="folder.percentValidation()" [percentFill]="folder.percentFill()"></app-progress-bar>
     
   </ion-card-content>
 

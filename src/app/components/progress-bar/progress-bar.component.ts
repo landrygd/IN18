@@ -9,6 +9,8 @@ export class ProgressBarComponent implements OnInit {
 
   @Input() percentValidation = 0;
   @Input() percentFill = 0;
+  @Input() showText = true;
+  @Input() showBar = true;
 
   constructor() { }
 

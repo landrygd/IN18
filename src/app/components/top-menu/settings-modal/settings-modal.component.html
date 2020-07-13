@@ -11,27 +11,48 @@
 
 </ion-header>
 
-<ion-content fullscreen>
+<ion-content fullscreen *ngIf="tab=='general'">
   <ion-item>
-    <ion-label>test</ion-label>
-    <ion-input></ion-input>
+    <ion-label>In a folder, extend all traductions of an item</ion-label>
+    <ion-checkbox slot="end" [value]="extendTrad" (ionChange)="extendTradChanged($event.detail.value)"></ion-checkbox>
+  </ion-item>
+</ion-content>
+
+<ion-content fullscreen *ngIf="tab=='import'">
+  <ion-item>
+    <ion-label>Default import</ion-label>
+    <ion-select [value]="tabImport" okText="Okay" cancelText="Dismiss" (ionChange)="tabImportChanged($event.detail.value)">
+      <ion-select-option value="json">Json</ion-select-option>
+      <ion-select-option value="csv">Csv</ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-content>
+
+<ion-content fullscreen *ngIf="tab=='export'">
+  <ion-item>
+    <ion-label>Default export</ion-label>
+    <ion-select [value]="tabExport" okText="Okay" cancelText="Dismiss" (ionChange)="tabExportChanged($event.detail.value)">
+      <ion-select-option value="json">Json</ion-select-option>
+      <ion-select-option value="csv">Csv</ion-select-option>
+    </ion-select>
   </ion-item>
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
     <ion-segment (ionChange)="tabChanged($event.detail.value)" [value]="tab">
+      <ion-segment-button value="general">General</ion-segment-button>
       <ion-segment-button value="import">Import</ion-segment-button>
       <ion-segment-button value="export">Export</ion-segment-button>
     </ion-segment>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <!--<ion-buttons slot="start">
       <ion-button (click)="reset()" color="primary">
         <ion-icon slot="start" name="refresh"></ion-icon>
         Reset
       </ion-button>
-    </ion-buttons>
+    </ion-buttons>-->
     <ion-buttons slot="secondary">
       <ion-button (click)="close()" color="medium">
         <ion-icon slot="start" name="close"></ion-icon>

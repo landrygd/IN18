@@ -6,6 +6,8 @@ import { GlobalService } from 'src/app/services/global.service';
 import { UploadModalComponent } from './upload-modal/upload-modal.component';
 import { TranslatorService } from 'src/app/services/translator.service';
 import { SettingsModalComponent } from './settings-modal/settings-modal.component';
+import { settings } from 'cluster';
+import { SettingsService } from 'src/app/services/settings.service';
 
 interface Import {
   type?: string;
@@ -25,7 +27,8 @@ export class TopMenuComponent implements OnInit {
     public modalController: ModalController,
     public alertController: AlertController,
     public global: GlobalService,
-    public translator: TranslatorService
+    public translator: TranslatorService,
+    private settings: SettingsService
     ) { }
 
   ngOnInit() {}
@@ -93,6 +96,7 @@ export class TopMenuComponent implements OnInit {
 async upload() {
     const modal = await this.modalController.create({
     component: UploadModalComponent,
+    componentProps: {tab: this.settings.tabImport},
     });
     await modal.present();
     const docs: Import = (await modal.onDidDismiss()).data;

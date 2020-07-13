@@ -11,6 +11,7 @@ import { TraductionsGroup } from './classes/traductions-group';
 import { Folder } from './classes/folder';
 import { Structure } from './classes/structure';
 import { LanguagesModalPage } from './components/top-menu/languages-modal/languages-modal.component';
+import { SettingsService } from './services/settings.service';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private global: GlobalService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private settings: SettingsService
   ) {
     this.initializeApp();
   }

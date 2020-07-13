@@ -25,6 +25,7 @@ import { FolderTreeComponent } from './components/tree-view/folder-tree/folder-t
 import { TradFolderComponent } from './components/trad-folder/trad-folder.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
+import { SettingsModalComponent } from './components/top-menu/settings-modal/settings-modal.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { ProgressBarComponent } from './components/progress-bar/progress-bar.com
     FolderTreeComponent,
     TradFolderComponent,
     BreadcrumbComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    SettingsModalComponent
   ],
   entryComponents: [],
   imports: [

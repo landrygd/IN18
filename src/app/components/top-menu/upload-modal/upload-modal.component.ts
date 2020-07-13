@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { saveAs } from 'file-saver';
 import { SettingsModalComponent } from '../settings-modal/settings-modal.component';
@@ -9,6 +9,8 @@ import { SettingsModalComponent } from '../settings-modal/settings-modal.compone
   styleUrls: ['./upload-modal.component.scss'],
 })
 export class UploadModalComponent implements OnInit {
+
+  @Input() tab = 'json';
 
   files: File[] = [];
 
