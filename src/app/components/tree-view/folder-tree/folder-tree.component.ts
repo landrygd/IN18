@@ -65,11 +65,10 @@ export class FolderTreeComponent implements OnInit {
   }
 
   getColor(folder: boolean, structure: Structure = this.folder): string {
-    if (structure.isFilled()) {
-      return 'primary';
-    }
-    else if (structure.isValidated()){
+    if (structure.isValidated()){
       return 'success';
+    }else if (structure.isFilled()) {
+      return 'primary';
     }
 
     else if (!this.collapsed || !folder) {
