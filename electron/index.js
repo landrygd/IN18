@@ -47,6 +47,8 @@ async function createWindow () {
     Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplateDev));
     // If we are developers we might as well open the devtools by default.
     mainWindow.webContents.openDevTools();
+  }else{
+    Menu.setApplicationMenu(null);
   }
 
   if(useSplashScreen) {

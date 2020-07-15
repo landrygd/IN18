@@ -12,6 +12,7 @@ import { Folder } from './classes/folder';
 import { Structure } from './classes/structure';
 import { LanguagesModalPage } from './components/top-menu/languages-modal/languages-modal.component';
 import { SettingsService } from './services/settings.service';
+import { ElectronService } from 'ngx-electron';
 
 
 @Component({
@@ -38,7 +39,8 @@ export class AppComponent implements OnInit {
     private statusBar: StatusBar,
     public global: GlobalService,
     private sanitizer: DomSanitizer,
-    private settings: SettingsService
+    private settings: SettingsService,
+    private electronService: ElectronService
   ) {
     this.initializeApp();
   }

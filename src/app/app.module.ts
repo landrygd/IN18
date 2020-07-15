@@ -28,7 +28,7 @@ import { ProgressBarComponent } from './components/progress-bar/progress-bar.com
 import { SettingsModalComponent } from './components/top-menu/settings-modal/settings-modal.component';
 import { TranslateModalComponent } from './components/top-menu/translate-modal/translate-modal.component';
 import { AboutModalComponent } from './components/top-menu/about-modal/about-modal.component';
-
+import { NgxElectronModule } from 'ngx-electron';
 
 @NgModule({
   declarations: [
@@ -57,6 +57,7 @@ import { AboutModalComponent } from './components/top-menu/about-modal/about-mod
     CommonModule,
     NgxDropzoneModule,
     HttpClientModule,
+    NgxElectronModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
   providers: [
