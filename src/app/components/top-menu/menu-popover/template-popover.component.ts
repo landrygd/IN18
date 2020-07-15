@@ -1,7 +1,10 @@
 import { Component, Input, EventEmitter} from '@angular/core';
-import {  PopoverController, AlertController } from '@ionic/angular';
+import {  PopoverController, AlertController, Platform } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global.service';
 import { ImportExportService } from 'src/app/services/import-export.service';
+import { ElectronService } from 'ngx-electron';
+import { Plugins } from '@capacitor/core';
+const { LocalNotifications, Clipboard, Modals, App } = Plugins;
 
 @Component({
   templateUrl: './template-popover.component.html',
@@ -13,7 +16,8 @@ import { ImportExportService } from 'src/app/services/import-export.service';
     constructor(public popoverCtrl: PopoverController,
                 public alertController: AlertController,
                 public global: GlobalService,
-                private importExport: ImportExportService) {
+                private importExport: ImportExportService,
+                private electronService: ElectronService) {
     }
 
 
@@ -27,7 +31,13 @@ import { ImportExportService } from 'src/app/services/import-export.service';
       this.popoverCtrl.dismiss();
     }
 
-    quit() {}
+    quit() {
+      if (this.electronService.isElectronApp) {
+        App.exitApp();
+      }else{
+        window.close();
+      }
+    }
 
     import(files){
       this.popoverCtrl.dismiss();

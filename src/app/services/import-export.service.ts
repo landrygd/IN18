@@ -12,10 +12,8 @@ import * as JSZip from 'jszip';
   providedIn: 'root'
 })
 export class ImportExportService {
-
-  lastSavedStrcture = JSON.stringify({});
-
   constructor(private global: GlobalService, private settings: SettingsService) { }
+
 
   CSVToArray(strData, strDelimiter = ','): string[][] {
 
@@ -262,22 +260,7 @@ export class ImportExportService {
     saveAs(blob, this.global.projectName + '.zip');
   }
 
-  savein18(structure: Structure): object {
-    const json: object = {};
-    if (structure instanceof Folder) {
-      for (const folder of structure.folderList) {
-        json[folder.getName()] = this.savein18(folder);
-      }
-      for (const trad of structure.tradGroupList) {
-        json[trad.getName()] = {};
-        for (const t of trad.tradList) {
-          json[trad.getName()][t.language] = { value: t.value, checked: t.checked };
-
-        }
-      }
-    }
-    return json;
-  }
+  
 
   loadin18(holder: object, key: string, structure: Folder) {
 
@@ -318,7 +301,7 @@ export class ImportExportService {
   }
 
 
-  async load(file) {
+  async load(file: File) {
     const obj = { default: JSON.parse(await file.text()) };
     console.log(obj);
     const newStructure = new Folder(this.global.projectName, undefined);
@@ -329,10 +312,10 @@ export class ImportExportService {
   }
 
   async download() {
-    const obj = this.savein18(this.global.structure);
+    const obj = this.global.savein18();
     const json = JSON.stringify(obj);
-    if (json !== this.lastSavedStrcture) {
-      this.lastSavedStrcture = json;
+    if (json !== JSON.stringify(this.global.lastSavedStrcture)) {
+      this.global.updateSavedStructure();
       const blob = new Blob([json], { type: 'application/json' });
       saveAs(blob, 'project.in18');
     }

@@ -10,6 +10,7 @@ import { Structure } from '../classes/structure';
 import { map } from 'rxjs/operators';
 import { settings } from 'cluster';
 import { SettingsService } from './settings.service';
+import { ImportExportService } from './import-export.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,19 +19,20 @@ export class GlobalService {
   projectName = 'project_name';
 
   structure: Folder = new Folder(this.projectName, undefined);
-
+  lastSavedStrcture: object;
   selectedStructure: Structure;
   selectedFolder: Folder;
   languages: string[] = [];
   paths: any;
- 
+
 
   selectedTradGroups$: Observable<TraductionsGroup[]>;
   selectedFolders$: Observable<Structure[]>;
 
 
-  constructor(private settings: SettingsService) {
+  constructor(private setting: SettingsService) {
     this.setSelectedStructure();
+    this.updateSavedStructure();
   }
 
 
@@ -43,6 +45,10 @@ export class GlobalService {
     this.selectedTradGroups$ = of(this.getSelectedFolder().tradGroupList);
     this.selectedFolders$ = of(this.getSelectedFolder().folderList);
     this.selectedStructure = structure;
+  }
+
+  updateSavedStructure(){
+    this.lastSavedStrcture = this.savein18(this.structure);
   }
 
   getSelectedStructureAsTradGroup(): TraductionsGroup {
@@ -92,6 +98,7 @@ export class GlobalService {
     this.setStructure(new Folder(this.projectName, undefined));
     this.languages = [];
     this.setSelectedStructure();
+    this.updateSavedStructure();
   }
 
   /*test() {
@@ -160,6 +167,21 @@ export class GlobalService {
     return this.modifyJson(this.structure, path);
   }
 
+  savein18(structure: Structure = this.structure): object {
+    const json: object = {};
+    if (structure instanceof Folder) {
+      for (const folder of structure.folderList) {
+        json[folder.getName()] = this.savein18(folder);
+      }
+      for (const trad of structure.tradGroupList) {
+        json[trad.getName()] = {};
+        for (const t of trad.tradList) {
+          json[trad.getName()][t.language] = { value: t.value, checked: t.checked };
 
+        }
+      }
+    }
+    return json;
+  }
 
 }

@@ -24,12 +24,12 @@
     <ion-card-content>
       <ion-row>
         <ion-col>
-          <ion-item button>
+          <ion-item button (click)="deakcor()">
             Deakcor
           </ion-item>
         </ion-col>
         <ion-col>
-          <ion-item button>
+          <ion-item button (click)="landry()">
             Landry
           </ion-item>
         </ion-col>
@@ -45,7 +45,7 @@
     <ion-card-content>
       <ion-item>
         <ion-label>Do you like our work?</ion-label>
-        <ion-button><ion-icon name="heart" slot="start"></ion-icon> Donation</ion-button>
+        <ion-button (click)="donation()"><ion-icon name="heart" slot="start"></ion-icon> Donation</ion-button>
       </ion-item>
     </ion-card-content>
   </ion-card>
@@ -54,7 +54,7 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-item slot='start'><ion-label>Copyright (C) 2020-2020</ion-label></ion-item>
+    <ion-item slot='start' button (click)="copyright()"><ion-label>Copyright (C) 2020-2020</ion-label></ion-item>
     <ion-buttons slot="secondary">
       <ion-button (click)="dismissModal()" color="medium">
         <ion-icon slot="start" name="close"></ion-icon>

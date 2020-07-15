@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -26,7 +26,9 @@ import { TradFolderComponent } from './components/trad-folder/trad-folder.compon
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { SettingsModalComponent } from './components/top-menu/settings-modal/settings-modal.component';
-
+import { TranslateModalComponent } from './components/top-menu/translate-modal/translate-modal.component';
+import { AboutModalComponent } from './components/top-menu/about-modal/about-modal.component';
+import { NgxElectronModule } from 'ngx-electron';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { SettingsModalComponent } from './components/top-menu/settings-modal/set
     TradFolderComponent,
     BreadcrumbComponent,
     ProgressBarComponent,
-    SettingsModalComponent
+    SettingsModalComponent,
+    TranslateModalComponent,
+    AboutModalComponent
   ],
   entryComponents: [],
   imports: [
@@ -53,6 +57,7 @@ import { SettingsModalComponent } from './components/top-menu/settings-modal/set
     CommonModule,
     NgxDropzoneModule,
     HttpClientModule,
+    NgxElectronModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
   providers: [
@@ -60,6 +65,7 @@ import { SettingsModalComponent } from './components/top-menu/settings-modal/set
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule {}

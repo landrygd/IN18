@@ -16,7 +16,7 @@ export class TradsGroupComponent implements OnInit {
   @Input() canExpand: boolean;
 
   constructor(public modalController: ModalController,
-              private settings: SettingsService,
+              public settings: SettingsService,
               private global: GlobalService,
               public alertController: AlertController) { }
 

@@ -11,7 +11,7 @@ export class LanguagesModalPage {
 
   newLanguage = '';
 
-  constructor(public alertController: AlertController, public modalCtrl: ModalController, private global: GlobalService) {
+  constructor(public alertController: AlertController, public modalCtrl: ModalController, public global: GlobalService) {
   }
 
   dismissModal() {

@@ -1,7 +1,8 @@
 {
   "name": "IN18",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }
