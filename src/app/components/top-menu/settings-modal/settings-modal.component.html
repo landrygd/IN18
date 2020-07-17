@@ -12,36 +12,65 @@
 </ion-header>
 
 <ion-content fullscreen *ngIf="tab=='general'">
-  <ion-item>
-    <ion-label>In a folder, extend all traductions of an item</ion-label>
-    <ion-checkbox slot="end" [value]="extendTrad" (ionChange)="extendTradChanged($event.detail.value)"></ion-checkbox>
-  </ion-item>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Main view</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>In a folder, extend all traductions of an item</ion-label>
+        <ion-checkbox slot="end" [value]="extendTrad" (ionChange)="extendTradChanged($event.detail.value)">
+        </ion-checkbox>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
 
 <ion-content fullscreen *ngIf="tab=='import_export'">
-  <ion-item>
-    <ion-label>Fusion with actual project</ion-label>
-    <ion-select [value]="importFusion" okText="Okay" cancelText="Dismiss" (ionChange)="importFusionChanged($event.detail.value)">
-      <ion-select-option value="no">No, erase actual project</ion-select-option>
-      <ion-select-option value="yes_actual">Yes, but take actual values in case of conflict</ion-select-option>
-      <ion-select-option value="yes_new">Yes, take new values in case of conflict</ion-select-option>
-    </ion-select>
-  </ion-item>
-  <ion-item>
-    <ion-label>Default file type</ion-label>
-    <ion-select [value]="tabImportExport" okText="Okay" cancelText="Dismiss" (ionChange)="tabImportExportChanged($event.detail.value)">
-      <ion-select-option value="json">Json</ion-select-option>
-      <ion-select-option value="csv">Csv</ion-select-option>
-    </ion-select>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Folder character separator in CSV</ion-label>
-    <ion-input [value]="folderCharCsv" (ionChange)="folderCharCsvChanged($event.detail.value)"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Auto validate filled translations</ion-label>
-    <ion-checkbox slot="end" [value]="autoValidate" (ionChange)="autoValidateChanged($event.detail.value)"></ion-checkbox>
-  </ion-item>
+
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>For import</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Fusion with actual project</ion-label>
+        <ion-select [value]="importFusion" okText="Okay" cancelText="Dismiss"
+          (ionChange)="importFusionChanged($event.detail.value)">
+          <ion-select-option value="no">No, erase actual project</ion-select-option>
+          <ion-select-option value="yes_actual">Yes, but take actual values in case of conflict</ion-select-option>
+          <ion-select-option value="yes_new">Yes, take new values in case of conflict</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Auto validate filled translations</ion-label>
+        <ion-checkbox slot="end" [value]="autoValidate" (ionChange)="autoValidateChanged($event.detail.value)">
+        </ion-checkbox>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>For both</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Default file type</ion-label>
+        <ion-select [value]="tabImportExport" okText="Okay" cancelText="Dismiss"
+          (ionChange)="tabImportExportChanged($event.detail.value)">
+          <ion-select-option value="json">Json</ion-select-option>
+          <ion-select-option value="csv">Csv</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Folder character separator in CSV</ion-label>
+        <ion-input [value]="folderCharCsv" (ionChange)="folderCharCsvChanged($event.detail.value)"></ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
 
 

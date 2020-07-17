@@ -1,6 +1,6 @@
 <ion-header translucent>
   <ion-toolbar>
-    <ion-title>About IN18</ion-title>
+    <ion-title>Translate your project</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="dismissModal()">
         <ion-icon name="close"></ion-icon>
@@ -11,12 +11,42 @@
 <ion-content fullscreen>
   <ion-card>
     <ion-card-header>
-      <ion-card-subtitle>IN18</ion-card-subtitle>
+      <ion-card-subtitle>Choose languages to translate</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      <ion-item>Translation files editors</ion-item>
+      <ion-button (click)="presentLanguagesModal()" expand="block" fill="clear" shape="round">
+        <ion-icon name="globe"></ion-icon> Add languages
+      </ion-button>
+      <ion-item>
+        <ion-label>Selected</ion-label>
+        <ion-select multiple="true" [value]="global.languages">
+          <ion-select-option *ngFor="let language of global.languages" [value]="language">{{language}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      
     </ion-card-content>
   </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Translate only</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>All unfilled</ion-label>
+        <ion-checkbox slot="end" [value]="unfilled" (ionChange)="unfilledChanged($event.detail.value)"></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>All unverified (Be careful, this can erase your translation)</ion-label>
+        <ion-checkbox slot="end" [value]="unverified" (ionChange)="unverifiedChanged($event.detail.value)"></ion-checkbox>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>You will translate {{words}} words, {{characters}} characters.</ion-card-subtitle>
+    </ion-card-header>
+    </ion-card>
   
 </ion-content>
 
@@ -26,6 +56,12 @@
       <ion-button (click)="dismissModal()" color="medium">
         <ion-icon slot="start" name="close"></ion-icon>
         Close
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button (click)="translate()" slot="primary" color="success">
+        <ion-icon slot="start" name="checkmark"></ion-icon>
+        Translate
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

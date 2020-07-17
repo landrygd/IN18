@@ -10,6 +10,7 @@ import { settings } from 'cluster';
 import { SettingsService } from 'src/app/services/settings.service';
 import { ImportExportService } from 'src/app/services/import-export.service';
 import { AboutModalComponent } from './about-modal/about-modal.component';
+import { TranslateModalComponent } from './translate-modal/translate-modal.component';
 
 interface Import {
   type?: string;
@@ -59,6 +60,15 @@ export class TopMenuComponent implements OnInit {
   async presentSettingsModal() {
     const modal = await this.modalController.create({
       component: SettingsModalComponent,
+      componentProps: {},
+      cssClass: ''
+    });
+    return await modal.present();
+  }
+
+  async presentTranslateModal() {
+    const modal = await this.modalController.create({
+      component: TranslateModalComponent,
       componentProps: {},
       cssClass: ''
     });
