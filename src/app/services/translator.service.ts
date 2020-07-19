@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { ToastController, AlertController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { GlobalService } from './global.service';
+import { async } from '@angular/core/testing';
+import { Traduction } from '../classes/traduction';
 
 export interface GoogleObj {
   q: string[];
@@ -20,7 +22,12 @@ export class TranslatorService {
 
   count = 0;
   untranslated: any;
-  languages: string[];
+  languages: string[] = [];
+  mainLanguage: string;
+  unfilled = false;
+  unverified = false;
+
+  traductionsTargeted: Traduction[];
 
   constructor(
     private toastController: ToastController,
@@ -29,7 +36,41 @@ export class TranslatorService {
     private global: GlobalService
   ) {}
 
-  async translate() {
+  prepareTranslation(structure = this.global.structure){
+    if (structure === this.global.structure){
+      this.traductionsTargeted = [];
+    }
+    for (const folder of structure.folderList) {
+      this.prepareTranslation(folder);
+    }
+    for (const tradGroup of structure.tradGroupList) {
+      const mainTrad = tradGroup.getTradByLanguage(this.mainLanguage);
+      for (const trad of tradGroup.tradList){
+        if (mainTrad !== undefined && mainTrad.isFilled() && mainTrad !== trad){
+          if ((!trad.isFilled() && this.unfilled) || (!trad.checked && this.unverified)){
+            if (this.languages.findIndex(k => k === trad.language) !== -1){
+              this.traductionsTargeted.push(trad);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  getTrad(): number{
+    let count = 0;
+    this.prepareTranslation();
+    for (const trad of this.traductionsTargeted){
+      count += 1;
+    }
+    return count;
+  }
+
+  async translate(){
+    
+  }
+
+  /*async translate() {
     this.getUntranslated();
     const alert = await this.alertController.create({
       message: 'You are going to translate ' + this.count + ' caracters in ' + this.languages.length + ' languages',
@@ -132,9 +173,9 @@ export class TranslatorService {
             }
           }
           console.log({paths, translated});
-          /*for (let i = 0; i < translated.length; i++) {
+          for (let i = 0; i < translated.length; i++) {
             this.global.setPath(paths[i] + '.' + lang, translated[i]);
-          }*/
+          }
           console.log(this.global.structure);
         }
       }
@@ -154,5 +195,5 @@ export class TranslatorService {
       buttons: ['OK']
     });
     await alert.present();
-  }
+  }*/
 }

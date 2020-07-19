@@ -35,7 +35,7 @@ export class GlobalService {
     this.updateSavedStructure();
   }
 
-
+  // Set selectedstructure with the folder or the item which is selected, set the new selected folder (parent folder if it's an item)
   async setSelectedStructure(structure: Structure = this.structure) {
     if (structure instanceof TraductionsGroup) {
       this.setSelectedFolder(structure.parentFolder);
@@ -47,10 +47,12 @@ export class GlobalService {
     this.selectedStructure = structure;
   }
 
+  // update lastsavedstructure when we save the structure
   updateSavedStructure(){
     this.lastSavedStrcture = this.savein18(this.structure);
   }
 
+  // get selectedstructure only if it's an item
   getSelectedStructureAsTradGroup(): TraductionsGroup {
     if (this.selectedStructure instanceof TraductionsGroup) {
       return this.selectedStructure;
@@ -63,6 +65,7 @@ export class GlobalService {
     return this.selectedStructure instanceof Folder;
   }
 
+  // false if all children aren't selected
   OneChildIsSelected(folder: Folder): boolean {
     for (const k of folder.folderList) {
       if (k === this.selectedStructure) {
@@ -88,6 +91,7 @@ export class GlobalService {
     this.selectedFolder = folder;
   }
 
+  // to set a new structure, also select it and update the languages list
   setStructure(newStructure) {
     this.structure = newStructure;
     this.setSelectedStructure(this.structure);
