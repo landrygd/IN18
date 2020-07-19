@@ -16,18 +16,20 @@ export interface GoogleObj {
 
 export class TranslatorService {
 
-  toast: HTMLIonToastElement;
+  // toast: HTMLIonToastElement;
 
-  url = 'https://translation.googleapis.com/language/translate/v2?key=';
+  // url = 'https://translation.googleapis.com/language/translate/v2?key=';
 
-  count = 0;
-  untranslated: any;
+  api = 'https://api.mymemory.translated.net/get';
+
+  // count = 0;
+  // untranslated: any;
   languages: string[] = [];
   mainLanguage: string;
   unfilled = false;
   unverified = false;
 
-  traductionsTargeted: Traduction[];
+  traductionsTargeted: Traduction[][];
 
   constructor(
     private toastController: ToastController,
@@ -49,7 +51,7 @@ export class TranslatorService {
         if (mainTrad !== undefined && mainTrad.isFilled() && mainTrad !== trad){
           if ((!trad.isFilled() && this.unfilled) || (!trad.checked && this.unverified)){
             if (this.languages.findIndex(k => k === trad.language) !== -1){
-              this.traductionsTargeted.push(trad);
+              this.traductionsTargeted.push([mainTrad, trad]);
             }
           }
         }
@@ -67,7 +69,27 @@ export class TranslatorService {
   }
 
   async translate(){
-    
+    this.prepareTranslation();
+    let error = false;
+    for (const trad of this.traductionsTargeted){
+      this.http.get(this.api + '?q=' + trad[0].value + '&langpair=' + this.mainLanguage + '|' + trad[1].language).subscribe(
+        res => {
+          if (res['responseDetails'] === ''){
+            trad[1].value = res['responseData']['translatedText'];
+          }else if (!error){
+            error = true;
+            this.error(res['responseDetails']);
+          }
+
+        }, err => {
+          if (!error){
+            error = true;
+            this.error(err['error']['responseDetails']);
+          }
+        }
+      );
+    }
+
   }
 
   /*async translate() {
@@ -187,7 +209,7 @@ export class TranslatorService {
       return;
     });
   }
-
+  */
   async error(message) {
     const alert = await this.alertController.create({
       header: 'Error',
@@ -195,5 +217,5 @@ export class TranslatorService {
       buttons: ['OK']
     });
     await alert.present();
-  }*/
+  }
 }
