@@ -84,6 +84,8 @@ export class TopMenuComponent implements OnInit {
     return await modal.present();
   }
 
+  
+
   async presentTradConfirm() {
     const alert = await this.alertController.create({
       cssClass: '',

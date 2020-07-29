@@ -98,7 +98,7 @@ export class ImportExportService {
 
   async importCsvFile(file: File, separator = this.settings.folderCharCsv) {
     const csvArray: string[][] = this.CSVToArray(await file.text());
-    let newStructure: Folder = new Folder(this.global.projectName, undefined);
+    let newStructure: Folder = new Folder(this.global.structure.getName(), undefined);
     if (this.settings.importFusion !== 'no') {
       newStructure = this.global.structure;
     }
@@ -144,7 +144,7 @@ export class ImportExportService {
   async importJsonFiles(files: object[], languages: string[]) {
     languages = languages.filter((e, i) => languages.indexOf(e) === i);
     this.global.languages = languages;
-    let newStructure = new Folder(this.global.projectName, undefined);
+    let newStructure = new Folder(this.global.structure.getName(), undefined);
     if (this.settings.importFusion !== 'no') {
       newStructure = this.global.structure;
     }
@@ -241,7 +241,7 @@ export class ImportExportService {
     csv += '\n';
     csv = this.exportToCsv(this.global.structure, csv);
     const blob = new Blob([csv], { type: 'text/csv' });
-    saveAs(blob, this.global.projectName + '.csv');
+    saveAs(blob, this.global.structure.getName() + '.csv');
   }
 
   async downloadJsons() {
@@ -257,7 +257,7 @@ export class ImportExportService {
     }
     const data = await zip.generateAsync({ type: 'blob' });
     const blob = new Blob([data], { type: 'application/zip' });
-    saveAs(blob, this.global.projectName + '.zip');
+    saveAs(blob, this.global.structure.getName() + '.zip');
   }
 
   
@@ -304,7 +304,7 @@ export class ImportExportService {
   async load(file: File) {
     const obj = { default: JSON.parse(await file.text()) };
     console.log(obj);
-    const newStructure = new Folder(this.global.projectName, undefined);
+    const newStructure = new Folder(this.global.structure.getName(), undefined);
     this.global.languages = [];
     this.loadin18(obj, 'default', newStructure);
     console.log(newStructure);
@@ -317,7 +317,7 @@ export class ImportExportService {
     if (json !== JSON.stringify(this.global.lastSavedStrcture)) {
       this.global.updateSavedStructure();
       const blob = new Blob([json], { type: 'application/json' });
-      saveAs(blob, 'project.in18');
+      saveAs(blob, this.global.structure.getName()+'.in18');
     }
   }
 }

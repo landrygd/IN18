@@ -62,7 +62,7 @@ export class TradFolderComponent implements OnInit {
   onNameUpdate(value: string) {
     this.folder.setName(value);
     if (this.folder.isRoot()){
-      this.global.projectName = this.folder.getName();
+      this.global.structure.setName(this.folder.getName());
     }
   }
 
