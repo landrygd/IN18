@@ -36,6 +36,7 @@ async function createWindow () {
     minWidth : 640,
     minHeight : 360,
     show: false,
+    icon: __dirname + '/src/assets/icon/favicon_invert.svg',
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, 'node_modules', '@capacitor', 'electron', 'dist', 'electron-bridge.js')
