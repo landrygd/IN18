@@ -28,15 +28,18 @@ const menuTemplateDev = [
   },
 ];
 
-async function createWindow () {
+const nativeImage = require('electron').nativeImage;
+var image = nativeImage.createFromPath(__dirname + '/src/assets/icon/favicon_invert.png');
+
+async function createWindow() {
   // Define our main window size
   mainWindow = new BrowserWindow({
     height: 920,
     width: 1600,
-    minWidth : 640,
-    minHeight : 360,
+    minWidth: 640,
+    minHeight: 360,
     show: false,
-    icon: __dirname + '/src/assets/icon/favicon_invert.svg',
+    icon: image,
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, 'node_modules', '@capacitor', 'electron', 'dist', 'electron-bridge.js')
@@ -50,11 +53,11 @@ async function createWindow () {
     Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplateDev));
     // If we are developers we might as well open the devtools by default.
     mainWindow.webContents.openDevTools();
-  }else{
+  } else {
     Menu.setApplicationMenu(null);
   }
 
-  if(useSplashScreen) {
+  if (useSplashScreen) {
     splashScreen = new CapacitorSplashScreen(mainWindow);
     splashScreen.init();
   } else {

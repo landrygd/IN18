@@ -1,7 +1,7 @@
 {
   "name": "IN18",
   "version": "1.0.0",
-  "description": "An Amazing Capacitor App",
+  "description": "An i18n translator",
   "main": "index.js",
   "scripts": {
     "electron:start": "electron ./"
