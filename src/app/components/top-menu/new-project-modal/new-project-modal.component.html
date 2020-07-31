@@ -16,36 +16,39 @@
     <ion-card-content>
       <ion-item>
         <ion-label position="floating">Name</ion-label>
-        <ion-input [value]="global.structure.getName()" (ionChange)="structureNameChanged($event.detail.value)"></ion-input>
+        <ion-input [value]="global.structure.getName()" (ionChange)="structureNameChanged($event.detail.value)">
+        </ion-input>
       </ion-item>
     </ion-card-content>
   </ion-card>
   <ion-card>
     <ion-card-header>
       <ion-card-subtitle>Languages</ion-card-subtitle>
+
     </ion-card-header>
     <ion-card-content>
+      <ion-item>
+        <div *ngFor="let language of global.languages; let index=index">
+          <ion-chip>{{language}}</ion-chip>
+        </div>
+      </ion-item>
+
       <ion-button (click)="presentLanguagesModal()" expand="block" fill="clear" shape="round">
         <ion-icon name="globe"></ion-icon> Add languages
       </ion-button>
-      <ion-item *ngIf="global.languages.length>0">
-        <ion-label *ngFor="let language of global.languages">
-          {{language}}
-        </ion-label>
-      </ion-item>
+
     </ion-card-content>
   </ion-card>
 
 
-  
-  
+
+
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
     <ion-buttons slot="secondary">
       <ion-button (click)="dismissModal()" color="medium">
-        <ion-icon slot="start" name="close"></ion-icon>
         Ok
       </ion-button>
     </ion-buttons>

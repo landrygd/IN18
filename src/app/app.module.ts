@@ -29,6 +29,7 @@ import { SettingsModalComponent } from './components/top-menu/settings-modal/set
 import { TranslateModalComponent } from './components/top-menu/translate-modal/translate-modal.component';
 import { AboutModalComponent } from './components/top-menu/about-modal/about-modal.component';
 import { NgxElectronModule } from 'ngx-electron';
+import { NewProjectModalComponent } from './components/top-menu/new-project-modal/new-project-modal.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { NgxElectronModule } from 'ngx-electron';
     ProgressBarComponent,
     SettingsModalComponent,
     TranslateModalComponent,
-    AboutModalComponent
+    AboutModalComponent,
+    NewProjectModalComponent
   ],
   entryComponents: [],
   imports: [

@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter } from '@angular/core';
+import { Component, Input, EventEmitter, HostListener } from '@angular/core';
 import { PopoverController, AlertController, Platform, ModalController } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global.service';
 import { ImportExportService } from 'src/app/services/import-export.service';
@@ -27,19 +27,14 @@ export class PopoverPage {
     this.popoverCtrl.dismiss();
   }
 
-  public onFileSelected(event) {
-    console.log(event.target.files[0]);
-    const file: File = event.target.files[0];
-    this.importExport.load(file);
-    this.popoverCtrl.dismiss();
+  load(){
+    this.popoverCtrl.dismiss("load");
   }
+  
 
   quit() {
-    if (this.electronService.isElectronApp) {
-      App.exitApp();
-    } else {
-      window.close();
-    }
+    this.popoverCtrl.dismiss("quit");
+    
   }
 
   import(files) {
@@ -47,57 +42,16 @@ export class PopoverPage {
   }
 
   save() {
-    this.importExport.download();
-    this.popoverCtrl.dismiss();
+    this.popoverCtrl.dismiss("save");
   }
 
   new() {
-    this.presentNewProject();
-    this.popoverCtrl.dismiss();
+    
+    this.popoverCtrl.dismiss("new");
   }
 
   close() { }
 
-  async presentNewProject() {
-    if (this.global.isSaved()) {
-      
-      this.global.newProject();
-      this.NewProjectModal();
-    } else {
-      const alert = await this.alertController.create({
-        cssClass: '',
-        header: 'Attention',
-        subHeader: '',
-        message: 'Create a new project? The unsave changes of your actual project will be lost.',
-        buttons: [{
-          text: 'No',
-          role: 'cancel',
-          cssClass: 'danger',
-          handler: (blah) => {
-            console.log('cancel');
-          }
-        }, {
-          text: 'Yes',
-          cssClass: 'primary',
-          handler: () => {
-            
-            this.global.newProject();
-            this.NewProjectModal();
-          }
-        }]
-      });
+  
 
-      await alert.present();
-    }
-
-  }
-
-  async NewProjectModal() {
-    const modal = await this.modalController.create({
-      component: NewProjectModalComponent,
-      componentProps: {},
-      cssClass: ''
-    });
-    return await modal.present();
-  }
 }

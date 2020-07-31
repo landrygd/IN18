@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { ModalController, AlertController } from '@ionic/angular';
+import { Component, Input, ViewChild, HostListener } from '@angular/core';
+import { ModalController, AlertController, IonInput } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
@@ -60,6 +60,7 @@ export class LanguagesModalPage {
   onLanguageChange(value: string, id: number){
     this.global.languages[id] = value;
   }
+
 
 
 }

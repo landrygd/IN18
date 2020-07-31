@@ -1,0 +1,48 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Export</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+
+</ion-header>
+
+<ion-content fullscreen>
+
+  
+
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-segment (ionChange)="typeChanged($event.detail.value)" [value]="tab">
+      <ion-segment-button value="json">Json</ion-segment-button>
+      <ion-segment-button value="csv">Csv</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="presentSettingsModal()" color="primary">
+        <ion-icon slot="start" name="settings"></ion-icon>
+        Settings
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="cancel()" color="medium">
+        <ion-icon slot="start" name="close"></ion-icon>
+        Cancel
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button (click)="export()" slot="primary" color="success">
+        <ion-icon slot="start" name="checkmark"></ion-icon>
+        Export
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
