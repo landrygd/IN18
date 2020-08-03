@@ -21,7 +21,7 @@
         <ion-button fill="clear" slot="end" expand="block" shape="round" (click)="selectParent()" *ngIf="!canExpand && !folder.isRoot()">
           <ion-icon name="chevron-up-outline"></ion-icon>
         </ion-button>
-        <ion-button slot="end" expand="block" shape="round" (click)="presentDeleteConfirm()"
+        <ion-button slot="end" expand="block" shape="round" (click)="presentDeleteConfirm()" *ngIf="!folder.isRoot()"
           color="danger">
           <ion-icon name="trash"></ion-icon>
         </ion-button>

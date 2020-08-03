@@ -7,11 +7,16 @@ import { Traduction } from '../classes/traduction';
 import { saveAs } from 'file-saver';
 import { Structure } from '../classes/structure';
 import * as JSZip from 'jszip';
+import { Filesystem, FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImportExportService {
+
+
+  projectPath = '';
+
   constructor(private global: GlobalService, private settings: SettingsService) { }
 
 
@@ -260,7 +265,7 @@ export class ImportExportService {
     saveAs(blob, this.global.structure.getName() + '.zip');
   }
 
-  
+
 
   loadin18(holder: object, key: string, structure: Folder) {
 
@@ -302,6 +307,7 @@ export class ImportExportService {
 
 
   async load(file: File) {
+    console.log(file);
     const obj = { default: JSON.parse(await file.text()) };
     console.log(obj);
     const newStructure = new Folder(this.global.structure.getName(), undefined);
@@ -309,15 +315,41 @@ export class ImportExportService {
     this.loadin18(obj, 'default', newStructure);
     console.log(newStructure);
     this.global.setStructure(newStructure);
+    this.global.updateSavedStructure();
+    this.projectPath = file.path;
   }
 
-  async download() {
+  async download(as = false) {
+    console.log('download');
     const obj = this.global.savein18();
     const json = JSON.stringify(obj);
-    if (!this.global.isSaved()) {
+    if (!this.global.isSaved() || as) {
+      if (this.projectPath === undefined || as){
+        this.fileSaveAs(json);
+      }else{
+        this.fileWrite(json);
+      }
+    }
+  }
+
+  fileSaveAs(data: string, name = this.global.structure.getName() + '.in18'){
+    const blob = new Blob([data], { type: 'application/json' });
+    saveAs(blob, name);
+    this.global.updateSavedStructure();
+  }
+
+  async fileWrite(data: string) {
+    console.log(this.projectPath);
+    try {
+      const result = await Filesystem.writeFile({
+        path: this.projectPath,
+        data,
+        encoding: FilesystemEncoding.UTF8
+      });
+      console.log(result);
       this.global.updateSavedStructure();
-      const blob = new Blob([json], { type: 'application/json' });
-      saveAs(blob, this.global.structure.getName()+'.in18');
+    } catch (e) {
+      this.fileSaveAs(data);
     }
   }
 }

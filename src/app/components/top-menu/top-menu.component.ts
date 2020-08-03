@@ -38,6 +38,8 @@ export class TopMenuComponent implements OnInit {
   shiftDown = false;
   canNewProject = true;
 
+  forceClose = false;
+
   @ViewChild('load', { static: false }) loadInput: ElementRef;
 
 
@@ -47,7 +49,7 @@ export class TopMenuComponent implements OnInit {
     public alertController: AlertController,
     public global: GlobalService,
     public translator: TranslatorService,
-    private settings: SettingsService,
+    private setting: SettingsService,
     private importExport: ImportExportService,
     private electronService: ElectronService
   ) { }
@@ -63,20 +65,23 @@ export class TopMenuComponent implements OnInit {
       translucent: true
     });
     await popover.present();
-    const data: String = (await popover.onDidDismiss()).data
-    console.log(data)
+    const data: string = (await popover.onDidDismiss()).data;
+    console.log(data);
     if (data !== undefined) {
       switch (data) {
-        case "load":
-          this.loadInput.nativeElement.click()
+        case 'load':
+          this.loadInput.nativeElement.click();
           break;
-        case "close":
+        case 'close':
           this.close();
           break;
-        case "save":
+        case 'save':
           this.importExport.download();
           break;
-        case "new":
+        case 'saveas':
+          this.importExport.download(true);
+          break;
+        case 'new':
           this.presentNewProject();
           break;
 
@@ -85,14 +90,14 @@ export class TopMenuComponent implements OnInit {
 
   }
 
-  async close(){
+  async close() {
     window.close();
   }
 
-  quit(){
+  quit() {
     if (this.electronService.isElectronApp) {
       App.exitApp();
-    } 
+    }
   }
 
   async presentLanguagesModal(id: number) {
@@ -162,7 +167,7 @@ export class TopMenuComponent implements OnInit {
   async export() {
     const modal = await this.modalController.create({
       component: ExportModalComponent,
-      componentProps: { tab: this.settings.tabImportExport },
+      componentProps: { tab: this.setting.tabImportExport },
     });
     await modal.present();
     const docs: Import = (await modal.onDidDismiss()).data;
@@ -185,7 +190,7 @@ export class TopMenuComponent implements OnInit {
   async upload() {
     const modal = await this.modalController.create({
       component: UploadModalComponent,
-      componentProps: { tab: this.settings.tabImportExport },
+      componentProps: { tab: this.setting.tabImportExport },
     });
     await modal.present();
     const docs: Import = (await modal.onDidDismiss()).data;
@@ -229,7 +234,7 @@ export class TopMenuComponent implements OnInit {
   }
 
   onFileSelected(event) {
-    console.log(event.target.files[0]);
+    console.log(event);
     const file: File = event.target.files[0];
     this.importExport.load(file);
   }
@@ -237,36 +242,37 @@ export class TopMenuComponent implements OnInit {
 
   @HostListener('window:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.keyCode == 17) {
+    // tslint:disable: deprecation
+    if (event.keyCode === 17) {
       this.ctrlDown = true;
     }
-    else if (event.keyCode == 16) {
+    else if (event.keyCode === 16) {
       this.shiftDown = true;
     }
-    else if (event.keyCode == 83 && this.ctrlDown) {
+    else if (event.keyCode === 83 && this.ctrlDown) {
       this.importExport.download();
     }
-    else if (event.keyCode == 79 && this.ctrlDown) {
-      this.loadInput.nativeElement.click()
+    else if (event.keyCode === 79 && this.ctrlDown) {
+      this.loadInput.nativeElement.click();
     }
-    else if (event.keyCode == 78 && this.ctrlDown) {
+    else if (event.keyCode === 78 && this.ctrlDown) {
       this.presentNewProject();
     }
-    else if (event.keyCode == 81 && this.ctrlDown) {
-      this.close()
+    else if (event.keyCode === 81 && this.ctrlDown) {
+      this.close();
     }
 
-    
+
 
 
   }
 
   @HostListener('window:keyup', ['$event'])
   handleKeyboardEvent2(event: KeyboardEvent) {
-    if (event.keyCode == 17) {
+    if (event.keyCode === 17) {
       this.ctrlDown = false;
     }
-    else if (event.keyCode == 16) {
+    else if (event.keyCode === 16) {
       this.shiftDown = false;
     }
   }
@@ -322,36 +328,32 @@ export class TopMenuComponent implements OnInit {
 
   @HostListener('window:beforeunload', ['$event'])
   async handleClose($event) {
-    let res = false;
-    if (this.global.isSaved()) {
-      res = true;
-    }else{
+    if (!this.global.isSaved() && !this.forceClose) {
+      $event.returnValue = false;
       const alert = await this.alertController.create({
         cssClass: '',
         header: 'Attention',
         subHeader: '',
-        message: "Are you sure want to close? Some change aren't saved",
+        message: 'Are you sure want to close? Some change aren\'t saved',
         buttons: [{
           text: 'No',
           role: 'cancel',
           cssClass: 'danger',
           handler: (blah) => {
-            res = false;
+            //
           }
         }, {
           text: 'Yes',
           cssClass: 'primary',
           handler: () => {
-            res = true;
+            this.forceClose = true;
+            close();
           }
         }]
       });
-  
+
       await alert.present();
     }
-    console.log(res)
-    $event.returnValue = res;
-    if(res) { this.quit(); }
   }
 }
 

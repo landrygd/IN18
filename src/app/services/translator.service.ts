@@ -10,6 +10,13 @@ export interface GoogleObj {
   target: string;
 }
 
+export interface ResponseTrad{
+  error?: ResponseTrad;
+  responseData?: ResponseTrad;
+  translatedText?: string;
+  responseDetails?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -74,17 +81,19 @@ export class TranslatorService {
     for (const trad of this.traductionsTargeted){
       this.http.get(this.api + '?q=' + trad[0].value + '&langpair=' + this.mainLanguage + '|' + trad[1].language).subscribe(
         res => {
-          if (res['responseDetails'] === ''){
-            trad[1].value = res['responseData']['translatedText'];
+          const r = res as ResponseTrad;
+          if (r.responseDetails === ''){
+            trad[1].value = r.responseData.translatedText;
           }else if (!error){
             error = true;
-            this.error(res['responseDetails']);
+            this.error(r.responseDetails);
           }
 
         }, err => {
           if (!error){
             error = true;
-            this.error(err['error']['responseDetails']);
+            const r = err as ResponseTrad;
+            this.error(r.error.responseDetails);
           }
         }
       );
