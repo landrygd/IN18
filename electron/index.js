@@ -29,7 +29,7 @@ const menuTemplateDev = [
 ];
 
 const nativeImage = require('electron').nativeImage;
-var image = nativeImage.createFromPath(__dirname + '/src/assets/icon/favicon_invert.png');
+var image = nativeImage.createFromPath(__dirname + '/src/assets/icon/favicon_invert.ico');
 
 async function createWindow() {
   // Define our main window size

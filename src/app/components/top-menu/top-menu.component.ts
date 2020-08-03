@@ -86,40 +86,13 @@ export class TopMenuComponent implements OnInit {
   }
 
   async close(){
-    if (this.global.isSaved()) {
-      this.quit()
-    }else{
-      const alert = await this.alertController.create({
-        cssClass: '',
-        header: 'Attention',
-        subHeader: '',
-        message: "Are you sure want to close? Some change aren't saved",
-        buttons: [{
-          text: 'No',
-          role: 'cancel',
-          cssClass: 'danger',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'Yes',
-          cssClass: 'primary',
-          handler: () => {
-            this.quit()
-          }
-        }]
-      });
-  
-      await alert.present();
-    }
+    window.close();
   }
 
   quit(){
     if (this.electronService.isElectronApp) {
-      close();
-    } else {
-      window.close();
-    }
+      App.exitApp();
+    } 
   }
 
   async presentLanguagesModal(id: number) {
@@ -378,7 +351,7 @@ export class TopMenuComponent implements OnInit {
     }
     console.log(res)
     $event.returnValue = res;
-    if(res) { App.exitApp(); }
+    if(res) { this.quit(); }
   }
 }
 
