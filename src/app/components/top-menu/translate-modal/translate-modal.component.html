@@ -39,12 +39,12 @@
     <ion-card-content>
       <ion-item>
         <ion-label>All unfilled</ion-label>
-        <ion-checkbox slot="end" [value]="translator.unfilled" (ionChange)="unfilledChanged($event.detail.value)"></ion-checkbox>
+        <ion-checkbox slot="end" [checked]="translator.unfilled" (ionChange)="unfilledChanged()"></ion-checkbox>
       </ion-item>
 
       <ion-item>
         <ion-label>All unverified (Be careful, this can erase your translation)</ion-label>
-        <ion-checkbox slot="end" [value]="translator.unverified" (ionChange)="unverifiedChanged($event.detail.value)"></ion-checkbox>
+        <ion-checkbox slot="end" [checked]="translator.unverified" (ionChange)="unverifiedChanged()"></ion-checkbox>
       </ion-item>
     </ion-card-content>
   </ion-card>

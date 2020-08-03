@@ -27,12 +27,12 @@ export class TranslateModalComponent implements OnInit {
     return this.global.languages.filter(l => l !== this.translator.mainLanguage);
   }
 
-  unfilledChanged(value) {
-    this.translator.unfilled = value;
+  unfilledChanged() {
+    this.translator.unfilled = !this.translator.unfilled;
   }
 
-  unverifiedChanged(value) {
-    this.translator.unverified = value;
+  unverifiedChanged() {
+    this.translator.unverified = !this.translator.unverified;
   }
 
   dismissModal() {

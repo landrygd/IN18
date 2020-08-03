@@ -64,13 +64,14 @@ export class TopMenuComponent implements OnInit {
     });
     await popover.present();
     const data: String = (await popover.onDidDismiss()).data
+    console.log(data)
     if (data !== undefined) {
       switch (data) {
         case "load":
           this.loadInput.nativeElement.click()
           break;
-        case "quit":
-          close();
+        case "close":
+          this.close();
           break;
         case "save":
           this.importExport.download();
@@ -85,7 +86,7 @@ export class TopMenuComponent implements OnInit {
   }
 
   async close(){
-    if (JSON.stringify(this.global.savein18()) === JSON.stringify(this.global.lastSavedStrcture)) {
+    if (this.global.isSaved()) {
       this.quit()
     }else{
       const alert = await this.alertController.create({
@@ -115,7 +116,7 @@ export class TopMenuComponent implements OnInit {
 
   quit(){
     if (this.electronService.isElectronApp) {
-      App.exitApp();
+      close();
     } else {
       window.close();
     }
@@ -344,6 +345,40 @@ export class TopMenuComponent implements OnInit {
     await modal.present();
     await modal.onDidDismiss();
     this.canNewProject = true;
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  async handleClose($event) {
+    let res = false;
+    if (this.global.isSaved()) {
+      res = true;
+    }else{
+      const alert = await this.alertController.create({
+        cssClass: '',
+        header: 'Attention',
+        subHeader: '',
+        message: "Are you sure want to close? Some change aren't saved",
+        buttons: [{
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'danger',
+          handler: (blah) => {
+            res = false;
+          }
+        }, {
+          text: 'Yes',
+          cssClass: 'primary',
+          handler: () => {
+            res = true;
+          }
+        }]
+      });
+  
+      await alert.present();
+    }
+    console.log(res)
+    $event.returnValue = res;
+    if(res) { App.exitApp(); }
   }
 }
 

@@ -314,7 +314,7 @@ export class ImportExportService {
   async download() {
     const obj = this.global.savein18();
     const json = JSON.stringify(obj);
-    if (json !== JSON.stringify(this.global.lastSavedStrcture)) {
+    if (!this.global.isSaved()) {
       this.global.updateSavedStructure();
       const blob = new Blob([json], { type: 'application/json' });
       saveAs(blob, this.global.structure.getName()+'.in18');

@@ -26,7 +26,7 @@ export class TranslatorService {
   // untranslated: any;
   languages: string[] = [];
   mainLanguage: string;
-  unfilled = false;
+  unfilled = true;
   unverified = false;
 
   traductionsTargeted: Traduction[][];

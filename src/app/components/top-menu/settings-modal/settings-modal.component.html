@@ -19,7 +19,7 @@
     <ion-card-content>
       <ion-item>
         <ion-label>In a folder, extend all traductions of an item</ion-label>
-        <ion-checkbox slot="end" [value]="extendTrad" (ionChange)="extendTradChanged($event.detail.value)">
+        <ion-checkbox slot="end" [checked]="extendTrad" (ionChange)="extendTradChanged()">
         </ion-checkbox>
       </ion-item>
     </ion-card-content>
@@ -46,7 +46,7 @@
       </ion-item>
       <ion-item>
         <ion-label>Auto validate filled translations</ion-label>
-        <ion-checkbox slot="end" [value]="autoValidate" (ionChange)="autoValidateChanged($event.detail.value)">
+        <ion-checkbox slot="end" [checked]="autoValidate" (ionChange)="autoValidateChanged()">
         </ion-checkbox>
       </ion-item>
     </ion-card-content>

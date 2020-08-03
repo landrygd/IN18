@@ -74,6 +74,8 @@ async function createWindow() {
 // Some Electron APIs can only be used after this event occurs.
 app.on('ready', createWindow);
 
+
+
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
   // On OS X it is common for applications and their menu bar

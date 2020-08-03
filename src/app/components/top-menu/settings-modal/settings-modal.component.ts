@@ -29,8 +29,8 @@ export class SettingsModalComponent implements OnInit {
     this.tab = value;
   }
 
-  extendTradChanged(value){
-    this.extendTrad = value;
+  extendTradChanged(){
+    this.extendTrad = !this.extendTrad;
     this.change = true;
   }
 
@@ -60,8 +60,8 @@ export class SettingsModalComponent implements OnInit {
 
   }
 
-  autoValidateChanged(value){
-    this.autoValidate = value;
+  autoValidateChanged(){
+    this.autoValidate = !this.autoValidate;
     this.change = true;
   }
 

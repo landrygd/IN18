@@ -33,7 +33,7 @@ export class PopoverPage {
   
 
   quit() {
-    this.popoverCtrl.dismiss("quit");
+    this.popoverCtrl.dismiss("close");
     
   }
 
