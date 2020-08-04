@@ -1,4 +1,5 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron');
+const fs = require('fs');
 const isDevMode = require('electron-is-dev');
 const { CapacitorSplashScreen, configCapacitor } = require('@capacitor/electron');
 
@@ -39,7 +40,7 @@ async function createWindow() {
     minWidth: 640,
     minHeight: 360,
     show: false,
-    icon: __dirname + '/src/assets/icon/favicon_invert.ico',
+    //icon: __dirname + '/src/assets/icon/favicon_invert.ico',
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, 'node_modules', '@capacitor', 'electron', 'dist', 'electron-bridge.js')
@@ -94,3 +95,39 @@ app.on('activate', function () {
 });
 
 // Define any IPC or other custom functionality below here
+// read the file and send data to the render process
+ipcMain.on('get-file-data', function(event) {
+  var data = null
+  if (process.platform == 'win32' && process.argv.length >= 2) {
+    var openFilePath = process.argv[1]
+    data = openFilePath
+  }
+  event.returnValue = data
+})
+
+
+ipcMain.on('save-file', async function(event,json,path,defaultName) {
+
+  let success = false;
+  let canceled = false;
+  if (path === undefined){
+    const { filePath, cancel } = await dialog.showSaveDialog({
+      defaultPath: defaultName,
+      filters : { name: 'In18 project', extensions: ['in18'] }
+      
+    });
+    path = filePath;
+    canceled = cancel;
+  }
+  
+
+  if (path && !canceled) {
+    
+    fs.writeFile(path, json, (err) => {
+      if (err) throw err;
+      success = true
+    });
+  }
+
+  event.reply('save-file', path)
+});

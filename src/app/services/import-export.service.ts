@@ -8,6 +8,7 @@ import { saveAs } from 'file-saver';
 import { Structure } from '../classes/structure';
 import * as JSZip from 'jszip';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
+import { ElectronService } from 'ngx-electron';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class ImportExportService {
 
   projectPath = '';
 
-  constructor(private global: GlobalService, private settings: SettingsService) { }
+  constructor(private global: GlobalService, private settings: SettingsService, private electronService:ElectronService) { }
 
 
   CSVToArray(strData, strDelimiter = ','): string[][] {
@@ -324,10 +325,15 @@ export class ImportExportService {
     const obj = this.global.savein18();
     const json = JSON.stringify(obj);
     if (!this.global.isSaved() || as) {
-      if (this.projectPath === undefined || as){
+      if (this.projectPath === undefined || as || !this.electronService.isElectronApp){
         this.fileSaveAs(json);
       }else{
-        this.fileWrite(json);
+        let tmp;
+        if (!as){
+          tmp = this.projectPath;
+        }
+        this.electronService.ipcRenderer.send('save-file',json,tmp,this.global.structure.getName() + '.in18');
+        
       }
     }
   }

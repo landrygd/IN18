@@ -52,9 +52,30 @@ export class TopMenuComponent implements OnInit {
     private setting: SettingsService,
     private importExport: ImportExportService,
     private electronService: ElectronService
-  ) { }
+  ) {
+    if (this.electronService.isElectronApp) {
+      this.electronService.ipcRenderer.on('save-file', this.fileSaved);
+      var data = this.electronService.ipcRenderer.sendSync('get-file-data');
+      if (data ===  null) {
+        console.log("There is no file")
+    } else {
+        // Do something with the file.
+        console.log(data)
+    }
+    }
+    
+
+   }
 
   ngOnInit() { }
+
+  async fileSaved(filePath) {
+    console.log("aaa")
+    Modals.alert({
+      title: 'aaa',
+      message: filePath
+    });
+  }
 
   async presentPopover(ev: any, id: number) {
     const popover = await this.popoverCtrl.create({

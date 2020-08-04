@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 import { SettingsService } from 'src/app/services/settings.service';
 
@@ -104,6 +104,16 @@ export class SettingsModalComponent implements OnInit {
     this.settings.importFusion = this.importFusion;
     this.settings.autoValidate = this.autoValidate;
     this.change = false;
+    this.settings.save();
+  }
+  
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    // tslint:disable: deprecation
+    if (event.keyCode === 13) {
+      this.save();
+    }
   }
 
 }
