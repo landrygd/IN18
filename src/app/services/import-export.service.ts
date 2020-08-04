@@ -10,16 +10,49 @@ import * as JSZip from 'jszip';
 import { Filesystem, FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
 import { ElectronService } from 'ngx-electron';
 
+let g: GlobalService;
+
+let self: ImportExportService;
+
 @Injectable({
   providedIn: 'root'
 })
 export class ImportExportService {
 
+  constructor(private global: GlobalService, private settings: SettingsService, private electronService: ElectronService) {
+    g = global;
+    self = this;
+    if (this.electronService.isElectronApp) {
+      this.electronService.ipcRenderer.on('save-file', this.fileSaved);
+      this.electronService.ipcRenderer.on('load-file', this.fileLoaded);
+      const path = this.electronService.ipcRenderer.sendSync('get-file-data');
+      if (path === null) {
+        console.log('There is no file');
+      } else {
+        alert(path);
+        this.load_in18(path, true);
+      }
+    }
 
-  projectPath = '';
+  }
 
-  constructor(private global: GlobalService, private settings: SettingsService, private electronService:ElectronService) { }
+  async fileSaved(event, filePath, success) {
+    if (success) {
+      g.projectPath = filePath;
+      g.updateSavedStructure();
+    }
+    console.log(filePath);
+    console.log(success);
+  }
 
+  async fileLoaded(event, filePath, file, success) {
+    console.log(filePath);
+    console.log(success);
+    if (success) {
+      self.load(file, filePath);
+    }
+
+  }
 
   CSVToArray(strData, strDelimiter = ','): string[][] {
 
@@ -204,7 +237,7 @@ export class ImportExportService {
     }
   }
 
-  exportToCsv(structure: Structure, csv: string, key: string = '', delimitor = ',', separator = this.settings.folderCharCsv): string{
+  exportToCsv(structure: Structure, csv: string, key: string = '', delimitor = ',', separator = this.settings.folderCharCsv): string {
     if (structure instanceof Folder) {
       key += structure.getName() + separator;
       for (const folder of structure.folderList) {
@@ -239,9 +272,9 @@ export class ImportExportService {
     return json;
   }
 
-  async downloadCsv(delimitor = ',', separator = this.settings.folderCharCsv){
+  async downloadCsv(delimitor = ',', separator = this.settings.folderCharCsv) {
     let csv = 'id';
-    for (const language of this.global.languages){
+    for (const language of this.global.languages) {
       csv += delimitor + language;
     }
     csv += '\n';
@@ -276,7 +309,8 @@ export class ImportExportService {
       for (k in json) {
         if (Object.prototype.hasOwnProperty.call(json, k)) {
           const keys = Object.keys(json[k]);
-          if (typeof json[k] === 'object' && json[k][keys[0]].hasOwnProperty('value') && typeof json[k][keys[0]].value === 'string') {
+          if (typeof json[k] === 'object' && json[k][keys[0]] !== undefined && json[k][keys[0]].hasOwnProperty('value')
+          && typeof json[k][keys[0]].value === 'string') {
             for (const i of keys) {
               this.global.addLanguage(i);
               const tradGroup = structure.findTraductionGroup(k);
@@ -306,10 +340,19 @@ export class ImportExportService {
     }
   }
 
+  async load_in18(path = '', noExplorer = false) {
+    if (this.electronService.isElectronApp) {
+      this.electronService.ipcRenderer.send('load-file', path, noExplorer);
+    }
+  }
 
-  async load(file: File) {
+  async load_file(file: File) {
     console.log(file);
-    const obj = { default: JSON.parse(await file.text()) };
+    this.load(await file.text(), file.path);
+  }
+
+  async load(data: string, path: string) {
+    const obj = { default: JSON.parse(data) };
     console.log(obj);
     const newStructure = new Folder(this.global.structure.getName(), undefined);
     this.global.languages = [];
@@ -317,7 +360,7 @@ export class ImportExportService {
     console.log(newStructure);
     this.global.setStructure(newStructure);
     this.global.updateSavedStructure();
-    this.projectPath = file.path;
+    this.global.projectPath = path;
   }
 
   async download(as = false) {
@@ -325,30 +368,30 @@ export class ImportExportService {
     const obj = this.global.savein18();
     const json = JSON.stringify(obj);
     if (!this.global.isSaved() || as) {
-      if (this.projectPath === undefined || as || !this.electronService.isElectronApp){
+      if (!this.electronService.isElectronApp) {
         this.fileSaveAs(json);
-      }else{
+      } else {
         let tmp;
-        if (!as){
-          tmp = this.projectPath;
+        if (!as) {
+          tmp = this.global.projectPath;
         }
-        this.electronService.ipcRenderer.send('save-file',json,tmp,this.global.structure.getName() + '.in18');
-        
+        console.log(tmp);
+        this.electronService.ipcRenderer.send('save-file', json, tmp, this.global.structure.getName() + '.in18');
       }
     }
   }
 
-  fileSaveAs(data: string, name = this.global.structure.getName() + '.in18'){
+  fileSaveAs(data: string, name = this.global.structure.getName() + '.in18') {
     const blob = new Blob([data], { type: 'application/json' });
     saveAs(blob, name);
     this.global.updateSavedStructure();
   }
 
-  async fileWrite(data: string) {
-    console.log(this.projectPath);
+  /*async fileWrite(data: string) {
+    console.log(this.global.projectPath);
     try {
       const result = await Filesystem.writeFile({
-        path: this.projectPath,
+        path: this.global.projectPath,
         data,
         encoding: FilesystemEncoding.UTF8
       });
@@ -357,5 +400,5 @@ export class ImportExportService {
     } catch (e) {
       this.fileSaveAs(data);
     }
-  }
+  }*/
 }

@@ -53,29 +53,9 @@ export class TopMenuComponent implements OnInit {
     private importExport: ImportExportService,
     private electronService: ElectronService
   ) {
-    if (this.electronService.isElectronApp) {
-      this.electronService.ipcRenderer.on('save-file', this.fileSaved);
-      var data = this.electronService.ipcRenderer.sendSync('get-file-data');
-      if (data ===  null) {
-        console.log("There is no file")
-    } else {
-        // Do something with the file.
-        console.log(data)
-    }
-    }
-    
-
    }
 
   ngOnInit() { }
-
-  async fileSaved(filePath) {
-    console.log("aaa")
-    Modals.alert({
-      title: 'aaa',
-      message: filePath
-    });
-  }
 
   async presentPopover(ev: any, id: number) {
     const popover = await this.popoverCtrl.create({
@@ -91,7 +71,11 @@ export class TopMenuComponent implements OnInit {
     if (data !== undefined) {
       switch (data) {
         case 'load':
-          this.loadInput.nativeElement.click();
+          if (this.electronService.isElectronApp){
+            this.importExport.load_in18();
+          }else{
+            this.loadInput.nativeElement.click();
+          }
           break;
         case 'close':
           this.close();
@@ -257,7 +241,7 @@ export class TopMenuComponent implements OnInit {
   onFileSelected(event) {
     console.log(event);
     const file: File = event.target.files[0];
-    this.importExport.load(file);
+    this.importExport.load_file(file);
   }
 
 

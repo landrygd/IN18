@@ -11,38 +11,38 @@ export class SettingsService {
   importFusion = 'no';
   autoValidate = false;
 
-  constructor() { 
+  constructor() {
     this.load();
   }
 
   save(){
-    localStorage.setItem('extendTrad', this.extendTrad?'1':'0');
-    localStorage.setItem('autoValidate', this.autoValidate?'1':'0');
+    localStorage.setItem('extendTrad', this.extendTrad ? '1' : '0');
+    localStorage.setItem('autoValidate', this.autoValidate ? '1' : '0');
     localStorage.setItem('tabImportExport', this.tabImportExport);
     localStorage.setItem('folderCharCsv', this.folderCharCsv);
     localStorage.setItem('importFusion', this.importFusion);
   }
 
   load(){
-    const new_extendTrad = localStorage.getItem('extendTrad');
-    if (new_extendTrad !== undefined && new_extendTrad!==null){
-      this.extendTrad = new_extendTrad=='1';
+    const newExtendTrad = localStorage.getItem('extendTrad');
+    if (newExtendTrad !== undefined && newExtendTrad !== null){
+      this.extendTrad = newExtendTrad === '1';
     }
-    const new_autoValidate = localStorage.getItem('autoValidate');
-    if (new_autoValidate !== undefined && new_autoValidate!==null){
-      this.autoValidate = new_autoValidate=='1';
+    const newAutoValidate = localStorage.getItem('autoValidate');
+    if (newAutoValidate !== undefined && newAutoValidate !== null){
+      this.autoValidate = newAutoValidate === '1';
     }
-    const new_tabImportExport = localStorage.getItem('tabImportExport');
-    if (new_tabImportExport !== undefined && new_tabImportExport!==null){
-      this.tabImportExport = new_tabImportExport;
+    const newTabImportExport = localStorage.getItem('tabImportExport');
+    if (newTabImportExport !== undefined && newTabImportExport !== null){
+      this.tabImportExport = newTabImportExport;
     }
-    const new_folderCharCsv = localStorage.getItem('folderCharCsv');
-    if (new_folderCharCsv !== undefined && new_folderCharCsv!==null){
-      this.folderCharCsv = new_folderCharCsv;
+    const newFolderCharCsv = localStorage.getItem('folderCharCsv');
+    if (newFolderCharCsv !== undefined && newFolderCharCsv !== null){
+      this.folderCharCsv = newFolderCharCsv;
     }
-    const new_importFusion = localStorage.getItem('importFusion');
-    if (new_importFusion !== undefined && new_importFusion!==null){
-      this.importFusion = new_importFusion;
+    const newImportFusion = localStorage.getItem('importFusion');
+    if (newImportFusion !== undefined && newImportFusion !== null){
+      this.importFusion = newImportFusion;
     }
   }
 }

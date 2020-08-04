@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, dialog, ipcRenderer } = require('electron');
 const fs = require('fs');
 const isDevMode = require('electron-is-dev');
 const { CapacitorSplashScreen, configCapacitor } = require('@capacitor/electron');
@@ -75,7 +75,9 @@ async function createWindow() {
 // Some Electron APIs can only be used after this event occurs.
 app.on('ready', createWindow);
 
-
+app.on('open-file', (event, path) => {
+  console.log(path);
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
@@ -106,14 +108,14 @@ ipcMain.on('get-file-data', function(event) {
 })
 
 
-ipcMain.on('save-file', async function(event,json,path,defaultName) {
+ipcMain.on('save-file', async function(event,json,path = undefined,defaultName = '') {
 
   let success = false;
   let canceled = false;
   if (path === undefined){
     const { filePath, cancel } = await dialog.showSaveDialog({
       defaultPath: defaultName,
-      filters : { name: 'In18 project', extensions: ['in18'] }
+      filters : [{ name: 'In18 project', extensions: ['in18'] }]
       
     });
     path = filePath;
@@ -124,10 +126,27 @@ ipcMain.on('save-file', async function(event,json,path,defaultName) {
   if (path && !canceled) {
     
     fs.writeFile(path, json, (err) => {
-      if (err) throw err;
+      if (!err) throw err;
       success = true
     });
   }
 
-  event.reply('save-file', path)
+  event.reply('save-file', path, !canceled)
+});
+
+ipcMain.on('load-file', async function(event, path = '', noExplorer = false){
+  let canceled = false;
+  if (!noExplorer){
+    const data = await dialog.showOpenDialog({
+      defaultPath: path,
+      filters : [{ name: 'In18 project', extensions: ['in18'] }]
+      
+    });
+    path = data.filePaths[0]
+    canceled = data.canceled
+  }
+  
+  
+  const file = fs.readFileSync(path, {encoding:'utf8', flag:'r'}); 
+ event.reply('load-file', path, file, !canceled)
 });

@@ -16,7 +16,8 @@ import { ImportExportService } from './import-export.service';
   providedIn: 'root'
 })
 export class GlobalService {
-structure: Folder = new Folder('project_name', undefined);
+  projectPath: string;
+  structure: Folder = new Folder('project_name', undefined);
   lastSavedStrcture: object;
   selectedStructure: Structure;
   selectedFolder: Folder;
@@ -51,7 +52,7 @@ structure: Folder = new Folder('project_name', undefined);
   }
 
   isSaved(){
-    return JSON.stringify(this.lastSavedStrcture) == JSON.stringify(this.savein18(this.structure));
+    return JSON.stringify(this.lastSavedStrcture) === JSON.stringify(this.savein18(this.structure));
   }
 
   // get selectedstructure only if it's an item
@@ -104,7 +105,7 @@ structure: Folder = new Folder('project_name', undefined);
     this.setStructure(new Folder('project_name', undefined));
     this.languages = [];
     this.setSelectedStructure();
-    this.updateSavedStructure();
+    this.projectPath = undefined;
   }
 
   /*test() {
