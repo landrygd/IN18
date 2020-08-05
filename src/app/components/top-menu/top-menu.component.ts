@@ -27,7 +27,7 @@ interface Menu {
   value?: any;
 }
 
-let self;
+
 
 @Component({
   selector: 'app-top-menu',
@@ -55,23 +55,10 @@ export class TopMenuComponent implements OnInit {
     private importExport: ImportExportService,
     private electronService: ElectronService
   ) {
-    self = this;
-    if (this.electronService.isElectronApp) {
-      //this.electronService.ipcRenderer.on('save-file', this.fileSaved);
-      this.electronService.ipcRenderer.on('load-file', this.fileLoaded);
-    }
-   }
 
-  ngOnInit() { }
-
-  async fileLoaded(event, filePath, file, success) {
-    console.log('top menu');
-    console.log(success);
-    console.log(self.global.structure);
   }
 
-  
-
+  ngOnInit() { }
   async presentPopover(ev: any, id: number) {
     const popover = await this.popoverCtrl.create({
       component: PopoverPage,
@@ -86,9 +73,9 @@ export class TopMenuComponent implements OnInit {
     if (data !== undefined) {
       switch (data) {
         case 'load':
-          if (this.electronService.isElectronApp){
+          if (this.electronService.isElectronApp) {
             this.importExport.load_in18();
-          }else{
+          } else {
             this.loadInput.nativeElement.click();
           }
           break;
@@ -278,12 +265,13 @@ export class TopMenuComponent implements OnInit {
       this.ctrlDown = false;
       this.importExport.download();
     }
-    
+
     else if (event.keyCode === 79 && this.ctrlDown) {
       this.ctrlDown = false;
-      if (this.electronService.isElectronApp){
-        this.importExport.load_in18();
-      }else{
+      if (this.electronService.isElectronApp) {
+        // this.importExport.load_in18();
+        this.loadInput.nativeElement.click();
+      } else {
         this.loadInput.nativeElement.click();
       }
     }

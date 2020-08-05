@@ -131,7 +131,7 @@ ipcMain.on('save-file', async function(event,json,path = undefined,defaultName =
     });
   }
 
-  event.reply('save-file', path, !canceled)
+  event.reply('file-saved', path, !canceled)
 });
 
 ipcMain.on('load-file', async function(event, path = '', noExplorer = false){
@@ -148,5 +148,5 @@ ipcMain.on('load-file', async function(event, path = '', noExplorer = false){
   
   
   const file = fs.readFileSync(path, {encoding:'utf8', flag:'r'}); 
- event.reply('load-file', path, file, !canceled)
+ event.reply('file-loaded', path, file, !canceled)
 });

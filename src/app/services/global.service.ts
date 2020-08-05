@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ChangeDetectorRef, Inject } from '@angular/core';
 
 
 
@@ -53,6 +53,10 @@ export class GlobalService {
 
   isSaved(){
     return JSON.stringify(this.lastSavedStrcture) === JSON.stringify(this.savein18(this.structure));
+  }
+
+  getProjectName(){
+    return this.structure.getName();
   }
 
   // get selectedstructure only if it's an item

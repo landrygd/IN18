@@ -20,13 +20,10 @@ let self: ImportExportService;
 })
 export class ImportExportService {
 
-  constructor(private global: GlobalService, private settings: SettingsService, private electronService: ElectronService,
-    private toastController: ToastController) {
+  constructor(private global: GlobalService, private settings: SettingsService, private electronService: ElectronService) {
     g = global;
     self = this;
     if (this.electronService.isElectronApp) {
-      this.electronService.ipcRenderer.on('save-file', this.fileSaved);
-      this.electronService.ipcRenderer.on('load-file', this.fileLoaded);
       const path = this.electronService.ipcRenderer.sendSync('get-file-data');
       if (path === null) {
         console.log('There is no file');
@@ -35,36 +32,6 @@ export class ImportExportService {
       }
     }
 
-  }
-
-  async fileSaved(event, filePath, success) {
-    if (success && filePath!='' && filePath!=undefined) {
-      g.projectPath = filePath;
-      g.updateSavedStructure();
-      console.log('saved')
-    }
-    console.log(filePath);
-    console.log(success);
-    
-  }
-
-  async fileLoaded(event, filePath, file, success) {
-    console.log(filePath);
-    console.log(success);
-    if (success) {
-      await self.load(file, filePath);
-      self.presentToast();
-    }
-    console.log(g.structure);
-  }
-
-  async presentToast() {
-    const toast = await this.toastController.create({
-      message: 'Your settings have been saved.',
-      duration: 2000
-    });
-    await toast.present();
-    
   }
 
   CSVToArray(strData, strDelimiter = ','): string[][] {
@@ -153,6 +120,8 @@ export class ImportExportService {
     let newStructure: Folder = new Folder(this.global.structure.getName(), undefined);
     if (this.settings.importFusion !== 'no') {
       newStructure = this.global.structure;
+    }else{
+      this.global.projectPath = undefined;
     }
     if (csvArray.length > 1) {
       const languages: string[] = [];
@@ -199,6 +168,8 @@ export class ImportExportService {
     let newStructure = new Folder(this.global.structure.getName(), undefined);
     if (this.settings.importFusion !== 'no') {
       newStructure = this.global.structure;
+    }else{
+      this.global.projectPath = undefined;
     }
     for (let i = 0; i < languages.length; i++) {
 
@@ -314,7 +285,7 @@ export class ImportExportService {
 
 
 
-  async loadin18(holder: object, key: string, structure: Folder) {
+  loadin18(holder: object, key: string, structure: Folder) {
 
     let k;
     const json = holder[key];
