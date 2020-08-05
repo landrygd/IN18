@@ -7,8 +7,9 @@ import { Traduction } from '../classes/traduction';
 import { saveAs } from 'file-saver';
 import { Structure } from '../classes/structure';
 import * as JSZip from 'jszip';
-import { Filesystem, FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
+import { Filesystem, FilesystemDirectory, FilesystemEncoding, App, Modals } from '@capacitor/core';
 import { ElectronService } from 'ngx-electron';
+import { ToastController } from '@ionic/angular';
 
 let g: GlobalService;
 
@@ -19,7 +20,8 @@ let self: ImportExportService;
 })
 export class ImportExportService {
 
-  constructor(private global: GlobalService, private settings: SettingsService, private electronService: ElectronService) {
+  constructor(private global: GlobalService, private settings: SettingsService, private electronService: ElectronService,
+    private toastController: ToastController) {
     g = global;
     self = this;
     if (this.electronService.isElectronApp) {
@@ -29,7 +31,6 @@ export class ImportExportService {
       if (path === null) {
         console.log('There is no file');
       } else {
-        alert(path);
         this.load_in18(path, true);
       }
     }
@@ -37,21 +38,33 @@ export class ImportExportService {
   }
 
   async fileSaved(event, filePath, success) {
-    if (success) {
+    if (success && filePath!='' && filePath!=undefined) {
       g.projectPath = filePath;
       g.updateSavedStructure();
+      console.log('saved')
     }
     console.log(filePath);
     console.log(success);
+    
   }
 
   async fileLoaded(event, filePath, file, success) {
     console.log(filePath);
     console.log(success);
     if (success) {
-      self.load(file, filePath);
+      await self.load(file, filePath);
+      self.presentToast();
     }
+    console.log(g.structure);
+  }
 
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Your settings have been saved.',
+      duration: 2000
+    });
+    await toast.present();
+    
   }
 
   CSVToArray(strData, strDelimiter = ','): string[][] {
@@ -301,7 +314,7 @@ export class ImportExportService {
 
 
 
-  loadin18(holder: object, key: string, structure: Folder) {
+  async loadin18(holder: object, key: string, structure: Folder) {
 
     let k;
     const json = holder[key];
@@ -340,7 +353,7 @@ export class ImportExportService {
     }
   }
 
-  async load_in18(path = '', noExplorer = false) {
+  load_in18(path = '', noExplorer = false) {
     if (this.electronService.isElectronApp) {
       this.electronService.ipcRenderer.send('load-file', path, noExplorer);
     }
@@ -351,7 +364,7 @@ export class ImportExportService {
     this.load(await file.text(), file.path);
   }
 
-  async load(data: string, path: string) {
+  load(data: string, path: string) {
     const obj = { default: JSON.parse(data) };
     console.log(obj);
     const newStructure = new Folder(this.global.structure.getName(), undefined);
@@ -359,6 +372,7 @@ export class ImportExportService {
     this.loadin18(obj, 'default', newStructure);
     console.log(newStructure);
     this.global.setStructure(newStructure);
+    console.log(this.global.structure);
     this.global.updateSavedStructure();
     this.global.projectPath = path;
   }

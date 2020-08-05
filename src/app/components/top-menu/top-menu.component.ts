@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, HostListener, ViewChild, ElementRef } from '@angular/core';
-import { PopoverController, AlertController, ModalController } from '@ionic/angular';
+import { PopoverController, AlertController, ModalController, ToastController } from '@ionic/angular';
 import { PopoverPage } from './menu-popover/template-popover.component';
 import { LanguagesModalPage } from './languages-modal/languages-modal.component';
 import { GlobalService } from 'src/app/services/global.service';
@@ -27,6 +27,8 @@ interface Menu {
   value?: any;
 }
 
+let self;
+
 @Component({
   selector: 'app-top-menu',
   templateUrl: './top-menu.component.html',
@@ -53,9 +55,22 @@ export class TopMenuComponent implements OnInit {
     private importExport: ImportExportService,
     private electronService: ElectronService
   ) {
+    self = this;
+    if (this.electronService.isElectronApp) {
+      //this.electronService.ipcRenderer.on('save-file', this.fileSaved);
+      this.electronService.ipcRenderer.on('load-file', this.fileLoaded);
+    }
    }
 
   ngOnInit() { }
+
+  async fileLoaded(event, filePath, file, success) {
+    console.log('top menu');
+    console.log(success);
+    console.log(self.global.structure);
+  }
+
+  
 
   async presentPopover(ev: any, id: number) {
     const popover = await this.popoverCtrl.create({
@@ -254,17 +269,31 @@ export class TopMenuComponent implements OnInit {
     else if (event.keyCode === 16) {
       this.shiftDown = true;
     }
+    else if (event.keyCode === 83 && this.ctrlDown && this.shiftDown) {
+      this.ctrlDown = false;
+      this.shiftDown = false;
+      this.importExport.download(true);
+    }
     else if (event.keyCode === 83 && this.ctrlDown) {
+      this.ctrlDown = false;
       this.importExport.download();
     }
+    
     else if (event.keyCode === 79 && this.ctrlDown) {
-      this.loadInput.nativeElement.click();
+      this.ctrlDown = false;
+      if (this.electronService.isElectronApp){
+        this.importExport.load_in18();
+      }else{
+        this.loadInput.nativeElement.click();
+      }
     }
     else if (event.keyCode === 78 && this.ctrlDown) {
       this.presentNewProject();
+      this.ctrlDown = false;
     }
     else if (event.keyCode === 81 && this.ctrlDown) {
       this.close();
+      this.ctrlDown = false;
     }
 
 
