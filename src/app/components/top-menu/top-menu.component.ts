@@ -269,8 +269,8 @@ export class TopMenuComponent implements OnInit {
     else if (event.keyCode === 79 && this.ctrlDown) {
       this.ctrlDown = false;
       if (this.electronService.isElectronApp) {
-        // this.importExport.load_in18();
-        this.loadInput.nativeElement.click();
+        this.importExport.load_in18();
+        // this.loadInput.nativeElement.click();
       } else {
         this.loadInput.nativeElement.click();
       }
