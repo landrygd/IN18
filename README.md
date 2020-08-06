@@ -23,15 +23,34 @@ Puis installez les dépendances npm prérequis avec les commandes suivantes:
 ```bash
 npm install -g @angular/cli
 npm install -g @ionic/cli
+
+npm install
 ```
 
 ## Démarrage
 
+### Web
 Depuis la racine du projet, entrez les commandes suivantes:
 ```bash
 ionic serve
 ```
 Une fenêtre de votre navigateur devrait alors s'ouvrir automatiquement sur la page: http://localhost:8100/
+
+### Windows
+Depuis la racine du projet, entrez les commandes suivantes pour compiler:
+```bash
+ionic capacitor run electron
+```
+
+Si il y a une erreur après la création du dossier electron, allez dans ce dossier et entrez:
+```bash
+npm install
+```
+
+Pour exporter:
+```bash
+npm start electron:win
+```
 
 ## Fabriqué avec
 
