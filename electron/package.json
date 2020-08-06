@@ -7,11 +7,14 @@
     "electron:start": "electron ./"
   },
   "dependencies": {
-    "@capacitor/electron": "^2.2.1",
-    "electron-is-dev": "^1.1.0"
+    "@capacitor-community/electron": "^1.2.3",
+    "@capacitor/electron": "^2.4.0",
+    "electron-is-dev": "^1.2.0"
   },
   "devDependencies": {
-    "electron": "^8.0.0"
+    "electron": "^9.1.2",
+    "electron-is-dev": "^1.2.0",
+    "@capacitor-community/electron": "^1.2.3"
   },
   "keywords": [
     "capacitor",

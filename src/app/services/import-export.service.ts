@@ -25,7 +25,7 @@ export class ImportExportService {
     self = this;
     if (this.electronService.isElectronApp) {
       const path = this.electronService.ipcRenderer.sendSync('get-file-data');
-      if (path === null) {
+      if (path === null || path === './') {
         console.log('There is no file');
       } else {
         this.load_in18(path, true);
@@ -327,6 +327,8 @@ export class ImportExportService {
   load_in18(path = '', noExplorer = false) {
     if (this.electronService.isElectronApp) {
       this.electronService.ipcRenderer.send('load-file', path, noExplorer);
+      //var data = this.electronService.ipcRenderer.send('load-file-sync', path, noExplorer);
+      //console.log(data)
     }
   }
 
@@ -346,6 +348,7 @@ export class ImportExportService {
     console.log(this.global.structure);
     this.global.updateSavedStructure();
     this.global.projectPath = path;
+    this.global.setSelectedStructure()
   }
 
   async download(as = false) {

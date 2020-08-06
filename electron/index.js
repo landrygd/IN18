@@ -142,11 +142,42 @@ ipcMain.on('load-file', async function(event, path = '', noExplorer = false){
       filters : [{ name: 'In18 project', extensions: ['in18'] }]
       
     });
-    path = data.filePaths[0]
+    if (data.filePaths !== undefined){
+      path = data.filePaths[0]
+    }
     canceled = data.canceled
   }
   
   
-  const file = fs.readFileSync(path, {encoding:'utf8', flag:'r'}); 
+  let file;
+  if (path !== undefined && path != ''){
+    const f = fs.readFileSync(path, {encoding:'utf8', flag:'r'}); 
+    file = f;
+  }
  event.reply('file-loaded', path, file, !canceled)
+});
+
+ipcMain.on('load-file-sync', (event, path = '', noExplorer = false) =>{
+  let canceled = false;
+  let test;
+  if (!noExplorer){
+    const data = dialog.showOpenDialogSync({
+      defaultPath: path,
+      filters : [{ name: 'In18 project', extensions: ['in18'] }]
+      
+    });
+    if (data.filePaths !== undefined){
+      path = data.filePaths[0]
+    }
+    test = data;
+    canceled = data.canceled
+  }
+  
+  let file;
+  if (path !== undefined && path != ''){
+    const f = fs.readFileSync(path, {encoding:'utf8', flag:'r'}); 
+    file = f;
+  }
+  
+ event.returnValue = test;
 });

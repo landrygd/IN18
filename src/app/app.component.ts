@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
     private settings: SettingsService,
     private electronService: ElectronService,
     private cdr: ChangeDetectorRef,
-    private importExportService: ImportExportService,
+    public importExportService: ImportExportService,
     private toastController: ToastController
   ) {
     this.initializeApp();
@@ -55,16 +55,16 @@ export class AppComponent implements OnInit {
       this.electronService.ipcRenderer.on('file-saved', this.fileSaved);
     }
   }
-
-  async fileLoaded(event, filePath, file, success) {
+  async fileLoaded(event, filePath:string, file:string, success:boolean) {
     if (success) {
       self.importExportService.load(file, filePath);
       self.presentLoadedToast();
     }
-    self.cdr.detectChanges();
+    
   }
+  
 
-  async fileSaved(event, filePath, success) {
+  async fileSaved(event, filePath: string, success: boolean) {
     if (success && filePath !== '' && filePath !== undefined) {
       self.global.projectPath = filePath;
       self.global.updateSavedStructure();
@@ -79,7 +79,6 @@ export class AppComponent implements OnInit {
       duration: 2000
     });
     await toast.present();
-
   }
 
   async presentSavedToast() {
@@ -88,7 +87,7 @@ export class AppComponent implements OnInit {
       duration: 2000
     });
     await toast.present();
-
+    
   }
 
   initializeApp() {
