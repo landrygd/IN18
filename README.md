@@ -2,15 +2,22 @@
 
 [![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)  [![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](http://forthebadge.com)
 
-I18N est un traducteurs de fichiers JSON
+I18N is a translation file editor.
 
-## Pour commencer
+## Features
 
-Le coeur de l'application est dans le répertoire src/app par convention des projets Ionic.
+- Import/export CSV and JSON files.
+- In18 project allows you to view your files in a tree architecture.
+- Progress bar and visual feedbacks.
+- Auto translation.
 
-Je vous invite à vous renseigner sur le fonctionnement des frameworks Angular, Ionic et d'avoir un bon niveau en javascript pour comprendre le projet
+## Get started
 
-### Pré-requis
+The core of the application is in the src/app directory by convention of the Ionic projects.
+
+I invite you to learn about the Angular and Ionic frameworks and to have a good level of Javascript to understand the project.
+
+### Prerequisite
 
 - Node v12+
 - Ionic v5+
@@ -18,65 +25,59 @@ Je vous invite à vous renseigner sur le fonctionnement des frameworks Angular, 
 
 ### Installation
 
-Il faut préalablement avoir installé [Node.js](https://nodejs.org/en/download/)
-Puis installez les dépendances npm prérequis avec les commandes suivantes:
+It is necessary to have previously installed [Node.js](https://nodejs.org/en/download/)
+Then install the prerequisite npm dependencies with the following commands:
 ```bash
-npm install -g @angular/cli
-npm install -g @ionic/cli
-
+npm install
+cd electron
 npm install
 ```
 
-## Démarrage
+## Start
 
 ### Web
-Depuis la racine du projet, entrez les commandes suivantes:
+From the project root, enter the following commands:
 ```bash
 ionic serve
 ```
-Une fenêtre de votre navigateur devrait alors s'ouvrir automatiquement sur la page: http://localhost:8100/
+A browser window should then open automatically on the page: http://localhost:8100/
 
 ### Windows
-Depuis la racine du projet, entrez les commandes suivantes pour compiler:
+From the project root, enter the following commands to compile:
 ```bash
 ionic capacitor run electron
 ```
 
-Si il y a une erreur après la création du dossier electron, allez dans ce dossier et entrez:
-```bash
-npm install
-```
-
-Pour exporter:
+To export:
 ```bash
 npm start electron:win
 ```
 
-## Fabriqué avec
+## Made with
 
-* [Ionic](https://ionicframework.com/) - Framework pour application hybride (web, android, IOS, Windows, MacOS et Linux)
+* [Ionic](https://ionicframework.com/) - Framework for hybrid application (web, android, IOS, Windows, MacOS and Linux)
 * [Angular](https://angular.io/) - Framework front-end
-* [Node.js](https://nodejs.org/en/) - Développement en temps réel sur serveur local en JavaScript
-* [NWJS](https://nwjs.io/) - Exportation natif sur ordinateur
+* [Node.js](https://nodejs.org/en/) - Real-time development on local server in JavaScript
+* [NWJS](https://nwjs.io/) - Native export to computer
 * [VSCode](https://code.visualstudio.com/) - IDE
 
-## Contribuer
+## Contribute
 
-Si vous souhaitez contribuer, vous pouvez nous contacter sur le [serveur Discord de Blockup](https://discord.gg/FUmcynX).
+If you wish to contribute, you can contact us on the [Blockup Discord Server](https://discord.gg/FUmcynX).
 
 ## Versions
-**Dernière version stable :** 0.0.1
-**Dernière version :** 0.0.1
-Liste des versions : [Cliquer pour afficher](https://github.com/landry42/neotic/tags)
+**Latest stable release :** 0.0.1
+**Latest version :** 0.0.1
+List of versions : [Click to view](https://github.com/landry42/neotic/tags)
 
-## Auteurs
+## Authors
 
 * **Landry** _alias_ [@landry42](https://github.com/landry42)
 * **Vincent** _alias_ [@deakcor](https://github.com/deakcor)
 
-Lisez la liste des [contributeurs](https://github.com/landry42/neotic/contributors) pour voir qui à aidé au projet !
+Read the list of [contributors](https://github.com/landry42/neotic/contributors) to see who helped the project!
 
 
 ## License
 
-Ce projet est sous licence ``MIT`` - voir le fichier [LICENSE.md](LICENSE.md) pour plus d'informations
+This project is licensed under the "MIT" license - see the [LICENSE.md](LICENSE.md) file for more information.
