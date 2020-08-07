@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit, Directive, ChangeDetectorRef } from '@angular/core';
-import { Platform, ModalController, IonVirtualScroll, ToastController } from '@ionic/angular';
+import { Platform, ModalController, IonVirtualScroll, ToastController, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { GlobalService } from './services/global.service';
@@ -45,7 +45,8 @@ export class AppComponent implements OnInit {
     private electronService: ElectronService,
     private cdr: ChangeDetectorRef,
     public importExportService: ImportExportService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private alertController: AlertController
   ) {
     this.initializeApp();
     self = this;
@@ -58,9 +59,27 @@ export class AppComponent implements OnInit {
   async fileLoaded(event, filePath:string, file:string, success:boolean) {
     if (success) {
       self.importExportService.load(file, filePath);
-      self.presentLoadedToast();
+      // self.presentLoadedToast();
     }
-    
+    self.presentLoadConfirm();
+  }
+
+  async presentLoadConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: '',
+      header: 'Confirmation',
+      subHeader: '',
+      message: 'Project well loaded',
+      buttons: [ {
+        text: 'Ok',
+        cssClass: 'primary',
+        handler: () => {
+          console.log('Confirm Okay');
+        }
+      }]
+    });
+
+    await alert.present();
   }
   
 
