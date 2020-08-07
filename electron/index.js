@@ -30,7 +30,7 @@ const menuTemplateDev = [
 ];
 
 const nativeImage = require('electron').nativeImage;
-var image = nativeImage.createFromPath(__dirname + '/src/assets/icon/favicon_invert.ico');
+var image = nativeImage.createFromPath(__dirname + '/icon/favicon_invert.png');
 
 async function createWindow() {
   // Define our main window size
@@ -40,7 +40,7 @@ async function createWindow() {
     minWidth: 640,
     minHeight: 360,
     show: false,
-    //icon: __dirname + '/src/assets/icon/favicon_invert.ico',
+    icon: image,
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, 'node_modules', '@capacitor', 'electron', 'dist', 'electron-bridge.js')
