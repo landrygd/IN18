@@ -1,14 +1,103 @@
-<ion-content>
-  <ngx-dropzone (change)="onSelect($event)" style="height: 200px;">
-    <ngx-dropzone-label>Drop your JSON files</ngx-dropzone-label>
-      <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
-        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
-      </ngx-dropzone-preview>
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Import</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+
+</ion-header>
+
+<ion-content fullscreen>
+
+  <ngx-dropzone [accept]="'.'+type" (change)="onSelect($event)">
+    <ngx-dropzone-label *ngIf="type=='json'">Drop your JSON files</ngx-dropzone-label>
+    <ngx-dropzone-label *ngIf="type=='csv'">Drop your CSV file</ngx-dropzone-label>
+    <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+      <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+    </ngx-dropzone-preview>
   </ngx-dropzone>
+  <ion-button expand="block" fill="clear" shape="round" (click)="downloadTemplate()">
+    <ion-icon slot="start" name="arrow-down"></ion-icon> Download a template
+  </ion-button>
+
+  <ion-row *ngIf="type=='json'">
+    <ion-col>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>en.json</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          {{exampleJsonEn}}
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>fr.json</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          {{exampleJsonFr}}
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-card *ngIf="type=='csv'">
+    <ion-card-header>
+      <ion-card-subtitle>file.csv (example with a "." separator to create the folders)</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+
+          </ion-col>
+          <ion-col>
+            en
+          </ion-col>
+          <ion-col>
+            fr
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            folder.id_yes
+          </ion-col>
+          <ion-col>
+            yes
+          </ion-col>
+          <ion-col>
+            oui
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+
 </ion-content>
 
 <ion-footer>
   <ion-toolbar>
+    <ion-segment (ionChange)="typeChanged($event.detail.value)" [value]="tab">
+      <ion-segment-button value="json">Json</ion-segment-button>
+      <ion-segment-button value="csv">Csv</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="presentSettingsModal()" color="primary">
+        <ion-icon slot="start" name="settings"></ion-icon>
+        Settings
+      </ion-button>
+    </ion-buttons>
     <ion-buttons slot="secondary">
       <ion-button (click)="cancel()" color="medium">
         <ion-icon slot="start" name="close"></ion-icon>

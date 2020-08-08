@@ -8,44 +8,38 @@ import { Traduction } from 'src/app/classes/traduction';
 })
 export class TradFieldComponent implements OnInit {
 
-  @Input() language: string;
-  @Input() value: string;
-  @Input() path: string;
+  @Input() trad: Traduction;
 
-  @Output() update = new EventEmitter();
-
-  checked: boolean;
   btnColor: string;
   btnFill: string;
   btnText: string;
 
   constructor() {
-    this.checked = true;
-    this.updateBtn();
-    this.language = 'Français';
+
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.updateBtn();
+  }
 
   confirm() {
-    this.checked = !this.checked;
+    this.trad.checked = !this.trad.checked;
     this.updateBtn();
   }
 
   updateBtn() {
-    if (this.checked) {
+    if (!this.trad.checked) {
       this.btnColor = 'primary';
       this.btnFill = 'clear';
-      this.btnText = 'Valider';
+      this.btnText = 'Validate';
     } else {
       this.btnColor = 'success';
       this.btnFill = 'solid';
-      this.btnText = 'Validé';
+      this.btnText = 'Validated';
     }
   }
 
-  onUpdate(event) {
-    const res: Traduction = new Traduction(this.path, event.target.value, this.language);
-    this.update.emit(res);
+  onUpdate(value) {
+    this.trad.value = value;
   }
 }

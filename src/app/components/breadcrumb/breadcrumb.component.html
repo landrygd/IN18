@@ -1,0 +1,8 @@
+<ion-row class="breadcrumb">
+    <app-breadcrumb [structure]="structure.parentFolder" *ngIf="structure.hasParent()"></app-breadcrumb>
+    <ion-button shape="" fill="clear" size="small" disabled>
+        <ion-icon name="chevron-forward-outline" *ngIf="structure.hasParent()"></ion-icon>
+    </ion-button>
+    <ion-button (click)="changeStructure(structure)" shape="" fill="clear" size="small">{{structure.getName()}}
+    </ion-button>
+</ion-row>

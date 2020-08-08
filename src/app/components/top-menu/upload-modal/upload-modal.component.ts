@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { saveAs } from 'file-saver';
+import { SettingsModalComponent } from '../settings-modal/settings-modal.component';
 
 @Component({
   selector: 'app-upload-modal',
@@ -8,21 +10,39 @@ import { ModalController } from '@ionic/angular';
 })
 export class UploadModalComponent implements OnInit {
 
+  @Input() tab = 'json';
+
   files: File[] = [];
+
+  type = 'json';
+
+  exampleJsonEn = `
+  {"folder" :
+        {"id_yes" : "yes"}
+      }
+  `;
+
+  exampleJsonFr = `
+  {"folder" :
+        {"id_yes" : "oui"}
+      }
+  `;
 
   constructor(
     private modalController: ModalController
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onSelect(event) {
-    console.log(event);
     this.files.push(...event.addedFiles);
   }
 
+  typeChanged(value) {
+    this.type = value;
+  }
+
   onRemove(event) {
-    console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
 
@@ -31,6 +51,37 @@ export class UploadModalComponent implements OnInit {
   }
 
   import() {
-    this.modalController.dismiss(this.files);
+    this.modalController.dismiss({ type: this.type, files: this.files });
+  }
+
+  downloadTemplate() {
+    switch (this.type) {
+      case 'json':
+        this.downloadJsonTemplate();
+        break;
+      case 'csv':
+        this.downloadCsvTemplate();
+        break;
+    }
+  }
+
+  downloadJsonTemplate() {
+    let blob = new Blob([this.exampleJsonEn], { type: 'application/json' });
+    saveAs(blob, 'en.json');
+    blob = new Blob([this.exampleJsonFr], { type: 'application/json' });
+    saveAs(blob, 'fr.json');
+  }
+
+  downloadCsvTemplate() {
+
+  }
+
+  async presentSettingsModal() {
+    const modal = await this.modalController.create({
+      component: SettingsModalComponent,
+      componentProps: { tab: 'import_export' },
+      cssClass: ''
+    });
+    return await modal.present();
   }
 }

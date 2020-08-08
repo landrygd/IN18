@@ -1,25 +1,14 @@
-
 <ion-list>
-  <ion-list-header>
-    <!-- <ion-button (click)="addTraduction()" expand="block" fill="clear" shape="round">
+  <!--<ion-list-header>
+    <ion-button (click)="addTraduction()" expand="block" fill="clear" shape="round">
       <ion-icon slot="start" name="add"></ion-icon>
-      Ajouter une traduction
-    </ion-button> -->
-  </ion-list-header>
-  <div *ngFor="let path of paths">
-    <ion-row  *ngIf="isVisible(path)">
-      <ion-col size="1" *ngFor="let level of getLevels(path)"></ion-col>
-      <ion-col>
-        <ion-item button *ngIf="isVisible(path)" (click)="develop(path)">
-          <ion-icon slot="start" [color]="getColor(path)" [name]="getIcon(path, 'chevron')" *ngIf="isFolder(path)"></ion-icon>
-          <ion-icon slot="start" [color]="getColor(path)" [name]="getIcon(path, 'folder')"></ion-icon>
-          <ion-label [color]="getColor(path)">
-            <p>
-              {{getName(path)}}
-            </p>
-          </ion-label>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </div>
+      Create an item or a folder
+    </ion-button>
+  </ion-list-header>-->
+  <ion-row *ngIf="!this.global.isSaved()">
+    <ion-item>
+      <ion-badge color="warning">Not saved</ion-badge>
+    </ion-item>
+  </ion-row>
+  <app-folder-tree [folder]="global.structure" [level]="-1"></app-folder-tree>
 </ion-list>

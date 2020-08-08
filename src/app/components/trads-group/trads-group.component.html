@@ -1,7 +1,49 @@
-<ion-item-group>
-  <ion-item-divider>
-    <ion-label>{{path}}</ion-label>
-  </ion-item-divider>
-  
-  <app-trad-field *ngFor="let trad of tradGroup.tradList" [language]="trad.language" [value]="trad.value" [path]="trad.path" (update)="onUpdate($event)"></app-trad-field>
-</ion-item-group>
+<ion-card [class]="canExpand?'':'opened-file'">
+  <ion-card-header>
+    <ion-card-subtitle>
+      <ion-row>
+        <ion-col>
+          <ion-item [class]="canExpand?'':'opened-file'">
+            <ion-icon slot="start" name="document"
+              [color]="tradGroup.isValidated()?'success':tradGroup.isFilled()?'primary':''"></ion-icon>
+            <ion-icon slot="start" name="checkmark-circle-outline" color="primary"
+              *ngIf="!tradGroup.isValidated() && tradGroup.isFilled()"></ion-icon>
+            <ion-icon slot="start" name="checkmark-circle" color="success" *ngIf="tradGroup.isValidated()"></ion-icon>
+            <ion-textarea slot="start" [value]="tradGroup.getName()" (ionChange)="onNameUpdate($event.target.value)"
+              [color]="tradGroup.isValidated()?'success':tradGroup.isFilled()?'primary':''"></ion-textarea>
+
+
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item [class]="canExpand?'':'opened-file'">
+            <ion-button fill="clear" slot="end" expand="block" shape="round" (click)="select()" *ngIf="canExpand">
+              <ion-icon name="chevron-down-outline"></ion-icon> Show
+            </ion-button>
+            <ion-button fill="clear" slot="end" expand="block" shape="round" (click)="selectParent()"
+              *ngIf="!canExpand">
+              <ion-icon name="chevron-up-outline"></ion-icon>
+            </ion-button>
+            <ion-button slot="end" expand="block" shape="round" (click)="presentDeleteConfirm()" color="danger">
+              <ion-icon name="trash"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-card-subtitle>
+    <app-progress-bar [showText]="false" [percentValidation]="tradGroup.percentValidation()"
+      [percentFill]="tradGroup.percentFill()"></app-progress-bar>
+
+  </ion-card-header>
+
+  <ion-card-content *ngIf="!canExpand || settings.extendTrad">
+    <app-progress-bar [showBar]="false" [percentValidation]="tradGroup.percentValidation()"
+      [percentFill]="tradGroup.percentFill()"></app-progress-bar>
+    <app-trad-field *ngFor="let trad of tradGroup.tradList" [trad]="trad"></app-trad-field>
+    <ion-button (click)="presentLanguagesModal()" expand="block" fill="clear" shape="round"
+      *ngIf="tradGroup.emptyTrad()">
+      <ion-icon name="globe"></ion-icon> Add languages
+    </ion-button>
+  </ion-card-content>
+
+</ion-card>

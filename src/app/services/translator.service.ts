@@ -2,10 +2,18 @@ import { Injectable } from '@angular/core';
 import { ToastController, AlertController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { GlobalService } from './global.service';
+import { Traduction } from '../classes/traduction';
 
 export interface GoogleObj {
   q: string[];
   target: string;
+}
+
+export interface ResponseTrad {
+  error?: ResponseTrad;
+  responseData?: ResponseTrad;
+  translatedText?: string;
+  responseDetails?: string;
 }
 
 @Injectable({
@@ -14,22 +22,85 @@ export interface GoogleObj {
 
 export class TranslatorService {
 
-  toast: HTMLIonToastElement;
+  // toast: HTMLIonToastElement;
 
-  url = 'https://translation.googleapis.com/language/translate/v2?key=';
+  // url = 'https://translation.googleapis.com/language/translate/v2?key=';
 
-  count = 0;
-  untranslated: any;
-  languages: string[];
+  api = 'https://api.mymemory.translated.net/get';
+
+  // count = 0;
+  // untranslated: any;
+  languages: string[] = [];
+  mainLanguage: string;
+  unfilled = true;
+  unverified = false;
+
+  traductionsTargeted: Traduction[][];
 
   constructor(
     private toastController: ToastController,
     private http: HttpClient,
     private alertController: AlertController,
     private global: GlobalService
-  ) {}
+  ) { }
+
+  prepareTranslation(structure = this.global.structure) {
+    if (structure === this.global.structure) {
+      this.traductionsTargeted = [];
+    }
+    for (const folder of structure.folderList) {
+      this.prepareTranslation(folder);
+    }
+    for (const tradGroup of structure.tradGroupList) {
+      const mainTrad = tradGroup.getTradByLanguage(this.mainLanguage);
+      for (const trad of tradGroup.tradList) {
+        if (mainTrad !== undefined && mainTrad.isFilled() && mainTrad !== trad) {
+          if ((!trad.isFilled() && this.unfilled) || (!trad.checked && this.unverified)) {
+            if (this.languages.findIndex(k => k === trad.language) !== -1) {
+              this.traductionsTargeted.push([mainTrad, trad]);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  getTrad(): number {
+    let count = 0;
+    this.prepareTranslation();
+    for (const trad of this.traductionsTargeted) {
+      count += 1;
+    }
+    return count;
+  }
 
   async translate() {
+    this.prepareTranslation();
+    let error = false;
+    for (const trad of this.traductionsTargeted) {
+      this.http.get(this.api + '?q=' + trad[0].value + '&langpair=' + this.mainLanguage + '|' + trad[1].language).subscribe(
+        res => {
+          const r = res as ResponseTrad;
+          if (r.responseDetails === '') {
+            trad[1].value = r.responseData.translatedText;
+          } else if (!error) {
+            error = true;
+            this.error(r.responseDetails);
+          }
+
+        }, err => {
+          if (!error) {
+            error = true;
+            const r = err as ResponseTrad;
+            this.error(r.error.responseDetails);
+          }
+        }
+      );
+    }
+
+  }
+
+  /*async translate() {
     this.getUntranslated();
     const alert = await this.alertController.create({
       message: 'You are going to translate ' + this.count + ' caracters in ' + this.languages.length + ' languages',
@@ -146,7 +217,7 @@ export class TranslatorService {
       return;
     });
   }
-
+  */
   async error(message) {
     const alert = await this.alertController.create({
       header: 'Error',

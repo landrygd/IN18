@@ -1,3 +1,41 @@
 .main-content {
-    margin-top: 58px!important;
+  margin-top: 58px !important;
+}
+
+.no-background {
+  background-color: rgba(0, 0, 0, 0);
+  --background: rgba(0, 0, 0, 0);
+}
+
+.special {
+  --background: #121212;
+  background-color: #181818;
+  border-radius: 4px;
+}
+
+.breadcrumb {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+/* size */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0) !important;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--ion-border-color);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ion-color-step-100);
 }

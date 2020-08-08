@@ -1,0 +1,69 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>About IN18</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>IN18</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>Translation files editors</ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Authors</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col>
+          <ion-item button (click)="deakcor()">
+            Deakcor
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item button (click)="landry()">
+            Landry
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Support us</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Do you like our work?</ion-label>
+        <ion-button (click)="donation()">
+          <ion-icon name="heart" slot="start"></ion-icon> Donation
+        </ion-button>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-item slot='start' button (click)="copyright()">
+      <ion-label>Copyright (C) 2020-2020</ion-label>
+    </ion-item>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="dismissModal()" color="medium">
+        <ion-icon slot="start" name="close"></ion-icon>
+        Close
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

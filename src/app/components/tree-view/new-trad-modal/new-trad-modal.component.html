@@ -1,21 +1,39 @@
-<!-- <ion-content>
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>New {{isFolder?'Folder':'Item'}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+
+</ion-header>
+
+<ion-content>
   <ion-item>
-    <ion-label position="floating">Path</ion-label>
-    <ion-input [(ngModel)]="traduction.path" (ionChange)="onPathChange($event.detail.value)"></ion-input>
+    <ion-label position="floating">Parent folder</ion-label>
+    <ion-input [value]="parentFolderName" (ionChange)="onFolderChange($event.detail.value)" disabled="true"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label position="floating">Value</ion-label>
-    <ion-input [(ngModel)]="traduction.value" (ionChange)="onValueChange($event.detail.value)"></ion-input>
+    <ion-label position="floating">Name *</ion-label>
+    <ion-input [value]="fileName" (ionChange)="onNameChange($event.detail.value)"></ion-input>
   </ion-item>
-  <ion-item>
-    <ion-select [(ngModel)]="traduction.language" (ionChange)="onLanguageChange($event)" value="en" placeholder="Language">
-      <ion-select-option value="en">English</ion-select-option>
-      <ion-select-option value="fr">French</ion-select-option>
-      <ion-select-option value="de">German</ion-select-option>
-      <ion-select-option value="es">Spanish</ion-select-option>
-      <ion-select-option value="ja">Japanese</ion-select-option>
-    </ion-select>
-  </ion-item>
+
+  <ion-title *ngIf="!isFolder" style="margin: 10px auto;">Fill traductions</ion-title>
+  <div *ngIf="!isFolder">
+
+    <app-trad-field *ngFor="let trad of tradGroup.tradList" [trad]="trad"></app-trad-field>
+  </div>
+
+  <ion-button (click)="presentLanguagesModal()" expand="block" fill="clear" shape="round" *ngIf="!isFolder">
+    <ion-icon name="globe"></ion-icon> Add languages
+  </ion-button>
+  <!--<ion-item>
+    <ion-label position="floating">This is a folder</ion-label>
+    <ion-checkbox [value]="isFolder" (ionChange)="onIsFolderChange($event.detail.value)"></ion-checkbox>
+  </ion-item>-->
 </ion-content>
 
 <ion-footer>
@@ -27,10 +45,10 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="primary">
-      <ion-button (click)="import()" slot="primary" color="success" [disabled]="traduction.path === '' || traduction.value === ''">
+      <ion-button (click)="import()" slot="primary" color="success" [disabled]="fileName==''">
         <ion-icon slot="start" name="checkmark"></ion-icon>
-        Import
+        Create
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-footer> -->
+</ion-footer>
