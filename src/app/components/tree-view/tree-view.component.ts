@@ -9,18 +9,18 @@ import { Folder } from 'src/app/classes/folder';
   templateUrl: './tree-view.component.html',
   styleUrls: ['./tree-view.component.scss'],
 })
-export class TreeViewComponent{
+export class TreeViewComponent {
   constructor(
     private modalController: ModalController,
     public global: GlobalService
   ) {
-   }
+  }
 
 
   async addTraduction() {
     const modal = await this.modalController.create({
       component: NewTradModalComponent,
-      componentProps: {parentFolder: this.global.getSelectedFolder()}
+      componentProps: { parentFolder: this.global.getSelectedFolder() }
     });
     await modal.present();
   }

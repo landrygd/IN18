@@ -3,15 +3,10 @@ import { Platform, ModalController, IonVirtualScroll, ToastController, AlertCont
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { GlobalService } from './services/global.service';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { SafeResourceUrl } from '@angular/platform-browser';
 import { NewTradModalComponent } from './components/tree-view/new-trad-modal/new-trad-modal.component';
-import { Observable, Subject, of } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { TraductionsGroup } from './classes/traductions-group';
-import { Folder } from './classes/folder';
 import { Structure } from './classes/structure';
 import { LanguagesModalPage } from './components/top-menu/languages-modal/languages-modal.component';
-import { SettingsService } from './services/settings.service';
 import { ElectronService } from 'ngx-electron';
 import { ImportExportService } from './services/import-export.service';
 
@@ -40,8 +35,6 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     public global: GlobalService,
-    private sanitizer: DomSanitizer,
-    private settings: SettingsService,
     private electronService: ElectronService,
     private cdr: ChangeDetectorRef,
     public importExportService: ImportExportService,
@@ -56,7 +49,7 @@ export class AppComponent implements OnInit {
       this.electronService.ipcRenderer.on('file-saved', this.fileSaved);
     }
   }
-  async fileLoaded(event, filePath:string, file:string, success:boolean) {
+  async fileLoaded(event, filePath: string, file: string, success: boolean) {
     if (success) {
       self.importExportService.load(file, filePath);
       // self.presentLoadedToast();
@@ -70,18 +63,17 @@ export class AppComponent implements OnInit {
       header: 'Confirmation',
       subHeader: '',
       message: 'Project well loaded',
-      buttons: [ {
+      buttons: [{
         text: 'Ok',
         cssClass: 'primary',
         handler: () => {
-          console.log('Confirm Okay');
         }
       }]
     });
 
     await alert.present();
   }
-  
+
 
   async fileSaved(event, filePath: string, success: boolean) {
     if (success && filePath !== '' && filePath !== undefined) {
@@ -106,7 +98,7 @@ export class AppComponent implements OnInit {
       duration: 2000
     });
     await toast.present();
-    
+
   }
 
   initializeApp() {

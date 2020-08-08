@@ -27,7 +27,7 @@ export class PopoverPage {
     this.popoverCtrl.dismiss();
   }
 
-  load(){
+  load() {
     this.popoverCtrl.dismiss('load');
   }
 

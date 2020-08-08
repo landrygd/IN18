@@ -1,30 +1,37 @@
 <ion-header translucent>
-    <ion-toolbar>
-      <ion-title>Languages</ion-title>
-      <ion-buttons slot="end">
-        <ion-button (click)="dismissModal()"><ion-icon name="close"></ion-icon></ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content fullscreen>
-      <ion-item *ngFor="let language of global.languages; let index = index">
-        <ion-input [value]="language" [id]="index" (ionChange)="onLanguageChange($event.detail.value,id)"></ion-input>
-        <ion-button slot="end" (click)="presentDeleteConfirm(language)" shape="round" color="danger"><ion-icon name="trash"></ion-icon></ion-button>
-      </ion-item>
-      
-      <!--<ion-item>
+  <ion-toolbar>
+    <ion-title>Languages</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <ion-item *ngFor="let language of global.languages; let index = index">
+    <ion-input [value]="language" [id]="index" (ionChange)="onLanguageChange($event.detail.value,id)"></ion-input>
+    <ion-button slot="end" (click)="presentDeleteConfirm(language)" shape="round" color="danger">
+      <ion-icon name="trash"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <!--<ion-item>
         <ion-label position="floating">This is a folder</ion-label>
         <ion-checkbox [value]="isFolder" (ionChange)="onIsFolderChange($event.detail.value)"></ion-checkbox>
       </ion-item>-->
-    
-  </ion-content>
-  <ion-footer class="ion-no-border">
-    <ion-item>
-      <ion-label position="floating">New Language</ion-label>
-      <ion-input [value]="newLanguage" (keydown.enter)="add()" (ionChange)="onNewLanguageChange($event.detail.value)" autofocus="true"></ion-input>
-      <ion-button slot="end" (click)="add()" shape="round" color="primary" [disabled]="newLanguage==''"><ion-icon name="add"></ion-icon></ion-button>
-    </ion-item>
-    <!--<ion-toolbar>
+
+</ion-content>
+<ion-footer class="ion-no-border">
+  <ion-item>
+    <ion-label position="floating">New Language</ion-label>
+    <ion-input [value]="newLanguage" (keydown.enter)="add()" (ionChange)="onNewLanguageChange($event.detail.value)"
+      autofocus="true"></ion-input>
+    <ion-button slot="end" (click)="add()" shape="round" color="primary" [disabled]="newLanguage==''">
+      <ion-icon name="add"></ion-icon>
+    </ion-button>
+  </ion-item>
+  <!--<ion-toolbar>
         <ion-item>
             <ion-label>Primary language</ion-label>
             <ion-select value="none">
@@ -34,4 +41,4 @@
             </ion-select>
           </ion-item>
     </ion-toolbar>-->
-  </ion-footer>
+</ion-footer>

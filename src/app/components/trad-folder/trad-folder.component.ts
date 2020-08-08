@@ -18,18 +18,18 @@ export class TradFolderComponent implements OnInit {
 
   constructor(private modalController: ModalController, private global: GlobalService, public alertController: AlertController) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  select(){
+  select() {
     this.global.setSelectedStructure(this.folder);
   }
 
-  selectParent(){
+  selectParent() {
     this.global.setSelectedStructure(this.folder.parentFolder);
   }
 
-  delete(){
-    if (this.folder.parentFolder.removeFolder(this.folder)){
+  delete() {
+    if (this.folder.parentFolder.removeFolder(this.folder)) {
       this.global.setSelectedStructure();
     }
   }
@@ -45,7 +45,6 @@ export class TradFolderComponent implements OnInit {
         role: 'cancel',
         cssClass: 'danger',
         handler: (blah) => {
-          console.log('Confirm Cancel: blah');
         }
       }, {
         text: 'Yes',
@@ -61,7 +60,7 @@ export class TradFolderComponent implements OnInit {
 
   onNameUpdate(value: string) {
     this.folder.setName(value);
-    if (this.folder.isRoot()){
+    if (this.folder.isRoot()) {
       this.global.structure.setName(this.folder.getName());
     }
   }
@@ -69,7 +68,7 @@ export class TradFolderComponent implements OnInit {
   async addTraduction(isFolder = false) {
     const modal = await this.modalController.create({
       component: NewTradModalComponent,
-      componentProps: {parentFolder: this.folder, isFolder}
+      componentProps: { parentFolder: this.folder, isFolder }
     });
     await modal.present();
   }

@@ -23,27 +23,27 @@ export class TranslateModalComponent implements OnInit {
 
   ngOnInit() { }
 
-  languagesAvailable(){
+  languagesAvailable() {
     return this.global.languages.filter(l => l !== this.translator.mainLanguage);
   }
 
-  unfilledChanged() {
-    this.translator.unfilled = !this.translator.unfilled;
+  unfilledChanged(value) {
+    this.translator.unfilled = value;
   }
 
-  unverifiedChanged() {
-    this.translator.unverified = !this.translator.unverified;
+  unverifiedChanged(value) {
+    this.translator.unverified = value;
   }
 
   dismissModal() {
     this.modalCtrl.dismiss();
   }
 
-  languagesSelectedChanged(value: string[]){
+  languagesSelectedChanged(value: string[]) {
     this.translator.languages = value;
   }
 
-  mainLanguageSelectedChanged(value: string){
+  mainLanguageSelectedChanged(value: string) {
     this.translator.mainLanguage = value;
   }
 

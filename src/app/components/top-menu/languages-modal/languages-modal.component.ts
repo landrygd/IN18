@@ -33,7 +33,6 @@ export class LanguagesModalPage {
         role: 'cancel',
         cssClass: 'danger',
         handler: (blah) => {
-          console.log('Confirm Cancel: blah');
         }
       }, {
         text: 'Yes',
@@ -57,7 +56,7 @@ export class LanguagesModalPage {
     this.newLanguage = value;
   }
 
-  onLanguageChange(value: string, id: number){
+  onLanguageChange(value: string, id: number) {
     this.global.languages[id] = value;
   }
 

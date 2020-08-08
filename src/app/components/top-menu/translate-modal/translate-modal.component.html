@@ -20,16 +20,19 @@
       <ion-item *ngIf="global.languages.length>0">
         <ion-label>From</ion-label>
         <ion-select [value]="translator.mainLanguage" (ionChange)="mainLanguageSelectedChanged($event.detail.value)">
-          <ion-select-option *ngFor="let language of global.languages" [value]="language">{{language}}</ion-select-option>
+          <ion-select-option *ngFor="let language of global.languages" [value]="language">{{language}}
+          </ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item *ngIf="global.languages.length>0">
         <ion-label>To</ion-label>
-        <ion-select multiple="true" [value]="translator.languages" (ionChange)="languagesSelectedChanged($event.detail.value)">
-          <ion-select-option *ngFor="let language of languagesAvailable()" [value]="language">{{language}}</ion-select-option>
+        <ion-select multiple="true" [value]="translator.languages"
+          (ionChange)="languagesSelectedChanged($event.detail.value)">
+          <ion-select-option *ngFor="let language of languagesAvailable()" [value]="language">{{language}}
+          </ion-select-option>
         </ion-select>
       </ion-item>
-      
+
     </ion-card-content>
   </ion-card>
   <ion-card>
@@ -39,12 +42,14 @@
     <ion-card-content>
       <ion-item>
         <ion-label>All unfilled</ion-label>
-        <ion-checkbox slot="end" [checked]="translator.unfilled" (ionChange)="unfilledChanged()"></ion-checkbox>
+        <ion-checkbox slot="end" [checked]="translator.unfilled" (ionChange)="unfilledChanged($event.detail.checked)">
+        </ion-checkbox>
       </ion-item>
 
       <ion-item>
         <ion-label>All unverified (Be careful, this can erase your translation)</ion-label>
-        <ion-checkbox slot="end" [checked]="translator.unverified" (ionChange)="unverifiedChanged()"></ion-checkbox>
+        <ion-checkbox slot="end" [checked]="translator.unverified"
+          (ionChange)="unverifiedChanged($event.detail.checked)"></ion-checkbox>
       </ion-item>
     </ion-card-content>
   </ion-card>
@@ -52,8 +57,8 @@
     <ion-card-header>
       <ion-card-subtitle>You will fill {{translator.getTrad()}} translations.</ion-card-subtitle>
     </ion-card-header>
-    </ion-card>
-  
+  </ion-card>
+
 </ion-content>
 
 <ion-footer>

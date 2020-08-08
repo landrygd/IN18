@@ -34,7 +34,7 @@ export class Structure {
 
     public percentValidation(): number {
         const count = this.rateValidation();
-        if (count[1] === 0){
+        if (count[1] === 0) {
             return 0.0;
         }
         return count[0] / count[1];
@@ -42,7 +42,7 @@ export class Structure {
 
     public percentFill(): number {
         const count = this.rateFill();
-        if (count[1] === 0){
+        if (count[1] === 0) {
             return 0.0;
         }
         return count[0] / count[1];

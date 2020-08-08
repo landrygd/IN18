@@ -32,19 +32,17 @@ export class UploadModalComponent implements OnInit {
     private modalController: ModalController
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onSelect(event) {
-    console.log(event);
     this.files.push(...event.addedFiles);
   }
 
-  typeChanged(value){
+  typeChanged(value) {
     this.type = value;
   }
 
   onRemove(event) {
-    console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
 
@@ -53,11 +51,11 @@ export class UploadModalComponent implements OnInit {
   }
 
   import() {
-    this.modalController.dismiss({type: this.type, files: this.files});
+    this.modalController.dismiss({ type: this.type, files: this.files });
   }
 
-  downloadTemplate(){
-    switch (this.type){
+  downloadTemplate() {
+    switch (this.type) {
       case 'json':
         this.downloadJsonTemplate();
         break;
@@ -67,21 +65,21 @@ export class UploadModalComponent implements OnInit {
     }
   }
 
-  downloadJsonTemplate(){
+  downloadJsonTemplate() {
     let blob = new Blob([this.exampleJsonEn], { type: 'application/json' });
     saveAs(blob, 'en.json');
     blob = new Blob([this.exampleJsonFr], { type: 'application/json' });
     saveAs(blob, 'fr.json');
   }
 
-  downloadCsvTemplate(){
+  downloadCsvTemplate() {
 
   }
 
   async presentSettingsModal() {
     const modal = await this.modalController.create({
       component: SettingsModalComponent,
-      componentProps: {tab: 'import_export'},
+      componentProps: { tab: 'import_export' },
       cssClass: ''
     });
     return await modal.present();

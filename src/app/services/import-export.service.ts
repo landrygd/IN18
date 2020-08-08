@@ -7,9 +7,7 @@ import { Traduction } from '../classes/traduction';
 import { saveAs } from 'file-saver';
 import { Structure } from '../classes/structure';
 import * as JSZip from 'jszip';
-import { Filesystem, FilesystemDirectory, FilesystemEncoding, App, Modals } from '@capacitor/core';
 import { ElectronService } from 'ngx-electron';
-import { ToastController } from '@ionic/angular';
 
 let g: GlobalService;
 
@@ -26,7 +24,6 @@ export class ImportExportService {
     if (this.electronService.isElectronApp) {
       const path = this.electronService.ipcRenderer.sendSync('get-file-data');
       if (path === null || path === './') {
-        console.log('There is no file');
       } else {
         this.load_in18(path, true);
       }
@@ -120,7 +117,7 @@ export class ImportExportService {
     let newStructure: Folder = new Folder(this.global.structure.getName(), undefined);
     if (this.settings.importFusion !== 'no') {
       newStructure = this.global.structure;
-    }else{
+    } else {
       this.global.projectPath = undefined;
     }
     if (csvArray.length > 1) {
@@ -168,7 +165,7 @@ export class ImportExportService {
     let newStructure = new Folder(this.global.structure.getName(), undefined);
     if (this.settings.importFusion !== 'no') {
       newStructure = this.global.structure;
-    }else{
+    } else {
       this.global.projectPath = undefined;
     }
     for (let i = 0; i < languages.length; i++) {
@@ -272,7 +269,6 @@ export class ImportExportService {
     const jsons = {};
     for (const language of this.global.languages) {
       jsons[language] = this.exportToJsons(this.global.structure, language);
-      console.log(jsons[language]);
     }
 
     for (const key of Object.keys(jsons)) {
@@ -294,7 +290,7 @@ export class ImportExportService {
         if (Object.prototype.hasOwnProperty.call(json, k)) {
           const keys = Object.keys(json[k]);
           if (typeof json[k] === 'object' && json[k][keys[0]] !== undefined && json[k][keys[0]].hasOwnProperty('value')
-          && typeof json[k][keys[0]].value === 'string') {
+            && typeof json[k][keys[0]].value === 'string') {
             for (const i of keys) {
               this.global.addLanguage(i);
               const tradGroup = structure.findTraductionGroup(k);
@@ -327,32 +323,27 @@ export class ImportExportService {
   load_in18(path = '', noExplorer = false) {
     if (this.electronService.isElectronApp) {
       this.electronService.ipcRenderer.send('load-file', path, noExplorer);
-      //var data = this.electronService.ipcRenderer.send('load-file-sync', path, noExplorer);
-      //console.log(data)
+      // var data = this.electronService.ipcRenderer.send('load-file-sync', path, noExplorer);
+      // console.log(data)
     }
   }
 
   async load_file(file: File) {
-    console.log(file);
     this.load(await file.text(), file.path);
   }
 
   load(data: string, path: string) {
     const obj = { default: JSON.parse(data) };
-    console.log(obj);
     const newStructure = new Folder(this.global.structure.getName(), undefined);
     this.global.languages = [];
     this.loadin18(obj, 'default', newStructure);
-    console.log(newStructure);
     this.global.setStructure(newStructure);
-    console.log(this.global.structure);
     this.global.updateSavedStructure();
     this.global.projectPath = path;
-    this.global.setSelectedStructure()
+    this.global.setSelectedStructure();
   }
 
   async download(as = false) {
-    console.log('download');
     const obj = this.global.savein18();
     const json = JSON.stringify(obj);
     if (!this.global.isSaved() || as) {
@@ -363,7 +354,6 @@ export class ImportExportService {
         if (!as) {
           tmp = this.global.projectPath;
         }
-        console.log(tmp);
         this.electronService.ipcRenderer.send('save-file', json, tmp, this.global.structure.getName() + '.in18');
       }
     }

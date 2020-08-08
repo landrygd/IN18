@@ -20,10 +20,10 @@ export class ExportModalComponent implements OnInit {
     private modalController: ModalController
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
 
-  typeChanged(value){
+  typeChanged(value) {
     this.type = value;
   }
   cancel() {
@@ -31,13 +31,13 @@ export class ExportModalComponent implements OnInit {
   }
 
   export() {
-    this.modalController.dismiss({type: this.type, files: this.files});
+    this.modalController.dismiss({ type: this.type, files: this.files });
   }
 
   async presentSettingsModal() {
     const modal = await this.modalController.create({
       component: SettingsModalComponent,
-      componentProps: {tab: 'import_export'},
+      componentProps: { tab: 'import_export' },
       cssClass: ''
     });
     return await modal.present();

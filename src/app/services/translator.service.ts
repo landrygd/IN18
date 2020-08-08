@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { ToastController, AlertController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { GlobalService } from './global.service';
-import { async } from '@angular/core/testing';
 import { Traduction } from '../classes/traduction';
 
 export interface GoogleObj {
@@ -10,7 +9,7 @@ export interface GoogleObj {
   target: string;
 }
 
-export interface ResponseTrad{
+export interface ResponseTrad {
   error?: ResponseTrad;
   responseData?: ResponseTrad;
   translatedText?: string;
@@ -43,10 +42,10 @@ export class TranslatorService {
     private http: HttpClient,
     private alertController: AlertController,
     private global: GlobalService
-  ) {}
+  ) { }
 
-  prepareTranslation(structure = this.global.structure){
-    if (structure === this.global.structure){
+  prepareTranslation(structure = this.global.structure) {
+    if (structure === this.global.structure) {
       this.traductionsTargeted = [];
     }
     for (const folder of structure.folderList) {
@@ -54,10 +53,10 @@ export class TranslatorService {
     }
     for (const tradGroup of structure.tradGroupList) {
       const mainTrad = tradGroup.getTradByLanguage(this.mainLanguage);
-      for (const trad of tradGroup.tradList){
-        if (mainTrad !== undefined && mainTrad.isFilled() && mainTrad !== trad){
-          if ((!trad.isFilled() && this.unfilled) || (!trad.checked && this.unverified)){
-            if (this.languages.findIndex(k => k === trad.language) !== -1){
+      for (const trad of tradGroup.tradList) {
+        if (mainTrad !== undefined && mainTrad.isFilled() && mainTrad !== trad) {
+          if ((!trad.isFilled() && this.unfilled) || (!trad.checked && this.unverified)) {
+            if (this.languages.findIndex(k => k === trad.language) !== -1) {
               this.traductionsTargeted.push([mainTrad, trad]);
             }
           }
@@ -66,31 +65,31 @@ export class TranslatorService {
     }
   }
 
-  getTrad(): number{
+  getTrad(): number {
     let count = 0;
     this.prepareTranslation();
-    for (const trad of this.traductionsTargeted){
+    for (const trad of this.traductionsTargeted) {
       count += 1;
     }
     return count;
   }
 
-  async translate(){
+  async translate() {
     this.prepareTranslation();
     let error = false;
-    for (const trad of this.traductionsTargeted){
+    for (const trad of this.traductionsTargeted) {
       this.http.get(this.api + '?q=' + trad[0].value + '&langpair=' + this.mainLanguage + '|' + trad[1].language).subscribe(
         res => {
           const r = res as ResponseTrad;
-          if (r.responseDetails === ''){
+          if (r.responseDetails === '') {
             trad[1].value = r.responseData.translatedText;
-          }else if (!error){
+          } else if (!error) {
             error = true;
             this.error(r.responseDetails);
           }
 
         }, err => {
-          if (!error){
+          if (!error) {
             error = true;
             const r = err as ResponseTrad;
             this.error(r.error.responseDetails);

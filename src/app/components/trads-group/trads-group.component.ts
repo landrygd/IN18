@@ -27,17 +27,17 @@ export class TradsGroupComponent implements OnInit {
     this.tradGroup.setName(value);
   }
 
-  delete(){
-    if (this.tradGroup.parentFolder.removeTradGroup(this.tradGroup)){
+  delete() {
+    if (this.tradGroup.parentFolder.removeTradGroup(this.tradGroup)) {
       this.global.setSelectedStructure(this.global.selectedFolder);
     }
   }
 
-  select(){
+  select() {
     this.global.setSelectedStructure(this.tradGroup);
   }
 
-  selectParent(){
+  selectParent() {
     this.global.setSelectedStructure(this.tradGroup.parentFolder);
   }
 
@@ -52,7 +52,6 @@ export class TradsGroupComponent implements OnInit {
         role: 'cancel',
         cssClass: 'danger',
         handler: (blah) => {
-          console.log('Confirm Cancel: blah');
         }
       }, {
         text: 'Yes',
@@ -69,7 +68,7 @@ export class TradsGroupComponent implements OnInit {
   async presentLanguagesModal(id: number = 0) {
     const modal = await this.modalController.create({
       component: LanguagesModalPage,
-      componentProps: {id},
+      componentProps: { id },
       cssClass: ''
     });
     return await modal.present();

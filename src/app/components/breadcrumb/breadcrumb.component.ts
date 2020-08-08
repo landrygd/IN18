@@ -13,9 +13,9 @@ export class BreadcrumbComponent implements OnInit {
 
   constructor(private global: GlobalService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  changeStructure(structure){
+  changeStructure(structure) {
     this.global.setSelectedStructure(structure);
   }
 

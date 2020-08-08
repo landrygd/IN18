@@ -28,13 +28,13 @@ export class Folder extends Structure {
 
     }
 
-    public removeFolder(folder: Folder): boolean{
+    public removeFolder(folder: Folder): boolean {
         const l = this.folderList.length;
         this.folderList = this.folderList.filter(e => e !== folder);
         return l > this.folderList.length;
     }
 
-    public removeTradGroup(TradGroup: TraductionsGroup): boolean{
+    public removeTradGroup(TradGroup: TraductionsGroup): boolean {
         const l = this.tradGroupList.length;
         this.tradGroupList = this.tradGroupList.filter(e => e !== TradGroup);
         return l > this.tradGroupList.length;
@@ -52,48 +52,48 @@ export class Folder extends Structure {
         return this.folderList.find(element => element.getName() === path);
     }
 
-    public isValidated(): boolean{
-        for (const k of this.tradGroupList){
-            if (!k.isValidated()){
+    public isValidated(): boolean {
+        for (const k of this.tradGroupList) {
+            if (!k.isValidated()) {
                 return false;
             }
         }
-        for (const k of this.folderList){
-            if (!k.isValidated()){
+        for (const k of this.folderList) {
+            if (!k.isValidated()) {
                 return false;
             }
         }
-        if (this.folderList.length === 0 && this.tradGroupList.length === 0){
+        if (this.folderList.length === 0 && this.tradGroupList.length === 0) {
             return false;
         }
         return true;
     }
 
-    public isFilled(): boolean{
-        for (const k of this.tradGroupList){
-            if (!k.isFilled()){
+    public isFilled(): boolean {
+        for (const k of this.tradGroupList) {
+            if (!k.isFilled()) {
                 return false;
             }
         }
-        for (const k of this.folderList){
-            if (!k.isFilled()){
+        for (const k of this.folderList) {
+            if (!k.isFilled()) {
                 return false;
             }
         }
-        if (this.folderList.length === 0 && this.tradGroupList.length === 0){
+        if (this.folderList.length === 0 && this.tradGroupList.length === 0) {
             return false;
         }
         return true;
     }
 
-    public rateValidation(): number[]{
-        let count = [0.0, 0.0];
-        for (const k of this.tradGroupList){
+    public rateValidation(): number[] {
+        const count = [0.0, 0.0];
+        for (const k of this.tradGroupList) {
             const tmp = k.rateValidation();
             count[0] += tmp[0];
             count[1] += tmp[1];
         }
-        for (const k of this.folderList){
+        for (const k of this.folderList) {
             const tmp = k.rateValidation();
             count[0] += tmp[0];
             count[1] += tmp[1];
@@ -101,14 +101,14 @@ export class Folder extends Structure {
         return count;
     }
 
-    public rateFill(): number[]{
-        let count = [0.0, 0.0];
-        for (const k of this.tradGroupList){
+    public rateFill(): number[] {
+        const count = [0.0, 0.0];
+        for (const k of this.tradGroupList) {
             const tmp = k.rateFill();
             count[0] += tmp[0];
             count[1] += tmp[1];
         }
-        for (const k of this.folderList){
+        for (const k of this.folderList) {
             const tmp = k.rateFill();
             count[0] += tmp[0];
             count[1] += tmp[1];
@@ -116,7 +116,7 @@ export class Folder extends Structure {
         return count;
     }
 
-    public isRoot(): boolean{
+    public isRoot(): boolean {
         return this.parentFolder === undefined;
     }
 

@@ -12,13 +12,13 @@ export class NewProjectModalComponent implements OnInit {
 
   constructor(public modalCtrl: ModalController, public global: GlobalService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   dismissModal() {
     this.modalCtrl.dismiss();
   }
 
-  structureNameChanged(value){
+  structureNameChanged(value) {
     this.global.structure.setName(value);
   }
 

@@ -5,6 +5,10 @@
       Create an item or a folder
     </ion-button>
   </ion-list-header>-->
-  <ion-row *ngIf="!this.global.isSaved()"><ion-item><ion-badge color="warning">Not saved</ion-badge></ion-item></ion-row>
+  <ion-row *ngIf="!this.global.isSaved()">
+    <ion-item>
+      <ion-badge color="warning">Not saved</ion-badge>
+    </ion-item>
+  </ion-row>
   <app-folder-tree [folder]="global.structure" [level]="-1"></app-folder-tree>
 </ion-list>

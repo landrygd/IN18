@@ -23,45 +23,45 @@ export class SettingsModalComponent implements OnInit {
               public alertController: AlertController,
               private settings: SettingsService) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  tabChanged(value){
+  tabChanged(value) {
     this.tab = value;
   }
 
-  extendTradChanged(){
-    this.extendTrad = !this.extendTrad;
+  extendTradChanged(value) {
+    this.extendTrad = value;
     this.change = true;
   }
 
-  tabImportExportChanged(value){
+  tabImportExportChanged(value) {
     this.tabImportExport = value;
     this.change = true;
   }
 
-  importFusionChanged(value){
+  importFusionChanged(value) {
     this.importFusion = value;
     this.change = true;
   }
 
-  folderCharCsvChanged(value){
+  folderCharCsvChanged(value) {
     this.folderCharCsv = value;
     this.change = true;
   }
 
-  reset(){}
+  reset() { }
 
   close() {
-    if (this.change){
+    if (this.change) {
       this.presentTradConfirm();
-    }else{
+    } else {
       this.modalController.dismiss();
     }
 
   }
 
-  autoValidateChanged(){
-    this.autoValidate = !this.autoValidate;
+  autoValidateChanged(value) {
+    this.autoValidate = value;
     this.change = true;
   }
 
@@ -76,7 +76,6 @@ export class SettingsModalComponent implements OnInit {
         role: 'cancel',
         cssClass: 'danger',
         handler: (blah) => {
-          console.log('Confirm Cancel: blah');
         }
       }, {
         text: 'Close without save',
@@ -97,7 +96,7 @@ export class SettingsModalComponent implements OnInit {
     await alert.present();
   }
 
-  save(){
+  save() {
     this.settings.extendTrad = this.extendTrad;
     this.settings.tabImportExport = this.tabImportExport;
     this.settings.folderCharCsv = this.folderCharCsv;
@@ -106,7 +105,6 @@ export class SettingsModalComponent implements OnInit {
     this.change = false;
     this.settings.save();
   }
-  
 
   @HostListener('window:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {

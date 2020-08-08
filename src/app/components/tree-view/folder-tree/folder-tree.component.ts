@@ -26,16 +26,16 @@ export class FolderTreeComponent implements OnInit {
   ngOnInit() { }
 
   toggleCollapse(select = false) {
-    if (!this.global.OneChildIsSelected(this.folder) || select){
-      if (select){
+    if (!this.global.OneChildIsSelected(this.folder) || select) {
+      if (select) {
         this.select(this.folder);
-      }else{
+      } else {
         this.collapsed = !this.collapsed;
       }
     }
   }
 
-  isExpanded(): boolean{
+  isExpanded(): boolean {
     return !this.collapsed || this.level < 0 || this.global.OneChildIsSelected(this.folder);
   }
 
@@ -47,7 +47,7 @@ export class FolderTreeComponent implements OnInit {
     return this.collapsed ? 'chevron-forward' : 'chevron-down';
   }
 
-  folderIcon(){
+  folderIcon() {
     return this.collapsed ? 'folder' : 'folder-open';
   }
 
@@ -58,16 +58,16 @@ export class FolderTreeComponent implements OnInit {
       (this.folder.parentFolder === this.global.selectedFolder && this.global.selectedFolder !== this.global.structure)){
       return true;
     }*/
-    if (structure === this.global.selectedStructure){
+    if (structure === this.global.selectedStructure) {
       return true;
     }
     return false;
   }
 
   getColor(folder: boolean, structure: Structure = this.folder): string {
-    if (structure.isValidated()){
+    if (structure.isValidated()) {
       return 'success';
-    }else if (structure.isFilled()) {
+    } else if (structure.isFilled()) {
       return 'primary';
     }
 
@@ -80,7 +80,7 @@ export class FolderTreeComponent implements OnInit {
   async addTraduction(isFolder = false) {
     const modal = await this.modalController.create({
       component: NewTradModalComponent,
-      componentProps: {parentFolder: this.folder, isFolder}
+      componentProps: { parentFolder: this.folder, isFolder }
     });
     await modal.present();
   }

@@ -1,7 +1,7 @@
 {
   "name": "in18",
   "main": "electron/index.js",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "Landry and Deackor",
   "homepage": "https://ionicframework.com/",
   "scripts": {

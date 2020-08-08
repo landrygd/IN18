@@ -63,12 +63,12 @@ export class NewTradModalComponent implements OnInit {
       result = this.parentFolder.addFolder(this.newFolder);
     } else {
       result = this.parentFolder.addTraductionGroup(this.tradGroup);
-      this.tradGroup.addMissingTrad(this.global.languages)
+      this.tradGroup.addMissingTrad(this.global.languages);
     }
 
-    if (!result){
+    if (!result) {
       this.presentExistDialog();
-    }else{
+    } else {
       this.modalController.dismiss();
     }
   }
@@ -84,7 +84,6 @@ export class NewTradModalComponent implements OnInit {
         role: 'cancel',
         cssClass: 'danger',
         handler: (blah) => {
-          console.log('Confirm Cancel: blah');
         }
       }]
     });
@@ -95,12 +94,11 @@ export class NewTradModalComponent implements OnInit {
   async presentLanguagesModal(id: number = 0) {
     const modal = await this.modalController.create({
       component: LanguagesModalPage,
-      componentProps: {id},
+      componentProps: { id },
       cssClass: ''
     });
     await modal.present();
     await modal.onDidDismiss();
     this.tradGroup.addMissingTrad(this.global.languages);
-    console.log(this.tradGroup.tradList);
   }
 }

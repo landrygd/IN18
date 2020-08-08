@@ -15,7 +15,7 @@ export class SettingsService {
     this.load();
   }
 
-  save(){
+  save() {
     localStorage.setItem('extendTrad', this.extendTrad ? '1' : '0');
     localStorage.setItem('autoValidate', this.autoValidate ? '1' : '0');
     localStorage.setItem('tabImportExport', this.tabImportExport);
@@ -23,25 +23,25 @@ export class SettingsService {
     localStorage.setItem('importFusion', this.importFusion);
   }
 
-  load(){
+  load() {
     const newExtendTrad = localStorage.getItem('extendTrad');
-    if (newExtendTrad !== undefined && newExtendTrad !== null){
+    if (newExtendTrad !== undefined && newExtendTrad !== null) {
       this.extendTrad = newExtendTrad === '1';
     }
     const newAutoValidate = localStorage.getItem('autoValidate');
-    if (newAutoValidate !== undefined && newAutoValidate !== null){
+    if (newAutoValidate !== undefined && newAutoValidate !== null) {
       this.autoValidate = newAutoValidate === '1';
     }
     const newTabImportExport = localStorage.getItem('tabImportExport');
-    if (newTabImportExport !== undefined && newTabImportExport !== null){
+    if (newTabImportExport !== undefined && newTabImportExport !== null) {
       this.tabImportExport = newTabImportExport;
     }
     const newFolderCharCsv = localStorage.getItem('folderCharCsv');
-    if (newFolderCharCsv !== undefined && newFolderCharCsv !== null){
+    if (newFolderCharCsv !== undefined && newFolderCharCsv !== null) {
       this.folderCharCsv = newFolderCharCsv;
     }
     const newImportFusion = localStorage.getItem('importFusion');
-    if (newImportFusion !== undefined && newImportFusion !== null){
+    if (newImportFusion !== undefined && newImportFusion !== null) {
       this.importFusion = newImportFusion;
     }
   }

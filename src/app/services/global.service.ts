@@ -1,16 +1,9 @@
-import { Injectable, ChangeDetectorRef, Inject } from '@angular/core';
-
-
-
-import { Subject, BehaviorSubject, Observable, of, interval } from 'rxjs';
-import { Traduction } from '../classes/traduction';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { Folder } from '../classes/folder';
 import { TraductionsGroup } from '../classes/traductions-group';
 import { Structure } from '../classes/structure';
-import { map } from 'rxjs/operators';
-import { settings } from 'cluster';
 import { SettingsService } from './settings.service';
-import { ImportExportService } from './import-export.service';
 
 @Injectable({
   providedIn: 'root'
@@ -47,15 +40,15 @@ export class GlobalService {
   }
 
   // update lastsavedstructure when we save the structure
-  updateSavedStructure(){
+  updateSavedStructure() {
     this.lastSavedStrcture = this.savein18(this.structure);
   }
 
-  isSaved(){
+  isSaved() {
     return JSON.stringify(this.lastSavedStrcture) === JSON.stringify(this.savein18(this.structure));
   }
 
-  getProjectName(){
+  getProjectName() {
     return this.structure.getName();
   }
 

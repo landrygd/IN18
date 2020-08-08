@@ -61,13 +61,13 @@ import { NewProjectModalComponent } from './components/top-menu/new-project-moda
     HttpClientModule,
     NgxElectronModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
-    ],
+  ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class AppModule {}
+export class AppModule { }
