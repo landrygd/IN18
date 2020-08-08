@@ -58,7 +58,7 @@ npm start electron:win
 * [Ionic](https://ionicframework.com/) - Framework for hybrid application (web, android, IOS, Windows, MacOS and Linux)
 * [Angular](https://angular.io/) - Framework front-end
 * [Node.js](https://nodejs.org/en/) - Real-time development on local server in JavaScript
-* [NWJS](https://nwjs.io/) - Native export to computer
+* [Electron](https://www.electronjs.org/) - Build desktop application
 * [VSCode](https://code.visualstudio.com/) - IDE
 
 ## Contribute
