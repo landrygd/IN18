@@ -66,8 +66,8 @@ npm start electron:win
 If you wish to contribute, you can contact us on the [Blockup Discord Server](https://discord.gg/FUmcynX).
 
 ## Versions
-**Latest stable release :** 0.0.1
-**Latest version :** 0.0.1
+**Latest stable release :** v1.0.0
+**Latest version :** v1.0.0
 List of versions : [Click to view](https://github.com/landry42/neotic/tags)
 
 ## Authors
