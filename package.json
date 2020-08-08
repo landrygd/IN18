@@ -18,7 +18,7 @@
     "linux-release": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=linux --arch=x64 --icon=src/assets/icon.png --prune=true --out=release-builds",
     "mac-build": "electron-installer-dmg ./release-builds/ionic-desktop-darwin-x64/ionic-desktop.app builds/ionic-desktop",
     "windows-build": "node src/windows-build.js",
-    "electron:win": "electron-packager ./electron IN18 --overwrite --asar=true --platform=win32 --arch=ia32 --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='IN18'"
+    "electron:win": "electron-packager ./electron IN18 --overwrite --asar=true --platform=win32 --arch=ia32 --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='IN18' --icon=./electron/icon/favicon_invert.ico"
   },
   "private": true,
   "dependencies": {

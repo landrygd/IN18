@@ -53,8 +53,8 @@ export class AppComponent implements OnInit {
     if (success) {
       self.importExportService.load(file, filePath);
       // self.presentLoadedToast();
+      self.presentLoadConfirm();
     }
-    self.presentLoadConfirm();
   }
 
   async presentLoadConfirm() {

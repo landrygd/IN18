@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
-import { ModalController, AlertController } from '@ionic/angular';
+import { ModalController, AlertController, ToastController } from '@ionic/angular';
 import { SettingsService } from 'src/app/services/settings.service';
 
 @Component({
@@ -21,7 +21,8 @@ export class SettingsModalComponent implements OnInit {
 
   constructor(private modalController: ModalController,
               public alertController: AlertController,
-              private settings: SettingsService) { }
+              private settings: SettingsService,
+              private toastController: ToastController) { }
 
   ngOnInit() { }
 
@@ -104,6 +105,15 @@ export class SettingsModalComponent implements OnInit {
     this.settings.autoValidate = this.autoValidate;
     this.change = false;
     this.settings.save();
+    this.presentSettingsToast();
+  }
+
+  async presentSettingsToast() {
+    const toast = await this.toastController.create({
+      message: 'Settings saved.',
+      duration: 2000
+    });
+    await toast.present();
   }
 
   @HostListener('window:keydown', ['$event'])
