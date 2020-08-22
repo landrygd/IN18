@@ -81,3 +81,9 @@ Read the list of [contributors](https://github.com/landry42/IN18/contributors) t
 ## License
 
 This project is licensed under the "MIT" license - see the [LICENSE.md](LICENSE.md) file for more information.
+
+## Support us
+
+In18's features are totally free so if you want to support our work, here is a donation link.
+
+[Support us](https://liberapay.com/IN18/donate)
