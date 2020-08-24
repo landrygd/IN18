@@ -159,6 +159,7 @@
     --ion-text-color: #ffffff;
     --ion-text-color-rgb: 255,255,255;
 
+    --ion-color-step-0: #070707;
     --ion-color-step-50: #0d0d0d;
     --ion-color-step-100: #1a1a1a;
     --ion-color-step-150: #262626;
@@ -199,6 +200,7 @@
 
     --ion-border-color: #222222;
 
+    --ion-color-step-0: #181818;
     --ion-color-step-50: #1e1e1e;
     --ion-color-step-100: #2a2a2a;
     --ion-color-step-150: #363636;
@@ -224,5 +226,12 @@
     --ion-toolbar-background: #1f1f1f;
 
     --ion-tab-bar-background: #1f1f1f;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    --ion-color-step-0: #f3f3f3;
+    --ion-item-background: #fafafa;
   }
 }
