@@ -68,16 +68,22 @@ If you wish to contribute, you can contact us on the [Blockup Discord Server](ht
 ## Versions
 **Latest stable release :** v1.0.0
 **Latest version :** v1.0.0
-List of versions : [Click to view](https://github.com/landry42/neotic/tags)
+List of versions : [Click to view](https://github.com/landry42/IN18/tags)
 
 ## Authors
 
 * **Landry** _alias_ [@landry42](https://github.com/landry42)
 * **Vincent** _alias_ [@deakcor](https://github.com/deakcor)
 
-Read the list of [contributors](https://github.com/landry42/neotic/contributors) to see who helped the project!
+Read the list of [contributors](https://github.com/landry42/IN18/contributors) to see who helped the project!
 
 
 ## License
 
 This project is licensed under the "MIT" license - see the [LICENSE.md](LICENSE.md) file for more information.
+
+## Support us
+
+In18's features are totally free so if you want to support our work, here is a donation link.
+
+[Support us](https://liberapay.com/IN18/donate)
