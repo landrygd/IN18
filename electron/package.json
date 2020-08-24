@@ -1,6 +1,6 @@
 {
   "name": "IN18",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An i18n translator",
   "main": "index.js",
   "scripts": {
