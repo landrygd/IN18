@@ -49,9 +49,9 @@ export class AppComponent implements OnInit {
       this.electronService.ipcRenderer.on('file-saved', this.fileSaved);
     }
   }
-  async fileLoaded(event, filePath: string, file: string, success: boolean) {
+  async fileLoaded(event, filePath: string, data: string, success: boolean) {
     if (success) {
-      self.importExportService.load(file, filePath);
+      self.importExportService.load(data, filePath);
       // self.presentLoadedToast();
       self.presentLoadConfirm();
     }
@@ -82,6 +82,7 @@ export class AppComponent implements OnInit {
       self.presentSavedToast();
     }
     self.cdr.detectChanges();
+    self.global.loading = false;
   }
 
   async presentLoadedToast() {

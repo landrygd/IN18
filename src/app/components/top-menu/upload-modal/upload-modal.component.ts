@@ -28,6 +28,10 @@ export class UploadModalComponent implements OnInit {
       }
   `;
 
+  exampleCsv = `id,en,fr
+id_yes,yes,oui
+  `;
+
   constructor(
     private modalController: ModalController
   ) { }
@@ -73,7 +77,8 @@ export class UploadModalComponent implements OnInit {
   }
 
   downloadCsvTemplate() {
-
+    const blob = new Blob([this.exampleCsv], { type: 'plain/text' });
+    saveAs(blob, 'example.csv');
   }
 
   async presentSettingsModal() {

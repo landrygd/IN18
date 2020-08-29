@@ -240,10 +240,10 @@ export class TopMenuComponent implements OnInit {
     return '';
   }
 
-  onFileSelected(event) {
+  async onFileSelected(event) {
     console.log(event);
     const file: File = event.target.files[0];
-    this.importExport.load_file(file);
+    this.importExport.load(await file.text(), file.path);
   }
 
 

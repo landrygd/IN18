@@ -17,6 +17,8 @@ export class GlobalService {
   languages: string[] = [];
   paths: any;
 
+  loading = false;
+
 
   selectedTradGroups$: Observable<TraductionsGroup[]>;
   selectedFolders$: Observable<Structure[]>;

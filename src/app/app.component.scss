@@ -38,3 +38,9 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--ion-color-step-100);
 }
+
+.loading_bar{
+  z-index: 10;
+  position: absolute;
+  margin-top: 6px;
+}
