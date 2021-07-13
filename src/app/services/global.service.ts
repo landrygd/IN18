@@ -175,16 +175,33 @@ export class GlobalService {
 
   savein18(structure: Structure = this.structure): object {
     const json: object = {};
+    if (structure == this.structure){
+      json[structure.getName()]={}
+    }
+    
     if (structure instanceof Folder) {
       for (const folder of structure.folderList) {
-        json[folder.getName()] = this.savein18(folder);
+        if (structure == this.structure){
+          json[structure.getName()][folder.getName()] = this.savein18(folder);
+        }else{
+          json[folder.getName()] = this.savein18(folder);
+        }
       }
       for (const trad of structure.tradGroupList) {
-        json[trad.getName()] = {};
-        for (const t of trad.tradList) {
-          json[trad.getName()][t.language] = { value: t.value, checked: t.checked };
+        if (structure == this.structure){
+          json[structure.getName()][trad.getName()] = {};
+          for (const t of trad.tradList) {
+            json[structure.getName()][trad.getName()][t.language] = { value: t.value, checked: t.checked };
 
+          }
+        }else{
+          json[trad.getName()] = {};
+          for (const t of trad.tradList) {
+            json[trad.getName()][t.language] = { value: t.value, checked: t.checked };
+
+          }
         }
+        
       }
     }
     return json;

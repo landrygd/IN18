@@ -16,7 +16,7 @@ export class SettingsModalComponent implements OnInit {
   folderCharCsv = this.settings.folderCharCsv;
   importFusion = this.settings.importFusion;
   autoValidate = this.settings.autoValidate;
-
+  folderNameOnlyForDoublon = this.settings.folderNameOnlyForDoublon;
   change = false;
 
   constructor(private modalController: ModalController,
@@ -47,6 +47,11 @@ export class SettingsModalComponent implements OnInit {
 
   folderCharCsvChanged(value) {
     this.folderCharCsv = value;
+    this.change = true;
+  }
+
+  folderNameOnlyForDoublonChanged(value) {
+    this.folderNameOnlyForDoublon = value;
     this.change = true;
   }
 
@@ -103,6 +108,7 @@ export class SettingsModalComponent implements OnInit {
     this.settings.folderCharCsv = this.folderCharCsv;
     this.settings.importFusion = this.importFusion;
     this.settings.autoValidate = this.autoValidate;
+    this.settings.folderNameOnlyForDoublon = this.folderNameOnlyForDoublon;
     this.change = false;
     this.settings.save();
     this.presentSettingsToast();

@@ -65,9 +65,15 @@
         </ion-select>
       </ion-item>
       <ion-item>
+        <ion-label>In CSV, add folder name only for doublon</ion-label>
+        <ion-checkbox slot="end" [checked]="folderNameOnlyForDoublon" (ionChange)="folderNameOnlyForDoublonChanged($event.detail.checked)">
+        </ion-checkbox>
+      </ion-item>
+      <ion-item>
         <ion-label position="floating">Folder character separator in CSV</ion-label>
         <ion-input [value]="folderCharCsv" (ionChange)="folderCharCsvChanged($event.detail.value)"></ion-input>
       </ion-item>
+      
     </ion-card-content>
   </ion-card>
 

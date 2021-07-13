@@ -21,7 +21,6 @@
     "electron:win": "electron-packager ./electron IN18 --overwrite --asar=true --platform=win32 --arch=ia32 --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='IN18' --icon=./electron/icon/favicon_invert.ico",
     "electron:linux": "electron-packager ./electron IN18 --overwrite --asar=true --platform=linux --arch=x64 --icon=./electron/icon/favicon_invert.png --prune=true --out=release-builds",
     "electron:mac": "electron-packager ./electron IN18 --overwrite --platform=darwin --arch=x64 --prune=true --out=release-builds --icon=./electron/icon/favicon_invert.icns"
-
   },
   "private": true,
   "dependencies": {
@@ -59,7 +58,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1000.5",
-    "@angular/cli": "^10.0.5",
+    "@angular/cli": "10.2.1",
     "@angular/compiler": "^10.0.8",
     "@angular/compiler-cli": "^10.0.8",
     "@angular/language-service": "^10.0.8",
@@ -68,13 +67,13 @@
     "@types/jasmine": "^3.5.12",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.12.54",
-    "IN18": "file:electron",
     "codelyzer": "^5.1.2",
     "electron": "^9.1.2",
-    "electron-is-dev": "^1.2.0",
     "electron-bridge": "^0.1.1",
     "electron-installer-dmg": "^3.0.0",
+    "electron-is-dev": "^1.2.0",
     "electron-packager": "^15.0.0",
+    "IN18": "file:electron",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~5.0.0",

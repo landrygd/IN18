@@ -8,6 +8,7 @@ export class SettingsService {
   extendTrad = false;
   tabImportExport = 'json';
   folderCharCsv = '.';
+  folderNameOnlyForDoublon = false;
   importFusion = 'no';
   autoValidate = false;
 
@@ -20,6 +21,7 @@ export class SettingsService {
     localStorage.setItem('autoValidate', this.autoValidate ? '1' : '0');
     localStorage.setItem('tabImportExport', this.tabImportExport);
     localStorage.setItem('folderCharCsv', this.folderCharCsv);
+    localStorage.setItem('folderNameOnlyForDoublon', this.folderNameOnlyForDoublon ? '1' : '0');
     localStorage.setItem('importFusion', this.importFusion);
   }
 
@@ -39,6 +41,10 @@ export class SettingsService {
     const newFolderCharCsv = localStorage.getItem('folderCharCsv');
     if (newFolderCharCsv !== undefined && newFolderCharCsv !== null) {
       this.folderCharCsv = newFolderCharCsv;
+    }
+    const newFolderNameOnlyForDoublon = localStorage.getItem('folderNameOnlyForDoublon');
+    if (newFolderNameOnlyForDoublon !== undefined && newFolderNameOnlyForDoublon !== null) {
+      this.folderNameOnlyForDoublon = newFolderNameOnlyForDoublon === '1';
     }
     const newImportFusion = localStorage.getItem('importFusion');
     if (newImportFusion !== undefined && newImportFusion !== null) {

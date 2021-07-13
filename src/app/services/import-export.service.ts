@@ -224,14 +224,21 @@ export class ImportExportService {
     }
   }
 
-  _exportToCsv(structure: Structure, csv: string, key: string = '', delimitor = ',', separator = this.settings.folderCharCsv): string {
+  _exportToCsv(structure: Structure, csv: string, key: string = '', delimitor = ',', separator = this.settings.folderCharCsv, noFolderName = this.settings.folderNameOnlyForDoublon ): string {
+    var existingKey = [];
     if (structure instanceof Folder) {
       key += structure.getName() + separator;
       for (const folder of structure.folderList) {
         csv = this._exportToCsv(folder, csv, key);
       }
       for (const trad of structure.tradGroupList) {
-        csv += key + trad.getName();
+        if (!noFolderName || existingKey.includes(trad.getName())){
+          csv += key + trad.getName();
+        }else{
+          csv = trad.getName();
+          existingKey.push(trad.getName());
+        }
+        
         for (const t of trad.tradList) {
           csv += delimitor + t.getValue();
         }
@@ -339,10 +346,15 @@ export class ImportExportService {
 
   load(data: string, path: string) {
     this.global.loading = true;
-    const obj = { default: JSON.parse(data) };
+    var obj = JSON.parse(data);
+    if (Object.keys(obj).length==1){
+      this.global.structure.setName(Object.keys(obj)[0]);
+    }else{
+      obj = {'default':obj};
+    }
     const newStructure = new Folder(this.global.structure.getName(), undefined);
     this.global.languages = [];
-    this._load_in18(obj, 'default', newStructure);
+    this._load_in18(obj, Object.keys(obj)[0], newStructure);
     this.global.setStructure(newStructure);
     this.global.updateSavedStructure();
     this.global.projectPath = path;
