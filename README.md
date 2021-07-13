@@ -48,6 +48,11 @@ From the project root, enter the following commands to compile:
 ionic capacitor run electron
 ```
 
+If electron already exist you can just type:
+```bash
+npm start
+```
+
 To export:
 ```bash
 npm start electron:win
