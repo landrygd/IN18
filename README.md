@@ -42,7 +42,7 @@ ionic serve
 ```
 A browser window should then open automatically on the page: http://localhost:8100/
 
-### Windows
+### Desktop
 From the project root, enter the following commands to compile:
 ```bash
 ionic capacitor run electron
@@ -55,8 +55,12 @@ npm start
 
 To export:
 ```bash
-npm start electron:win
+npm run electron:win
+npm run electron:linux
+npm run electron:mac
 ```
+
+You will find the builds in **release-builds** folder in IN18 main folder.
 
 ## Made with
 
