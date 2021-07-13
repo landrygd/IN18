@@ -50,6 +50,7 @@ ionic capacitor run electron
 
 If electron already exist you can just type:
 ```bash
+ionic build && ionic cap copy
 npm start
 ```
 
