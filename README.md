@@ -45,13 +45,7 @@ A browser window should then open automatically on the page: http://localhost:81
 ### Desktop
 From the project root, enter the following commands to compile:
 ```bash
-ionic capacitor run electron
-```
-
-If electron already exist you can just type:
-```bash
-ionic build && ionic cap copy
-npm start
+npm run electron
 ```
 
 To export:
