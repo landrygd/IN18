@@ -13,7 +13,7 @@ export class ExportModalComponent implements OnInit {
 
   files: File[] = [];
 
-  type = 'json';
+  @Input() type = 'json';
 
 
   constructor(

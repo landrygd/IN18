@@ -174,7 +174,7 @@ export class TopMenuComponent implements OnInit {
   async export() {
     const modal = await this.modalController.create({
       component: ExportModalComponent,
-      componentProps: { tab: this.setting.tabImportExport },
+      componentProps: { tab: this.setting.tabImportExport, type:this.setting.tabImportExport },
     });
     await modal.present();
     const docs: Import = (await modal.onDidDismiss()).data;

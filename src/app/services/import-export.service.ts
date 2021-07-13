@@ -235,7 +235,7 @@ export class ImportExportService {
         if (!noFolderName || existingKey.includes(trad.getName())){
           csv += key + trad.getName();
         }else{
-          csv = trad.getName();
+          csv += trad.getName();
           existingKey.push(trad.getName());
         }
         
@@ -274,7 +274,7 @@ export class ImportExportService {
     }
     csv += '\n';
     csv = this._exportToCsv(this.global.structure, csv);
-    const blob = new Blob([csv], { type: 'text/csv' });
+    const blob = new Blob(["\uFEFF"+csv], { type: 'text/csv; charset=utf-8' });
     saveAs(blob, this.global.structure.getName() + '.csv');
     this.global.loading = false;
   }
