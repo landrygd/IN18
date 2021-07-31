@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { GlobalService } from 'src/app/services/global.service';
+import { ImportExportService } from 'src/app/services/import-export.service';
 import { SettingsModalComponent } from '../settings-modal/settings-modal.component';
 
 @Component({
@@ -15,9 +17,12 @@ export class ExportModalComponent implements OnInit {
 
   @Input() type = 'json';
 
+  previewExport =[];
 
   constructor(
-    private modalController: ModalController
+    private modalController: ModalController,
+    public global: GlobalService,
+    private importExport: ImportExportService
   ) { }
 
   ngOnInit() { }
@@ -25,6 +30,14 @@ export class ExportModalComponent implements OnInit {
 
   typeChanged(value) {
     this.type = value;
+    switch (this.type){
+      case 'json':
+        this.previewExport = this.importExport.getJsonPreview();
+        break;
+      case 'csv':
+        this.previewExport = this.importExport.getCsvPreview();
+        break;
+    }
   }
   cancel() {
     this.modalController.dismiss();

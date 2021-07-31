@@ -77,7 +77,7 @@ id_yes,yes,oui
   }
 
   downloadCsvTemplate() {
-    const blob = new Blob([this.exampleCsv], { type: 'plain/text' });
+    const blob = new Blob(["\uFEFF"+this.exampleCsv], { type: 'text/csv; charset=utf-8' });
     saveAs(blob, 'example.csv');
   }
 

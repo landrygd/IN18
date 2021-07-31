@@ -30,6 +30,7 @@ import { TranslateModalComponent } from './components/top-menu/translate-modal/t
 import { AboutModalComponent } from './components/top-menu/about-modal/about-modal.component';
 import { NgxElectronModule } from 'ngx-electron';
 import { NewProjectModalComponent } from './components/top-menu/new-project-modal/new-project-modal.component';
+import { ExportModalComponent } from './components/top-menu/export-modal/export-modal.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { NewProjectModalComponent } from './components/top-menu/new-project-moda
     SettingsModalComponent,
     TranslateModalComponent,
     AboutModalComponent,
-    NewProjectModalComponent
+    NewProjectModalComponent,
+    ExportModalComponent
   ],
   entryComponents: [],
   imports: [

@@ -224,15 +224,22 @@ export class ImportExportService {
     }
   }
 
-  _exportToCsv(structure: Structure, csv: string, key: string = '', delimitor = ',', separator = this.settings.folderCharCsv, noFolderName = this.settings.folderNameOnlyForDoublon ): string {
+  _exportToCsv(structure: Structure, csv: string = '', key: string = '', delimitor = ','): string {
+    if (csv==''){
+      csv = 'id';
+      for (const language of this.global.languages) {
+        csv += delimitor + language;
+      }
+      csv += '\n';
+    }
     var existingKey = [];
     if (structure instanceof Folder) {
-      key += structure.getName() + separator;
+      key += structure.getName() + this.settings.folderCharCsv;
       for (const folder of structure.folderList) {
         csv = this._exportToCsv(folder, csv, key);
       }
       for (const trad of structure.tradGroupList) {
-        if (!noFolderName || existingKey.includes(trad.getName())){
+        if (!this.settings.folderNameOnlyForDoublon || existingKey.includes(trad.getName())){
           csv += key + trad.getName();
         }else{
           csv += trad.getName();
@@ -266,14 +273,27 @@ export class ImportExportService {
     return json;
   }
 
-  async downloadCsv(delimitor = ',', separator = this.settings.folderCharCsv) {
-    this.global.loading = true;
-    let csv = 'id';
-    for (const language of this.global.languages) {
-      csv += delimitor + language;
+  getCsvPreview(){
+    let csv = this._exportToCsv(this.global.structure);
+    let csv_arr = csv.split('\n');
+    let res=[]
+    for (var k of csv_arr){
+      res.push(k.split(','));
     }
-    csv += '\n';
-    csv = this._exportToCsv(this.global.structure, csv);
+    return res;
+  }
+
+  getJsonPreview(){
+    const res = [];
+    for (const language of this.global.languages) {
+      res.push(JSON.stringify(this._exportToJsons(this.global.structure, language))) ;
+    }
+    return res;
+  }
+
+  async downloadCsv(delimitor = ',') {
+    this.global.loading = true;
+    let csv = this._exportToCsv(this.global.structure);
     const blob = new Blob(["\uFEFF"+csv], { type: 'text/csv; charset=utf-8' });
     saveAs(blob, this.global.structure.getName() + '.csv');
     this.global.loading = false;

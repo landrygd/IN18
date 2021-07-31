@@ -13,7 +13,35 @@
 
 <ion-content fullscreen>
 
+  <ion-row *ngIf="type=='json'">
+    <ion-col>
+      <ion-card *ngFor="let jsonFile of previewExport; ; index as i;">
+        <ion-card-header>
+          <ion-card-subtitle>{{global.languages[i]}}.json</ion-card-subtitle>
+        </ion-card-header>
 
+        <ion-card-content>
+          {{jsonFile}}
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+<ion-card *ngIf="type=='csv'">
+  <ion-card-header>
+    <ion-card-subtitle>{{global.structure.getName()}}.csv</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-grid>
+      <ion-row *ngFor="let csvRow of previewExport;">
+        <ion-col *ngFor = "let csvCol of csvRow;">
+            {{csvCol}}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
 
 
 </ion-content>
