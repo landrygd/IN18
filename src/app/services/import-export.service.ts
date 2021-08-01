@@ -1,55 +1,55 @@
-import { Injectable } from '@angular/core';
-import { GlobalService } from './global.service';
-import { Folder } from '../classes/folder';
-import { SettingsService } from './settings.service';
-import { TraductionsGroup } from '../classes/traductions-group';
-import { Traduction } from '../classes/traduction';
-import { saveAs } from 'file-saver';
-import { Structure } from '../classes/structure';
-import * as JSZip from 'jszip';
-import { ElectronService } from 'ngx-electron';
-import { ToastController } from '@ionic/angular';
+import { Injectable } from "@angular/core";
+import { GlobalService } from "./global.service";
+import { Folder } from "../classes/folder";
+import { SettingsService } from "./settings.service";
+import { TraductionsGroup } from "../classes/traductions-group";
+import { Traduction } from "../classes/traduction";
+import { saveAs } from "file-saver";
+import { Structure } from "../classes/structure";
+import * as JSZip from "jszip";
+import { ElectronService } from "ngx-electron";
+import { ToastController } from "@ionic/angular";
 
 let g: GlobalService;
 
 let self: ImportExportService;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ImportExportService {
-
-  constructor(private global: GlobalService, private settings: SettingsService, private electronService: ElectronService,
-    private toastController: ToastController) {
+  constructor(
+    private global: GlobalService,
+    private settings: SettingsService,
+    private electronService: ElectronService,
+    private toastController: ToastController
+  ) {
     g = global;
     self = this;
     if (this.electronService.isElectronApp) {
-      const path = this.electronService.ipcRenderer.sendSync('get-file-data');
-      if (path === null || path === './') {
+      const path = this.electronService.ipcRenderer.sendSync("get-file-data");
+      if (path === null || path === "./") {
       } else {
         this.load_in18(path, true);
       }
     }
-
   }
 
-  _CSVToArray(strData, strDelimiter = ','): string[][] {
-
+  _CSVToArray(strData, strDelimiter = ","): string[][] {
     // Create a regular expression to parse the CSV values.
     const objPattern = new RegExp(
-      (
-        // Delimiters.
-        '(\\' + strDelimiter + '|\\r?\\n|\\r|^)' +
-
+      // Delimiters.
+      "(\\" +
+        strDelimiter +
+        "|\\r?\\n|\\r|^)" +
         // Quoted fields.
         '(?:"([^"]*(?:""[^"]*)*)"|' +
-
         // Standard fields.
-        '([^"\\' + strDelimiter + '\\r\\n]*))'
-      ),
-      'gi'
+        '([^"\\' +
+        strDelimiter +
+        "\\r\\n]*))",
+      "gi"
     );
-
 
     // Create an array to hold our data. Give the array
     // a default empty first row.
@@ -59,12 +59,10 @@ export class ImportExportService {
     // matching groups.
     let arrMatches = null;
 
-
     // Keep looping over the regular expression matches
     // until we can no longer find a match.
     // tslint:disable-next-line: no-conditional-assignment
-    while (arrMatches = objPattern.exec(strData)) {
-
+    while ((arrMatches = objPattern.exec(strData))) {
       // Get the delimiter that was found.
       const strMatchedDelimiter = arrMatches[1];
 
@@ -72,15 +70,10 @@ export class ImportExportService {
       // (is not the start of string) and if it matches
       // field delimiter. If id does not, then we know
       // that this delimiter is a row delimiter.
-      if (
-        strMatchedDelimiter.length &&
-        strMatchedDelimiter !== strDelimiter
-      ) {
-
+      if (strMatchedDelimiter.length && strMatchedDelimiter !== strDelimiter) {
         // Since we have reached a new row of data,
         // add an empty row to our data array.
         arrData.push([]);
-
       }
 
       let strMatchedValue;
@@ -89,21 +82,13 @@ export class ImportExportService {
       // let's check to see which kind of value we
       // captured (quoted or unquoted).
       if (arrMatches[2]) {
-
         // We found a quoted value. When we capture
         // this value, unescape any double quotes.
-        strMatchedValue = arrMatches[2].replace(
-          new RegExp('""', 'g'),
-          '"'
-        );
-
+        strMatchedValue = arrMatches[2].replace(new RegExp('""', "g"), '"');
       } else {
-
         // We found a non-quoted value.
         strMatchedValue = arrMatches[3];
-
       }
-
 
       // Now that we have our value string, let's add
       // it to the data array.
@@ -111,20 +96,29 @@ export class ImportExportService {
     }
 
     // Return the parsed data.
-    return (arrData);
+    return arrData;
   }
 
-  async importCsvFile(file: File, separator = this.settings.folderCharCsv) {
-    if (file.path !==undefined){
-      this.settings.addRecentFilePath(file.path)
+  async importFile(path: String) {
+    if (this.electronService.isElectronApp) {
+      this.electronService.ipcRenderer.send("load-file", path, true);
+    }
+  }
+
+  async importCsvFile(data: String, path:string="", separator = this.settings.folderCharCsv) {
+    if (path !== "") {
+      this.settings.addRecentFilePath(path);
     }
     this.global.loading = true;
-    const csvArray: string[][] = this._CSVToArray(await file.text());
-    if (this.global.structure===undefined){
-      this.global.structure = new Folder('project_name', undefined);
+    const csvArray: string[][] = this._CSVToArray(data);
+    if (this.global.structure === undefined) {
+      this.global.structure = new Folder("project_name", undefined);
     }
-    let newStructure: Folder = new Folder(this.global.structure.getName(), undefined);
-    if (this.settings.importFusion !== 'no') {
+    let newStructure: Folder = new Folder(
+      this.global.structure.getName(),
+      undefined
+    );
+    if (this.settings.importFusion !== "no") {
       newStructure = this.global.structure;
     } else {
       this.global.projectPath = undefined;
@@ -141,7 +135,9 @@ export class ImportExportService {
           let currentTrad: TraductionsGroup;
           for (let i = 0; i < res.length; i++) {
             if (i === res.length - 1) {
-              currentFolder.addTraductionGroup(new TraductionsGroup(res[i], currentFolder, []));
+              currentFolder.addTraductionGroup(
+                new TraductionsGroup(res[i], currentFolder, [])
+              );
               currentTrad = currentFolder.findTraductionGroup(res[i]);
             } else {
               currentFolder.addFolder(new Folder(res[i], currentFolder));
@@ -150,9 +146,13 @@ export class ImportExportService {
           }
           for (let i = 1; i < csvArray[k].length; i++) {
             const actualTrad = currentTrad.getTradByLanguage(csvArray[0][i]);
-            const trad = new Traduction(csvArray[k][i], csvArray[0][i], this.settings.autoValidate);
+            const trad = new Traduction(
+              csvArray[k][i],
+              csvArray[0][i],
+              this.settings.autoValidate
+            );
             if (actualTrad !== undefined) {
-              if (this.settings.importFusion === 'yes_new') {
+              if (this.settings.importFusion === "yes_new") {
                 currentTrad.removeTraduction(actualTrad);
                 currentTrad.addTraduction(trad);
               }
@@ -162,55 +162,62 @@ export class ImportExportService {
           }
         }
       }
-      this.global.languages = languages.filter((e, i) => languages.indexOf(e) === i);
+      this.global.languages = languages.filter(
+        (e, i) => languages.indexOf(e) === i
+      );
       this.global.setStructure(newStructure);
     }
     this.global.loading = false;
   }
 
-
   async importJsonFiles(files: object[], languages: string[]) {
-    for (let file of files){
-      if (file["path"] !==undefined){
-        this.settings.addRecentFilePath(file["path"])
+    for (let file of files) {
+      if (file["path"] !== undefined) {
+        this.settings.addRecentFilePath(file["path"]);
       }
     }
     this.global.loading = true;
     languages = languages.filter((e, i) => languages.indexOf(e) === i);
     this.global.languages = languages;
-    if (this.global.structure===undefined){
-      this.global.structure = new Folder('project_name', undefined);
+    if (this.global.structure === undefined) {
+      this.global.structure = new Folder("project_name", undefined);
     }
     let newStructure = new Folder(this.global.structure.getName(), undefined);
-    if (this.settings.importFusion !== 'no') {
+    if (this.settings.importFusion !== "no") {
       newStructure = this.global.structure;
     } else {
       this.global.projectPath = undefined;
     }
     for (let i = 0; i < languages.length; i++) {
-
-      this._walkInJson(files[i], 'default', newStructure, languages[i]);
-
+      this._walkInJson(files[i], "default", newStructure, languages[i]);
     }
     this.global.setStructure(newStructure);
     this.global.loading = false;
   }
 
-  _walkInJson(holder: object, key: string, structure: Folder, language: string) {
-
+  _walkInJson(
+    holder: object,
+    key: string,
+    structure: Folder,
+    language: string
+  ) {
     let k;
     const json = holder[key];
-    if (json && typeof json === 'object') {
+    if (json && typeof json === "object") {
       for (k in json) {
         if (Object.prototype.hasOwnProperty.call(json, k)) {
           const keys = Object.keys(json[k]);
-          if (typeof json[k] === 'string') {
+          if (typeof json[k] === "string") {
             const tradGroup = structure.findTraductionGroup(k);
-            const trad = new Traduction(json[k], language, this.settings.autoValidate);
+            const trad = new Traduction(
+              json[k],
+              language,
+              this.settings.autoValidate
+            );
             if (tradGroup !== undefined) {
               const actualTrad = tradGroup.getTradByLanguage(language);
               if (actualTrad !== undefined) {
-                if (this.settings.importFusion === 'yes_new') {
+                if (this.settings.importFusion === "yes_new") {
                   tradGroup.removeTraduction(actualTrad);
                   tradGroup.addTraduction(trad);
                 }
@@ -218,18 +225,17 @@ export class ImportExportService {
                 tradGroup.addTraduction(trad);
               }
             } else {
-              structure.addTraductionGroup(new TraductionsGroup(k, structure, [trad]));
+              structure.addTraductionGroup(
+                new TraductionsGroup(k, structure, [trad])
+              );
             }
-
-          }
-          else if (json[k] !== undefined) {
+          } else if (json[k] !== undefined) {
             let folder = structure.findFolder(k);
             if (folder === undefined) {
               folder = new Folder(k, structure);
               structure.addFolder(folder);
             }
             this._walkInJson(json, k, folder, language);
-
           } else {
             delete json[k];
           }
@@ -238,16 +244,20 @@ export class ImportExportService {
     }
   }
 
-  _exportToCsv(structure: Structure, csv: string = '', key: string = '', delimitor = ','): string {
-    if (csv == '') {
+  _exportToCsv(
+    structure: Structure,
+    csv: string = "",
+    key: string = "",
+    delimitor = ","
+  ): string {
+    if (csv == "") {
       if (this.global.languages.length > 0) {
-        csv = 'id';
+        csv = "id";
         for (const language of this.global.languages) {
           csv += delimitor + language;
         }
-        csv += '\n';
+        csv += "\n";
       }
-
     }
     var existingKey = [];
     if (structure instanceof Folder) {
@@ -256,7 +266,10 @@ export class ImportExportService {
         csv = this._exportToCsv(folder, csv, key);
       }
       for (const trad of structure.tradGroupList) {
-        if (!this.settings.folderNameOnlyForDoublon || existingKey.includes(trad.getName())) {
+        if (
+          !this.settings.folderNameOnlyForDoublon ||
+          existingKey.includes(trad.getName())
+        ) {
           csv += key + trad.getName();
         } else {
           csv += trad.getName();
@@ -266,7 +279,7 @@ export class ImportExportService {
         for (const t of trad.tradList) {
           csv += delimitor + t.getValue();
         }
-        csv += '\n';
+        csv += "\n";
       }
     }
     return csv;
@@ -283,7 +296,6 @@ export class ImportExportService {
           if (t.language === language) {
             json[trad.getName()] = t.getValue();
           }
-
         }
       }
     }
@@ -293,16 +305,15 @@ export class ImportExportService {
   getCsvPreview() {
     let csv = this._exportToCsv(this.global.structure);
 
-    let res = []
+    let res = [];
     if (csv.includes(",")) {
-      let csv_arr = csv.split('\n');
+      let csv_arr = csv.split("\n");
 
       for (var k of csv_arr) {
         if (k.includes(",")) {
-          res.push(k.split(','));
+          res.push(k.split(","));
         }
       }
-
     }
 
     return res;
@@ -311,16 +322,24 @@ export class ImportExportService {
   getJsonPreview() {
     const res = [];
     for (const language of this.global.languages) {
-      res.push(JSON.stringify(this._exportToJsons(this.global.structure, language),undefined,2));
+      res.push(
+        JSON.stringify(
+          this._exportToJsons(this.global.structure, language),
+          undefined,
+          2
+        )
+      );
     }
     return res;
   }
 
-  async downloadCsv(delimitor = ',') {
+  async downloadCsv(delimitor = ",") {
     this.global.loading = true;
     let csv = this._exportToCsv(this.global.structure);
-    const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv; charset=utf-8' });
-    saveAs(blob, this.global.structure.getName() + '.csv');
+    const blob = new Blob(["\uFEFF" + csv], {
+      type: "text/csv; charset=utf-8",
+    });
+    saveAs(blob, this.global.structure.getName() + ".csv");
     this.global.loading = false;
   }
 
@@ -333,47 +352,50 @@ export class ImportExportService {
     }
 
     for (const key of Object.keys(jsons)) {
-      zip.file(key + '.json', JSON.stringify(jsons[key]));
+      zip.file(key + ".json", JSON.stringify(jsons[key]));
     }
-    const data = await zip.generateAsync({ type: 'blob' });
-    const blob = new Blob([data], { type: 'application/zip' });
-    saveAs(blob, this.global.structure.getName() + '.zip');
+    const data = await zip.generateAsync({ type: "blob" });
+    const blob = new Blob([data], { type: "application/zip" });
+    saveAs(blob, this.global.structure.getName() + ".zip");
     this.global.loading = false;
   }
 
-
-
   _load_in18(holder: object, key: string, structure: Folder) {
-
     let k;
     const json = holder[key];
-    if (json && typeof json === 'object') {
+    if (json && typeof json === "object") {
       for (k in json) {
         if (Object.prototype.hasOwnProperty.call(json, k)) {
           const keys = Object.keys(json[k]);
-          if (typeof json[k] === 'object' && json[k][keys[0]] !== undefined && json[k][keys[0]].hasOwnProperty('value')
-            && typeof json[k][keys[0]].value === 'string') {
+          if (
+            typeof json[k] === "object" &&
+            json[k][keys[0]] !== undefined &&
+            json[k][keys[0]].hasOwnProperty("value") &&
+            typeof json[k][keys[0]].value === "string"
+          ) {
             for (const i of keys) {
               this.global.addLanguage(i);
               const tradGroup = structure.findTraductionGroup(k);
-              const trad = new Traduction(json[k][i].value, i, json[k][i].checked);
+              const trad = new Traduction(
+                json[k][i].value,
+                i,
+                json[k][i].checked
+              );
               if (tradGroup !== undefined) {
                 tradGroup.addTraduction(trad);
               } else {
-                structure.addTraductionGroup(new TraductionsGroup(k, structure, [trad]));
+                structure.addTraductionGroup(
+                  new TraductionsGroup(k, structure, [trad])
+                );
               }
             }
-
-
-          }
-          else if (json[k] !== undefined) {
+          } else if (json[k] !== undefined) {
             let folder = structure.findFolder(k);
             if (folder === undefined) {
               folder = new Folder(k, structure);
               structure.addFolder(folder);
             }
             this._load_in18(json, k, folder);
-
           } else {
             delete json[k];
           }
@@ -382,40 +404,57 @@ export class ImportExportService {
     }
   }
 
-  load_in18(path = '', noExplorer = false) {
+  load_in18(path = "", noExplorer = false) {
     if (this.electronService.isElectronApp) {
-      this.electronService.ipcRenderer.send('load-file', path, noExplorer);
+      this.electronService.ipcRenderer.send("load-file", path, noExplorer);
     }
   }
 
-
   load(data: string, path: string) {
-    this.settings.addRecentProjectPath(path);
-    this.global.loading = true;
-    var obj = JSON.parse(data);
-    if (this.global.structure===undefined){
-      this.global.structure = new Folder('project_name', undefined);
+    const extension: string = path.split(".").pop().toLowerCase();
+    console.log(extension)
+    switch (extension) {
+      case "json":
+        this.importJsonFiles(
+          [{ default: JSON.parse(data), path: path }],
+          [path.split(/.*[\/|\\]/).pop()]
+        );
+        break;
+      case "csv":
+        this.importCsvFile(data,path);
+        break;
+      default:
+        this.settings.addRecentProjectPath(path);
+        this.global.loading = true;
+        var obj = JSON.parse(data);
+        if (this.global.structure === undefined) {
+          this.global.structure = new Folder("project_name", undefined);
+        }
+        if (Object.keys(obj).length == 1) {
+          this.global.structure.setName(Object.keys(obj)[0]);
+        } else {
+          obj = { default: obj };
+        }
+        const newStructure = new Folder(
+          this.global.structure.getName(),
+          undefined
+        );
+        this.global.languages = [];
+        this._load_in18(obj, Object.keys(obj)[0], newStructure);
+        this.global.setStructure(newStructure);
+        this.global.updateSavedStructure();
+        this.global.projectPath = path;
+        this.global.setSelectedStructure();
+        this.presentLoadedToast();
+        this.global.loading = false;
+        break;
     }
-    if (Object.keys(obj).length == 1) {
-      this.global.structure.setName(Object.keys(obj)[0]);
-    } else {
-      obj = { 'default': obj };
-    }
-    const newStructure = new Folder(this.global.structure.getName(), undefined);
-    this.global.languages = [];
-    this._load_in18(obj, Object.keys(obj)[0], newStructure);
-    this.global.setStructure(newStructure);
-    this.global.updateSavedStructure();
-    this.global.projectPath = path;
-    this.global.setSelectedStructure();
-    this.presentLoadedToast();
-    this.global.loading = false;
   }
 
   async presentLoadedToast() {
     const toast = await this.toastController.create({
-      message: 'Project loaded.',
-      duration: 2000
+      message: "Project loaded.",
+      duration: 2000,
     });
     await toast.present();
   }
@@ -432,15 +471,20 @@ export class ImportExportService {
         if (!as) {
           tmp = this.global.projectPath;
         }
-        this.electronService.ipcRenderer.send('save-file', json, tmp, this.global.structure.getName() + '.in18');
+        this.electronService.ipcRenderer.send(
+          "save-file",
+          json,
+          tmp,
+          this.global.structure.getName() + ".in18"
+        );
       }
     } else {
       this.global.loading = false;
     }
   }
 
-  fileSaveAs(data: string, name = this.global.structure.getName() + '.in18') {
-    const blob = new Blob([data], { type: 'application/json' });
+  fileSaveAs(data: string, name = this.global.structure.getName() + ".in18") {
+    const blob = new Blob([data], { type: "application/json" });
     saveAs(blob, name);
     this.global.updateSavedStructure();
     this.global.loading = false;

@@ -224,4 +224,28 @@ export class GlobalService {
     return json;
   }
 
+  getFileDirectory(path:String) {
+    if (path.indexOf("/") == -1) { // windows
+      return path.substring(0, path.lastIndexOf('\\')).split('\\').pop();
+    } 
+    else { // unix
+      return path.substring(0, path.lastIndexOf('/')).split('/').pop();
+    }
+  }
+
+  getPrettyPath(path:String){
+    let tmp = path.split(/.*[\/|\\]/);
+    let str:String = "";
+    if (tmp.length>1){
+      str+=this.getFileDirectory(path);
+      if (str!=""){
+        str+="/"
+      }
+      str+=tmp[1]
+    }else{
+      str=path
+    }
+    return str;
+  }
+
 }

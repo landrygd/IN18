@@ -1,45 +1,67 @@
 <ion-app>
-  
   <app-top-menu></app-top-menu>
-  
+
   <ion-split-pane when="sm" content-id="main-content" class="main-content">
-    <ion-menu content-id="main-content" *ngIf = "global.structure!==undefined">
+    <ion-menu content-id="main-content" *ngIf="global.structure !== undefined">
       <ion-content>
         <app-tree-view></app-tree-view>
       </ion-content>
     </ion-menu>
 
     <div class="ion-page" id="main-content">
-      <ion-progress-bar type="indeterminate" color="primary" class="loading_bar" *ngIf="global.loading"></ion-progress-bar>
-      <ion-content class="ion-padding" *ngIf = "global.structure!==undefined">
-        
+      <ion-progress-bar
+        type="indeterminate"
+        color="primary"
+        class="loading_bar"
+        *ngIf="global.loading"
+      ></ion-progress-bar>
+      <ion-content class="ion-padding" *ngIf="global.structure !== undefined">
         <ion-item class="no-background">
-
-
           <ion-buttons slot="end">
-            <ion-button fill="clear" shape="round" (click)="presentLanguagesModal()">
+            <ion-button
+              fill="clear"
+              shape="round"
+              (click)="presentLanguagesModal()"
+            >
               <ion-label slot="start">+</ion-label>
               <ion-icon slot="start" name="globe-outline"></ion-icon>
             </ion-button>
-            <div *ngFor="let language of global.languages; let index=index">
-              <ion-chip (click)="presentLanguagesModal()" *ngIf="index<3">{{language}}</ion-chip>
-              <ion-chip (click)="presentLanguagesModal()" *ngIf="index==3">...</ion-chip>
+            <div *ngFor="let language of global.languages; let index = index">
+              <ion-chip (click)="presentLanguagesModal()" *ngIf="index < 3">{{
+                language
+              }}</ion-chip>
+              <ion-chip (click)="presentLanguagesModal()" *ngIf="index == 3"
+                >...</ion-chip
+              >
             </div>
           </ion-buttons>
           <div class="breadcrumb" size="small">
-            <app-breadcrumb [structure]="global.selectedStructure"></app-breadcrumb>
+            <app-breadcrumb
+              [structure]="global.selectedStructure"
+            ></app-breadcrumb>
           </div>
         </ion-item>
         <ion-list class="special">
-
           <div *ngIf="!global.isSelectedStructureFolder()">
-            <app-trads-group [tradGroup]="global.getSelectedStructureAsTradGroup()"></app-trads-group>
+            <app-trads-group
+              [tradGroup]="global.getSelectedStructureAsTradGroup()"
+            ></app-trads-group>
           </div>
           <div *ngIf="global.isSelectedStructureFolder()">
-            <app-trad-folder [folder]="global.getSelectedFolder()"></app-trad-folder>
-            <app-trads-group *ngFor="let t of global.selectedTradGroups$ | async" [tradGroup]="t" [canExpand]="true">
+            <app-trad-folder
+              [folder]="global.getSelectedFolder()"
+            ></app-trad-folder>
+            <app-trads-group
+              *ngFor="let t of global.selectedTradGroups$ | async"
+              [tradGroup]="t"
+              [canExpand]="true"
+            >
             </app-trads-group>
-            <app-trad-folder *ngFor="let f of global.selectedFolders$ | async" [folder]="f" [canExpand]="true">
+            <app-trad-folder
+              *ngFor="let f of global.selectedFolders$ | async"
+              [folder]="f"
+              [canExpand]="true"
+            >
             </app-trad-folder>
 
             <!--<ion-virtual-scroll [items]="selectedStructure">
@@ -57,49 +79,65 @@
             </ion-virtual-scroll>-->
           </div>
           <ion-card>
-
-
             <ion-row>
               <ion-col>
-                <ion-button (click)="addTraduction()" expand="block" fill="clear" shape="round">
+                <ion-button
+                  (click)="addTraduction()"
+                  expand="block"
+                  fill="clear"
+                  shape="round"
+                >
                   <ion-icon slot="start" name="add"></ion-icon>
                   Create an item
                 </ion-button>
               </ion-col>
               <ion-col>
-                <ion-button (click)="addTraduction(true)" expand="block" fill="clear" shape="round">
+                <ion-button
+                  (click)="addTraduction(true)"
+                  expand="block"
+                  fill="clear"
+                  shape="round"
+                >
                   <ion-icon slot="start" name="add"></ion-icon>
                   Create a folder
                 </ion-button>
               </ion-col>
             </ion-row>
           </ion-card>
-
         </ion-list>
       </ion-content>
-      <ion-content class="ion-padding" *ngIf = "global.structure===undefined">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-subtitle>Recent project</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content *ngFor="let path of settings.recentProjects;">
-            <ion-item button (click)="importExportService.load_in18(path,true)">
-              <ion-icon name="document-outline"></ion-icon>
-              <ion-label>{{path}}</ion-label>
-            </ion-item>
-          </ion-card-content>
-        </ion-card>
-        <ion-card>
-          <ion-card-header>
-            <ion-card-subtitle>Recent files</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content *ngFor="let path of settings.recentFiles;">
-            <ion-item button (click)="openFile(path)">
-              <ion-icon name="document-outline"></ion-icon>
-              <ion-label>{{path}}</ion-label>
-            </ion-item>
-          </ion-card-content>
-        </ion-card>
+      <ion-content class="ion-padding" *ngIf="global.structure === undefined">
+        <div class="wrapper">
+          <div>
+            <ion-card>
+              <ion-card-header>
+                <ion-card-subtitle>Recent project</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content *ngFor="let path of settings.recentProjects">
+                <ion-item
+                  button
+                  (click)="importExportService.load_in18(path, true)"
+                >
+                  <ion-icon name="document-outline"></ion-icon>
+                  <ion-label>{{ global.getPrettyPath(path) }}</ion-label>
+                </ion-item>
+              </ion-card-content>
+            </ion-card>
+          </div>
+          <div>
+            <ion-card>
+              <ion-card-header>
+                <ion-card-subtitle>Recent files</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content *ngFor="let path of settings.recentFiles">
+                <ion-item button (click)="importExportService.importFile(path)">
+                  <ion-icon name="document-outline"></ion-icon>
+                  <ion-label>{{ global.getPrettyPath(path) }}</ion-label>
+                </ion-item>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </div>
       </ion-content>
     </div>
   </ion-split-pane>

@@ -222,7 +222,7 @@ export class TopMenuComponent implements OnInit {
           const files = [];
           const languages = [];
           for (const doc of docs.files) {
-            files.push({ default: JSON.parse(await doc.text()) });
+            files.push({ default: JSON.parse(await doc.text()),path:doc.path });
             const name = doc.name;
             const nameArray = name.split('.');
             nameArray.pop();
@@ -233,7 +233,7 @@ export class TopMenuComponent implements OnInit {
           break;
         case 'csv':
           for (const doc of docs.files) {
-            this.importExport.importCsvFile(doc);
+            this.importExport.importCsvFile(await doc.text(), doc.path);
           }
           break;
       }

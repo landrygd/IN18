@@ -44,3 +44,8 @@
   position: absolute;
   margin-top: 6px;
 }
+
+.wrapper{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(40em, 1fr));
+}
