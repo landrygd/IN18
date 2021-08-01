@@ -53,6 +53,18 @@
   </ion-card>
   <ion-card>
     <ion-card-header>
+      <ion-card-subtitle>For Export</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>In CSV, add folder name only for doublon</ion-label>
+        <ion-checkbox slot="end" [checked]="folderNameOnlyForDoublon" (ionChange)="folderNameOnlyForDoublonChanged($event.detail.checked)">
+        </ion-checkbox>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
       <ion-card-subtitle>For both</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
@@ -63,11 +75,6 @@
           <ion-select-option value="json">Json</ion-select-option>
           <ion-select-option value="csv">Csv</ion-select-option>
         </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label>In CSV, add folder name only for doublon</ion-label>
-        <ion-checkbox slot="end" [checked]="folderNameOnlyForDoublon" (ionChange)="folderNameOnlyForDoublonChanged($event.detail.checked)">
-        </ion-checkbox>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Folder character separator in CSV</ion-label>

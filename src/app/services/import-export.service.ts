@@ -417,7 +417,7 @@ export class ImportExportService {
       case "json":
         this.importJsonFiles(
           [{ default: JSON.parse(data), path: path }],
-          [path.split(/.*[\/|\\]/).pop()]
+          [path.split(/.*[\/|\\]/).pop().split(".").shift()]
         );
         break;
       case "csv":
