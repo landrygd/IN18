@@ -77,8 +77,6 @@ You will find the builds in **release-builds** folder in IN18 main folder.
 If you wish to contribute, you can contact us on the [Blockup Discord Server](https://discord.gg/FUmcynX).
 
 ## Versions
-**Latest stable release :** v1.0.0
-**Latest version :** v1.0.0
 List of versions : [Click to view](https://github.com/landry42/IN18/tags)
 
 ## Authors
