@@ -18,7 +18,7 @@
     </ion-card-header>
     <ion-card-content>
       <ion-item>
-        <ion-label>In a folder, extend all traductions of an item</ion-label>
+        <ion-label>In a folder, extend all translations of an item</ion-label>
         <ion-checkbox slot="end" [checked]="extendTrad" (ionChange)="extendTradChanged($event.detail.checked)">
         </ion-checkbox>
       </ion-item>
@@ -77,7 +77,11 @@
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Folder character separator in CSV</ion-label>
+        <ion-label position="floating">Character delimiter for CSV</ion-label>
+        <ion-input [value]="separatorCharCsv" (ionChange)="separatorCharCsvChanged($event.detail.value)"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Folder character separator for CSV</ion-label>
         <ion-input [value]="folderCharCsv" (ionChange)="folderCharCsvChanged($event.detail.value)"></ion-input>
       </ion-item>
       

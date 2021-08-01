@@ -35,18 +35,18 @@ export class ImportExportService {
     }
   }
 
-  _CSVToArray(strData, strDelimiter = ","): string[][] {
+  _CSVToArray(strData): string[][] {
     // Create a regular expression to parse the CSV values.
     const objPattern = new RegExp(
       // Delimiters.
       "(\\" +
-        strDelimiter +
+      this.settings.separatorCharCsv +
         "|\\r?\\n|\\r|^)" +
         // Quoted fields.
         '(?:"([^"]*(?:""[^"]*)*)"|' +
         // Standard fields.
         '([^"\\' +
-        strDelimiter +
+        this.settings.separatorCharCsv +
         "\\r\\n]*))",
       "gi"
     );
@@ -70,7 +70,7 @@ export class ImportExportService {
       // (is not the start of string) and if it matches
       // field delimiter. If id does not, then we know
       // that this delimiter is a row delimiter.
-      if (strMatchedDelimiter.length && strMatchedDelimiter !== strDelimiter) {
+      if (strMatchedDelimiter.length && strMatchedDelimiter !==  this.settings.separatorCharCsv) {
         // Since we have reached a new row of data,
         // add an empty row to our data array.
         arrData.push([]);
@@ -105,7 +105,7 @@ export class ImportExportService {
     }
   }
 
-  async importCsvFile(data: String, path:string="", separator = this.settings.folderCharCsv) {
+  async importCsvFile(data: String, path:string="") {
     if (path !== "") {
       this.settings.addRecentFilePath(path);
     }
@@ -130,7 +130,7 @@ export class ImportExportService {
       }
       if (languages.length > 0) {
         for (let k = 1; k < csvArray.length; k++) {
-          const res: string[] = csvArray[k][0].split(separator);
+          const res: string[] = csvArray[k][0].split(this.settings.folderCharCsv);
           let currentFolder: Folder = newStructure;
           let currentTrad: TraductionsGroup;
           for (let i = 0; i < res.length; i++) {
@@ -247,14 +247,13 @@ export class ImportExportService {
   _exportToCsv(
     structure: Structure,
     csv: string = "",
-    key: string = "",
-    delimitor = ","
+    key: string = ""
   ): string {
     if (csv == "") {
       if (this.global.languages.length > 0) {
         csv = "id";
         for (const language of this.global.languages) {
-          csv += delimitor + language;
+          csv += this.settings.separatorCharCsv + language;
         }
         csv += "\n";
       }
@@ -277,7 +276,7 @@ export class ImportExportService {
         }
 
         for (const t of trad.tradList) {
-          csv += delimitor + t.getValue();
+          csv += this.settings.separatorCharCsv + t.getValue();
         }
         csv += "\n";
       }
@@ -303,15 +302,15 @@ export class ImportExportService {
   }
 
   getCsvPreview() {
-    let csv = this._exportToCsv(this.global.structure);
-
+    const csv = this._exportToCsv(this.global.structure);
+    const delimiter = this.settings.separatorCharCsv;
     let res = [];
-    if (csv.includes(",")) {
+    if (csv.includes(delimiter)) {
       let csv_arr = csv.split("\n");
 
       for (var k of csv_arr) {
-        if (k.includes(",")) {
-          res.push(k.split(","));
+        if (k.includes(delimiter)) {
+          res.push(k.split(delimiter));
         }
       }
     }
@@ -333,7 +332,7 @@ export class ImportExportService {
     return res;
   }
 
-  async downloadCsv(delimitor = ",") {
+  async downloadCsv() {
     this.global.loading = true;
     let csv = this._exportToCsv(this.global.structure);
     const blob = new Blob(["\uFEFF" + csv], {

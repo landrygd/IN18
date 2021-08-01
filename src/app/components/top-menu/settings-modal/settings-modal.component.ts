@@ -13,6 +13,7 @@ export class SettingsModalComponent implements OnInit {
 
   extendTrad = this.settings.extendTrad;
   tabImportExport = this.settings.tabImportExport;
+  separatorCharCsv = this.settings.separatorCharCsv;
   folderCharCsv = this.settings.folderCharCsv;
   importFusion = this.settings.importFusion;
   autoValidate = this.settings.autoValidate;
@@ -52,6 +53,11 @@ export class SettingsModalComponent implements OnInit {
 
   folderNameOnlyForDoublonChanged(value) {
     this.folderNameOnlyForDoublon = value;
+    this.change = true;
+  }
+
+  separatorCharCsvChanged(value){
+    this.separatorCharCsv = value;
     this.change = true;
   }
 
@@ -109,6 +115,7 @@ export class SettingsModalComponent implements OnInit {
     this.settings.importFusion = this.importFusion;
     this.settings.autoValidate = this.autoValidate;
     this.settings.folderNameOnlyForDoublon = this.folderNameOnlyForDoublon;
+    this.settings.separatorCharCsv = this.separatorCharCsv;
     this.change = false;
     this.settings.save();
     this.presentSettingsToast();

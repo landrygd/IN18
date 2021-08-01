@@ -7,6 +7,7 @@ export class SettingsService {
 
   extendTrad = false;
   tabImportExport = 'json';
+  separatorCharCsv = ',';
   folderCharCsv = '.';
   folderNameOnlyForDoublon = false;
   importFusion = 'no';
@@ -21,6 +22,7 @@ export class SettingsService {
     localStorage.setItem('extendTrad', this.extendTrad ? '1' : '0');
     localStorage.setItem('autoValidate', this.autoValidate ? '1' : '0');
     localStorage.setItem('tabImportExport', this.tabImportExport);
+    localStorage.setItem('separatorCharCsv', this.separatorCharCsv);
     localStorage.setItem('folderCharCsv', this.folderCharCsv);
     localStorage.setItem('folderNameOnlyForDoublon', this.folderNameOnlyForDoublon ? '1' : '0');
     localStorage.setItem('importFusion', this.importFusion);
@@ -40,6 +42,10 @@ export class SettingsService {
     const newTabImportExport = localStorage.getItem('tabImportExport');
     if (newTabImportExport !== undefined && newTabImportExport !== null) {
       this.tabImportExport = newTabImportExport;
+    }
+    const newSeparatorCharCsv = localStorage.getItem('separatorCharCsv');
+    if (newSeparatorCharCsv !== undefined && newSeparatorCharCsv !== null) {
+      this.separatorCharCsv = newSeparatorCharCsv;
     }
     const newFolderCharCsv = localStorage.getItem('folderCharCsv');
     if (newFolderCharCsv !== undefined && newFolderCharCsv !== null) {
