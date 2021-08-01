@@ -13,7 +13,13 @@
 
 <ion-content fullscreen>
 
-  <ion-row *ngIf="type=='json'">
+    <ion-card *ngIf = "previewExport.length==0">
+      <ion-card-header>
+        <ion-card-subtitle>No data to preview</ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+
+  <ion-row *ngIf="type=='json' && previewExport.length>0">
     <ion-col>
       <ion-card *ngFor="let jsonFile of previewExport; ; index as i;">
         <ion-card-header>
@@ -21,25 +27,31 @@
         </ion-card-header>
 
         <ion-card-content>
-          {{jsonFile}}
+          <div style="white-space:pre;">
+            {{jsonFile}}
+          </div>
+          
         </ion-card-content>
       </ion-card>
     </ion-col>
   </ion-row>
 
-<ion-card *ngIf="type=='csv'">
+<ion-card *ngIf="type=='csv' && previewExport.length>0">
   <ion-card-header>
     <ion-card-subtitle>{{global.structure.getName()}}.csv</ion-card-subtitle>
   </ion-card-header>
 
   <ion-card-content>
-    <ion-grid>
-      <ion-row *ngFor="let csvRow of previewExport;">
-        <ion-col *ngFor = "let csvCol of csvRow;">
-            {{csvCol}}
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <div style='overflow-x:auto;'>
+      <table>
+        <tr *ngFor="let csvRow of previewExport;">
+          <td *ngFor = "let csvCol of csvRow;">
+              {{csvCol}}
+          </td>
+        </tr>
+      </table>
+    </div>
+    
   </ion-card-content>
 </ion-card>
 

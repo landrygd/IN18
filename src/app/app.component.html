@@ -3,7 +3,7 @@
   <app-top-menu></app-top-menu>
   
   <ion-split-pane when="sm" content-id="main-content" class="main-content">
-    <ion-menu content-id="main-content">
+    <ion-menu content-id="main-content" *ngIf = "global.structure!==undefined">
       <ion-content>
         <app-tree-view></app-tree-view>
       </ion-content>
@@ -11,7 +11,7 @@
 
     <div class="ion-page" id="main-content">
       <ion-progress-bar type="indeterminate" color="primary" class="loading_bar" *ngIf="global.loading"></ion-progress-bar>
-      <ion-content class="ion-padding">
+      <ion-content class="ion-padding" *ngIf = "global.structure!==undefined">
         
         <ion-item class="no-background">
 

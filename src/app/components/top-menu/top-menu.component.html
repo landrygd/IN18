@@ -21,18 +21,18 @@
         <ion-icon size="large" slot="start" name="file-tray-full"></ion-icon>
         <ion-label>Project</ion-label>
       </ion-button>
-      <ion-button slot="start" (click)="presentLanguagesModal(0)">
+      <ion-button slot="start" (click)="presentLanguagesModal(0)" disabled = "global.structure!==undefined">
         <ion-icon size="large" slot="start" name="globe"></ion-icon>
         <ion-label>Languages</ion-label>
       </ion-button>
 
-      <ion-button slot="start" (click)="presentTranslateModal()">
+      <ion-button slot="start" (click)="presentTranslateModal()" disabled = "global.structure!==undefined">
         <ion-icon size="large" slot="start" name="language"></ion-icon>
         <ion-label>Translate</ion-label>
       </ion-button>
     </ion-buttons>
     <ion-buttons class="top-buttons export">
-      <ion-button (click)="export()">
+      <ion-button (click)="export()" disabled = "global.structure!==undefined">
         <ion-icon size="large" slot="start" name="download"></ion-icon>
         <ion-label>Export</ion-label>
       </ion-button>

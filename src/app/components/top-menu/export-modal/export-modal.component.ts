@@ -25,7 +25,7 @@ export class ExportModalComponent implements OnInit {
     private importExport: ImportExportService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {this.typeChanged(this.type); }
 
 
   typeChanged(value) {
@@ -53,7 +53,9 @@ export class ExportModalComponent implements OnInit {
       componentProps: { tab: 'import_export' },
       cssClass: ''
     });
-    return await modal.present();
+    await modal.present();
+    await modal.onDidDismiss();
+    this.typeChanged(this.type);
   }
 
 }

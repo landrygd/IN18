@@ -10,7 +10,7 @@ import { SettingsService } from './settings.service';
 })
 export class GlobalService {
   projectPath: string;
-  structure: Folder = new Folder('project_name', undefined);
+  structure: Folder; //= new Folder('project_name', undefined);
   lastSavedStrcture: object;
   selectedStructure: Structure;
   selectedFolder: Folder;
@@ -31,14 +31,17 @@ export class GlobalService {
 
   // Set selectedstructure with the folder or the item which is selected, set the new selected folder (parent folder if it's an item)
   async setSelectedStructure(structure: Structure = this.structure) {
-    if (structure instanceof TraductionsGroup) {
-      this.setSelectedFolder(structure.parentFolder);
-    } else if (structure instanceof Folder) {
-      this.setSelectedFolder(structure);
+    if (structure !== undefined) {
+      if (structure instanceof TraductionsGroup) {
+        this.setSelectedFolder(structure.parentFolder);
+      } else if (structure instanceof Folder) {
+        this.setSelectedFolder(structure);
+      }
+      this.selectedTradGroups$ = of(this.getSelectedFolder().tradGroupList);
+      this.selectedFolders$ = of(this.getSelectedFolder().folderList);
+      this.selectedStructure = structure;
     }
-    this.selectedTradGroups$ = of(this.getSelectedFolder().tradGroupList);
-    this.selectedFolders$ = of(this.getSelectedFolder().folderList);
-    this.selectedStructure = structure;
+
   }
 
   // update lastsavedstructure when we save the structure
@@ -46,12 +49,12 @@ export class GlobalService {
     this.lastSavedStrcture = this.savein18(this.structure);
   }
 
-  isSaved() {
+  isSaved(): boolean {
     return JSON.stringify(this.lastSavedStrcture) === JSON.stringify(this.savein18(this.structure));
   }
 
-  getProjectName() {
-    return this.structure.getName();
+  getProjectName(): String {
+    return this.structure === undefined ? "" : this.structure.getName();
   }
 
   // get selectedstructure only if it's an item
@@ -63,7 +66,7 @@ export class GlobalService {
     }
   }
 
-  isSelectedStructureFolder() {
+  isSelectedStructureFolder(): boolean {
     return this.selectedStructure instanceof Folder;
   }
 
@@ -175,33 +178,37 @@ export class GlobalService {
 
   savein18(structure: Structure = this.structure): object {
     const json: object = {};
-    if (structure == this.structure){
-      json[structure.getName()]={}
-    }
-    
-    if (structure instanceof Folder) {
-      for (const folder of structure.folderList) {
-        if (structure == this.structure){
-          json[structure.getName()][folder.getName()] = this.savein18(folder);
-        }else{
-          json[folder.getName()] = this.savein18(folder);
-        }
+    if (this.structure !== undefined) {
+
+
+      if (structure == this.structure) {
+        json[structure.getName()] = {}
       }
-      for (const trad of structure.tradGroupList) {
-        if (structure == this.structure){
-          json[structure.getName()][trad.getName()] = {};
-          for (const t of trad.tradList) {
-            json[structure.getName()][trad.getName()][t.language] = { value: t.value, checked: t.checked };
 
-          }
-        }else{
-          json[trad.getName()] = {};
-          for (const t of trad.tradList) {
-            json[trad.getName()][t.language] = { value: t.value, checked: t.checked };
-
+      if (structure instanceof Folder) {
+        for (const folder of structure.folderList) {
+          if (structure == this.structure) {
+            json[structure.getName()][folder.getName()] = this.savein18(folder);
+          } else {
+            json[folder.getName()] = this.savein18(folder);
           }
         }
-        
+        for (const trad of structure.tradGroupList) {
+          if (structure == this.structure) {
+            json[structure.getName()][trad.getName()] = {};
+            for (const t of trad.tradList) {
+              json[structure.getName()][trad.getName()][t.language] = { value: t.value, checked: t.checked };
+
+            }
+          } else {
+            json[trad.getName()] = {};
+            for (const t of trad.tradList) {
+              json[trad.getName()][t.language] = { value: t.value, checked: t.checked };
+
+            }
+          }
+
+        }
       }
     }
     return json;

@@ -20,7 +20,7 @@ let self: ImportExportService;
 export class ImportExportService {
 
   constructor(private global: GlobalService, private settings: SettingsService, private electronService: ElectronService,
-              private toastController: ToastController) {
+    private toastController: ToastController) {
     g = global;
     self = this;
     if (this.electronService.isElectronApp) {
@@ -225,12 +225,15 @@ export class ImportExportService {
   }
 
   _exportToCsv(structure: Structure, csv: string = '', key: string = '', delimitor = ','): string {
-    if (csv==''){
-      csv = 'id';
-      for (const language of this.global.languages) {
-        csv += delimitor + language;
+    if (csv == '') {
+      if (this.global.languages.length > 0) {
+        csv = 'id';
+        for (const language of this.global.languages) {
+          csv += delimitor + language;
+        }
+        csv += '\n';
       }
-      csv += '\n';
+
     }
     var existingKey = [];
     if (structure instanceof Folder) {
@@ -239,13 +242,13 @@ export class ImportExportService {
         csv = this._exportToCsv(folder, csv, key);
       }
       for (const trad of structure.tradGroupList) {
-        if (!this.settings.folderNameOnlyForDoublon || existingKey.includes(trad.getName())){
+        if (!this.settings.folderNameOnlyForDoublon || existingKey.includes(trad.getName())) {
           csv += key + trad.getName();
-        }else{
+        } else {
           csv += trad.getName();
           existingKey.push(trad.getName());
         }
-        
+
         for (const t of trad.tradList) {
           csv += delimitor + t.getValue();
         }
@@ -273,20 +276,28 @@ export class ImportExportService {
     return json;
   }
 
-  getCsvPreview(){
+  getCsvPreview() {
     let csv = this._exportToCsv(this.global.structure);
-    let csv_arr = csv.split('\n');
-    let res=[]
-    for (var k of csv_arr){
-      res.push(k.split(','));
+
+    let res = []
+    if (csv.includes(",")) {
+      let csv_arr = csv.split('\n');
+
+      for (var k of csv_arr) {
+        if (k.includes(",")) {
+          res.push(k.split(','));
+        }
+      }
+
     }
+
     return res;
   }
 
-  getJsonPreview(){
+  getJsonPreview() {
     const res = [];
     for (const language of this.global.languages) {
-      res.push(JSON.stringify(this._exportToJsons(this.global.structure, language))) ;
+      res.push(JSON.stringify(this._exportToJsons(this.global.structure, language),undefined,2));
     }
     return res;
   }
@@ -294,7 +305,7 @@ export class ImportExportService {
   async downloadCsv(delimitor = ',') {
     this.global.loading = true;
     let csv = this._exportToCsv(this.global.structure);
-    const blob = new Blob(["\uFEFF"+csv], { type: 'text/csv; charset=utf-8' });
+    const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv; charset=utf-8' });
     saveAs(blob, this.global.structure.getName() + '.csv');
     this.global.loading = false;
   }
@@ -367,10 +378,10 @@ export class ImportExportService {
   load(data: string, path: string) {
     this.global.loading = true;
     var obj = JSON.parse(data);
-    if (Object.keys(obj).length==1){
+    if (Object.keys(obj).length == 1) {
       this.global.structure.setName(Object.keys(obj)[0]);
-    }else{
-      obj = {'default':obj};
+    } else {
+      obj = { 'default': obj };
     }
     const newStructure = new Folder(this.global.structure.getName(), undefined);
     this.global.languages = [];
@@ -405,7 +416,7 @@ export class ImportExportService {
         }
         this.electronService.ipcRenderer.send('save-file', json, tmp, this.global.structure.getName() + '.in18');
       }
-    }else{
+    } else {
       this.global.loading = false;
     }
   }
