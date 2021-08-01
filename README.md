@@ -42,6 +42,13 @@ ionic serve
 ```
 A browser window should then open automatically on the page: http://localhost:8100/
 
+To export:
+```bash
+npm run build
+```
+
+You will find the build in **www** folder in IN18 main folder.
+
 ### Desktop
 From the project root, enter the following commands to compile:
 ```bash
