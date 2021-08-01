@@ -410,7 +410,7 @@ export class ImportExportService {
     }
   }
 
-  load(data: string, path: string) {
+  load(data: string, path: string="") {
     const extension: string = path.split(".").pop().toLowerCase();
     console.log(extension)
     switch (extension) {
