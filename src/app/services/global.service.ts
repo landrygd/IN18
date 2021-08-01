@@ -4,6 +4,7 @@ import { Folder } from '../classes/folder';
 import { TraductionsGroup } from '../classes/traductions-group';
 import { Structure } from '../classes/structure';
 import { SettingsService } from './settings.service';
+import { ElectronService } from 'ngx-electron';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,12 @@ export class GlobalService {
   selectedFolders$: Observable<Structure[]>;
 
 
-  constructor(private setting: SettingsService) {
+  constructor(private setting: SettingsService,private electronService: ElectronService) {
+    if (this.electronService.isElectronApp) {
+      this.structure = undefined;
+    } else {
+      this.newProject();
+    }
     this.setSelectedStructure();
     this.updateSavedStructure();
   }
@@ -51,6 +57,10 @@ export class GlobalService {
 
   isSaved(): boolean {
     return JSON.stringify(this.lastSavedStrcture) === JSON.stringify(this.savein18(this.structure));
+  }
+
+  hasProject(): boolean {
+    return this.structure !== undefined;
   }
 
   getProjectName(): String {

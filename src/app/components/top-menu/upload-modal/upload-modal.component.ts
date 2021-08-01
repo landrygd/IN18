@@ -10,11 +10,11 @@ import { SettingsModalComponent } from '../settings-modal/settings-modal.compone
 })
 export class UploadModalComponent implements OnInit {
 
-  @Input() tab = 'json';
+  //@Input() tab = 'json';
 
   files: File[] = [];
 
-  type = 'json';
+  @Input() type = 'json';
 
   exampleJsonEn = `
   {"folder" :
@@ -36,7 +36,7 @@ id_yes,yes,oui
     private modalController: ModalController
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {this.typeChanged(this.type); }
 
   onSelect(event) {
     this.files.push(...event.addedFiles);

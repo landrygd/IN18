@@ -33,7 +33,7 @@ export class PopoverPage {
 
 
   quit() {
-    this.popoverCtrl.dismiss('close');
+    this.popoverCtrl.dismiss('quit');
 
   }
 
@@ -54,7 +54,9 @@ export class PopoverPage {
     this.popoverCtrl.dismiss('new');
   }
 
-  close() { }
+  close() {
+    this.popoverCtrl.dismiss('close');
+   }
 
 
 

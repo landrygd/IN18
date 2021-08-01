@@ -80,13 +80,21 @@ export class TopMenuComponent implements OnInit {
           }
           break;
         case 'close':
-          this.close();
+          this.closeProject();
           break;
+          case 'quit':
+            this.closeApp();
+            break;
         case 'save':
-          this.importExport.download();
+          if (this.global.hasProject()){
+            this.importExport.download();
+          }
+          
           break;
         case 'saveas':
-          this.importExport.download(true);
+          if (this.global.hasProject()){
+            this.importExport.download(true);
+          }
           break;
         case 'new':
           this.presentNewProject();
@@ -97,7 +105,7 @@ export class TopMenuComponent implements OnInit {
 
   }
 
-  async close() {
+  async closeApp() {
     window.close();
   }
 
@@ -108,12 +116,14 @@ export class TopMenuComponent implements OnInit {
   }
 
   async presentLanguagesModal(id: number) {
+    if (this.global.hasProject()){
     const modal = await this.modalController.create({
       component: LanguagesModalPage,
       componentProps: { id },
       cssClass: ''
     });
     return await modal.present();
+  }
   }
 
   async presentSettingsModal() {
@@ -126,12 +136,14 @@ export class TopMenuComponent implements OnInit {
   }
 
   async presentTranslateModal() {
+    if (this.global.hasProject()){
     const modal = await this.modalController.create({
       component: TranslateModalComponent,
       componentProps: {},
       cssClass: ''
     });
     return await modal.present();
+  }
   }
 
   async aboutModal() {
@@ -172,22 +184,25 @@ export class TopMenuComponent implements OnInit {
 
 
   async export() {
-    const modal = await this.modalController.create({
-      component: ExportModalComponent,
-      componentProps: { tab: this.setting.tabImportExport, type:this.setting.tabImportExport },
-    });
-    await modal.present();
-    const docs: Import = (await modal.onDidDismiss()).data;
-    if (docs !== undefined) {
-      switch (docs.type) {
-        case 'json':
-          this.importExport.downloadJsons();
-          break;
-        case 'csv':
-          this.importExport.downloadCsv();
-          break;
+    if (this.global.hasProject()){
+      const modal = await this.modalController.create({
+        component: ExportModalComponent,
+        componentProps: { tab: this.setting.tabImportExport, type:this.setting.tabImportExport },
+      });
+      await modal.present();
+      const docs: Import = (await modal.onDidDismiss()).data;
+      if (docs !== undefined) {
+        switch (docs.type) {
+          case 'json':
+            this.importExport.downloadJsons();
+            break;
+          case 'csv':
+            this.importExport.downloadCsv();
+            break;
+        }
       }
     }
+    
 
 
   }
@@ -197,7 +212,7 @@ export class TopMenuComponent implements OnInit {
   async upload() {
     const modal = await this.modalController.create({
       component: UploadModalComponent,
-      componentProps: { tab: this.setting.tabImportExport },
+      componentProps: { type: this.setting.tabImportExport },
     });
     await modal.present();
     const docs: Import = (await modal.onDidDismiss()).data;
@@ -259,11 +274,15 @@ export class TopMenuComponent implements OnInit {
     else if (event.keyCode === 83 && this.ctrlDown && this.shiftDown) {
       this.ctrlDown = false;
       this.shiftDown = false;
-      this.importExport.download(true);
+      if (this.global.hasProject()){
+        this.importExport.download(true);
+      }
     }
     else if (event.keyCode === 83 && this.ctrlDown) {
       this.ctrlDown = false;
-      this.importExport.download();
+      if (this.global.hasProject()){
+        this.importExport.download();
+      }
     }
 
     else if (event.keyCode === 79 && this.ctrlDown) {
@@ -280,13 +299,50 @@ export class TopMenuComponent implements OnInit {
       this.ctrlDown = false;
     }
     else if (event.keyCode === 81 && this.ctrlDown) {
-      this.close();
+      this.closeApp();
+      this.ctrlDown = false;
+    }
+    else if (event.keyCode === 87 && this.ctrlDown) {
+      this.closeProject()
       this.ctrlDown = false;
     }
 
 
 
+  }
 
+  async closeProject(){
+    if (this.global.isSaved()) {
+      this.global.structure = undefined;
+    } else {
+    const alert = await this.alertController.create({
+      cssClass: '',
+      header: 'Attention',
+      subHeader: '',
+      message: 'Close the project? The unsave changes of your actual project will be lost.',
+      buttons: [{
+        text: 'No',
+        role: 'cancel',
+        cssClass: 'danger',
+        handler: (blah) => {
+          console.log('cancel');
+        }
+      }, {
+        text: 'Yes',
+        cssClass: 'primary',
+        handler: () => {
+          if (this.electronService.isElectronApp) {
+            this.global.structure = undefined;
+          } else {
+            this.global.newProject();
+          }
+          
+        }
+      }]
+    });
+    
+    await alert.present();
+  }
   }
 
   @HostListener('window:keyup', ['$event'])
@@ -302,7 +358,6 @@ export class TopMenuComponent implements OnInit {
   async presentNewProject() {
     if (this.canNewProject) {
       if (this.global.isSaved()) {
-
         this.global.newProject();
         this.NewProjectModal();
       } else {

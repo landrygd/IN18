@@ -115,8 +115,14 @@ export class ImportExportService {
   }
 
   async importCsvFile(file: File, separator = this.settings.folderCharCsv) {
+    if (file.path !==undefined){
+      this.settings.addRecentFilePath(file.path)
+    }
     this.global.loading = true;
     const csvArray: string[][] = this._CSVToArray(await file.text());
+    if (this.global.structure===undefined){
+      this.global.structure = new Folder('project_name', undefined);
+    }
     let newStructure: Folder = new Folder(this.global.structure.getName(), undefined);
     if (this.settings.importFusion !== 'no') {
       newStructure = this.global.structure;
@@ -164,9 +170,17 @@ export class ImportExportService {
 
 
   async importJsonFiles(files: object[], languages: string[]) {
+    for (let file of files){
+      if (file["path"] !==undefined){
+        this.settings.addRecentFilePath(file["path"])
+      }
+    }
     this.global.loading = true;
     languages = languages.filter((e, i) => languages.indexOf(e) === i);
     this.global.languages = languages;
+    if (this.global.structure===undefined){
+      this.global.structure = new Folder('project_name', undefined);
+    }
     let newStructure = new Folder(this.global.structure.getName(), undefined);
     if (this.settings.importFusion !== 'no') {
       newStructure = this.global.structure;
@@ -376,8 +390,12 @@ export class ImportExportService {
 
 
   load(data: string, path: string) {
+    this.settings.addRecentProjectPath(path);
     this.global.loading = true;
     var obj = JSON.parse(data);
+    if (this.global.structure===undefined){
+      this.global.structure = new Folder('project_name', undefined);
+    }
     if (Object.keys(obj).length == 1) {
       this.global.structure.setName(Object.keys(obj)[0]);
     } else {

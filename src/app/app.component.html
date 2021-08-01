@@ -77,6 +77,30 @@
 
         </ion-list>
       </ion-content>
+      <ion-content class="ion-padding" *ngIf = "global.structure===undefined">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>Recent project</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content *ngFor="let path of settings.recentProjects;">
+            <ion-item button (click)="importExportService.load_in18(path,true)">
+              <ion-icon name="document-outline"></ion-icon>
+              <ion-label>{{path}}</ion-label>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>Recent files</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content *ngFor="let path of settings.recentFiles;">
+            <ion-item button (click)="openFile(path)">
+              <ion-icon name="document-outline"></ion-icon>
+              <ion-label>{{path}}</ion-label>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
     </div>
   </ion-split-pane>
 </ion-app>

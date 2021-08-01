@@ -86,7 +86,7 @@
 
 <ion-footer>
   <ion-toolbar>
-    <ion-segment (ionChange)="typeChanged($event.detail.value)" [value]="tab">
+    <ion-segment (ionChange)="typeChanged($event.detail.value)" [value]="type">
       <ion-segment-button value="json">Json</ion-segment-button>
       <ion-segment-button value="csv">Csv</ion-segment-button>
     </ion-segment>

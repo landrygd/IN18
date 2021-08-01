@@ -9,6 +9,7 @@ import { Structure } from './classes/structure';
 import { LanguagesModalPage } from './components/top-menu/languages-modal/languages-modal.component';
 import { ElectronService } from 'ngx-electron';
 import { ImportExportService } from './services/import-export.service';
+import { SettingsService } from './services/settings.service';
 
 let self;
 
@@ -39,7 +40,8 @@ export class AppComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     public importExportService: ImportExportService,
     private toastController: ToastController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    public settings:SettingsService
   ) {
     this.initializeApp();
     self = this;
@@ -55,6 +57,11 @@ export class AppComponent implements OnInit {
       // self.presentLoadedToast();
       self.presentLoadConfirm();
     }
+  }
+
+  openFile(path:String){
+    console.log("a")
+    console.log(path)
   }
 
   async presentLoadConfirm() {
