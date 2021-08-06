@@ -15,7 +15,7 @@ I18N is a translation file editor.
 
 The core of the application is in the src/app directory by convention of the Ionic projects.
 
-I invite you to learn about the Angular and Ionic frameworks and to have a good level of Javascript to understand the project.
+I invite you to learn about the Angular and Ionic frameworks and to have a good level of JavaScript to understand the project.
 
 ### Prerequisite
 

@@ -11,6 +11,8 @@ const { LocalNotifications, Clipboard, Modals, App } = Plugins;
 })
 export class AboutModalComponent implements OnInit {
 
+  year = new Date().getFullYear();
+
   constructor(public modalCtrl: ModalController, private electronService: ElectronService) { }
 
   ngOnInit() { }
