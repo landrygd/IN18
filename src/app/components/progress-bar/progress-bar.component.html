@@ -1,4 +1,5 @@
-<ion-progress-bar *ngIf="showBar" color="primary" [value]="percentValidation" [buffer]="percentFill"></ion-progress-bar>
+<ion-progress-bar *ngIf="showBar" [value]="percentFill"></ion-progress-bar>
+<ion-progress-bar class="validation" *ngIf="showBar" [value]="percentValidation"></ion-progress-bar>
 <ion-item *ngIf="showText">
   <ion-badge slot="start" color="success">Validate {{(percentValidation*100).toFixed(1)}}%</ion-badge>
   <ion-badge color="primary">Fill {{(percentFill*100).toFixed(1)}}%</ion-badge>

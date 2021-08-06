@@ -3,9 +3,6 @@ import { PopoverController, AlertController, Platform, ModalController } from '@
 import { GlobalService } from 'src/app/services/global.service';
 import { ImportExportService } from 'src/app/services/import-export.service';
 import { ElectronService } from 'ngx-electron';
-import { Plugins } from '@capacitor/core';
-import { NewProjectModalComponent } from '../new-project-modal/new-project-modal.component';
-const { LocalNotifications, Clipboard, Modals, App } = Plugins;
 
 @Component({
   templateUrl: './template-popover.component.html',

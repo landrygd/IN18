@@ -1,11 +1,20 @@
 ion-progress-bar {
-    --background: var(--ion-color-success);
-    --buffer-background: var(--ion-color-primary);
+    position: fixed;
+    --progress-background: var(--ion-color-primary);
+}
+
+ion-progress-bar.validation {
+    --background: rgba(0, 0, 0, 0);
     --progress-background: var(--ion-color-success);
 }
+
 
 ion-item {
     --background: rgba(0, 0, 0, 0);
     box-shadow: none;
     background-color: rgba(0, 0, 0, 0);
+}
+
+.buffer-circles {
+    background-image: none !important;
 }

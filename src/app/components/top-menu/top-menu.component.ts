@@ -6,7 +6,6 @@ import { GlobalService } from 'src/app/services/global.service';
 import { UploadModalComponent } from './upload-modal/upload-modal.component';
 import { TranslatorService } from 'src/app/services/translator.service';
 import { SettingsModalComponent } from './settings-modal/settings-modal.component';
-import { settings } from 'cluster';
 import { SettingsService } from 'src/app/services/settings.service';
 import { ImportExportService } from 'src/app/services/import-export.service';
 import { AboutModalComponent } from './about-modal/about-modal.component';

@@ -1,24 +1,23 @@
 {
-  "name": "IN18",
-  "version": "1.1.0",
+  "name": "in18",
+  "version": "1.2.0",
   "description": "An i18n translator",
   "main": "index.js",
   "scripts": {
     "electron:start": "electron ./"
   },
   "dependencies": {
-    "@capacitor/electron": "^2.4.0",
-    "electron-bridge": "^0.1.1",
-    "electron-is-dev": "^1.2.0"
+    "@capacitor/electron": "^2.4.8",
+    "electron-is-dev": "^2.0.0"
   },
   "devDependencies": {
-    "electron": "^9.1.2",
-    "electron-is-dev": "^1.2.0"
+    "electron": "^13.1.8",
+    "electron-is-dev": "^2.0.0"
   },
   "keywords": [
     "capacitor",
     "electron"
   ],
-  "author": "",
+  "author": "Landry and Deakcor",
   "license": "ISC"
 }
