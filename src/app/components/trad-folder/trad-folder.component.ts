@@ -1,24 +1,30 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Folder } from 'src/app/classes/folder';
-import { GlobalService } from 'src/app/services/global.service';
-import { AlertController, ModalController } from '@ionic/angular';
-import { NewTradModalComponent } from '../tree-view/new-trad-modal/new-trad-modal.component';
+import { Component, OnInit, Input } from "@angular/core";
+import { Folder } from "src/app/classes/folder";
+import { GlobalService } from "src/app/services/global.service";
+import {
+  AlertController,
+  PopoverController,
+} from "@ionic/angular";
+import { PopoverMenu } from "../tree-view/menu-popover/template-popover.component";
 
 @Component({
-  selector: 'app-trad-folder',
-  templateUrl: './trad-folder.component.html',
-  styleUrls: ['./trad-folder.component.scss'],
+  selector: "app-trad-folder",
+  templateUrl: "./trad-folder.component.html",
+  styleUrls: ["./trad-folder.component.scss"],
 })
 export class TradFolderComponent implements OnInit {
-
   @Input() folder: Folder;
   @Input() canExpand = false;
 
   invisible = false;
 
-  constructor(private modalController: ModalController, private global: GlobalService, public alertController: AlertController) { }
+  constructor(
+    public popoverCtrl: PopoverController,
+    private global: GlobalService,
+    public alertController: AlertController
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   select() {
     this.global.setSelectedStructure(this.folder);
@@ -28,36 +34,16 @@ export class TradFolderComponent implements OnInit {
     this.global.setSelectedStructure(this.folder.parentFolder);
   }
 
-  delete() {
-    if (this.folder.parentFolder.removeFolder(this.folder)) {
-      this.global.setSelectedStructure();
-    }
-  }
-
-  async presentDeleteConfirm() {
-    const alert = await this.alertController.create({
-      cssClass: '',
-      header: 'Attention',
-      subHeader: '',
-      message: 'Are you sure to delete this folder? All the items inside it will also be deleted',
-      buttons: [{
-        text: 'No',
-        role: 'cancel',
-        cssClass: 'danger',
-        handler: (blah) => {
-        }
-      }, {
-        text: 'Yes',
-        cssClass: 'primary',
-        handler: () => {
-          this.delete();
-        }
-      }]
+  async presentPopover(ev: any, f) {
+    const popover = await this.popoverCtrl.create({
+      component: PopoverMenu,
+      componentProps: { item: f },
+      cssClass: "",
+      event: ev,
+      translucent: true,
     });
-
-    await alert.present();
+    await popover.present();
   }
-
   onNameUpdate(value: string) {
     this.folder.setName(value);
     if (this.folder.isRoot()) {
@@ -65,12 +51,5 @@ export class TradFolderComponent implements OnInit {
     }
   }
 
-  async addTraduction(isFolder = false) {
-    const modal = await this.modalController.create({
-      component: NewTradModalComponent,
-      componentProps: { parentFolder: this.folder, isFolder }
-    });
-    await modal.present();
-  }
-
+  
 }

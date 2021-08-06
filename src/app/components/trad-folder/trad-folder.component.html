@@ -20,16 +20,6 @@
         </ion-col>
         <ion-col *ngIf="!folder.isRoot()">
           <ion-item [class]="canExpand?'':'opened-folder'">
-            <ion-button fill="clear" slot="end" expand="block" shape="round" (click)="addTraduction()"
-              *ngIf="canExpand">
-              <ion-icon name="add"></ion-icon>
-              <ion-icon name="document"></ion-icon>
-            </ion-button>
-            <ion-button fill="clear" slot="end" expand="block" shape="round" (click)="addTraduction(true)"
-              *ngIf="canExpand">
-              <ion-icon name="add"></ion-icon>
-              <ion-icon name="folder"></ion-icon>
-            </ion-button>
             <ion-button fill="clear" slot="end" expand="block" shape="round" (click)="select()" *ngIf="canExpand">
               <ion-icon name="chevron-down-outline"></ion-icon> Expand
             </ion-button>
@@ -37,9 +27,8 @@
               *ngIf="!canExpand && !folder.isRoot()">
               <ion-icon name="chevron-up-outline"></ion-icon>
             </ion-button>
-            <ion-button slot="end" expand="block" shape="round" (click)="presentDeleteConfirm()"
-              *ngIf="!folder.isRoot()" color="danger">
-              <ion-icon name="trash"></ion-icon>
+            <ion-button slot="end" expand="block" fill="clear" shape="round" (click)="presentPopover($event,folder)">
+              <ion-icon name="ellipsis-vertical"></ion-icon>
             </ion-button>
           </ion-item>
         </ion-col>

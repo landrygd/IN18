@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { GlobalService } from 'src/app/services/global.service';
 import { TraductionsGroup } from 'src/app/classes/traductions-group';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, PopoverController } from '@ionic/angular';
 import { LanguagesModalPage } from '../top-menu/languages-modal/languages-modal.component';
 import { SettingsService } from 'src/app/services/settings.service';
+import { PopoverMenu } from '../tree-view/menu-popover/template-popover.component';
 
 @Component({
   selector: 'app-trads-group',
@@ -15,7 +16,7 @@ export class TradsGroupComponent implements OnInit {
   @Input() tradGroup: TraductionsGroup;
   @Input() canExpand: boolean;
 
-  constructor(public modalController: ModalController,
+  constructor(public popoverCtrl: PopoverController, public modalController: ModalController,
               public settings: SettingsService,
               private global: GlobalService,
               public alertController: AlertController) { }
@@ -27,12 +28,6 @@ export class TradsGroupComponent implements OnInit {
     this.tradGroup.setName(value);
   }
 
-  delete() {
-    if (this.tradGroup.parentFolder.removeTradGroup(this.tradGroup)) {
-      this.global.setSelectedStructure(this.global.selectedFolder);
-    }
-  }
-
   select() {
     this.global.setSelectedStructure(this.tradGroup);
   }
@@ -41,28 +36,15 @@ export class TradsGroupComponent implements OnInit {
     this.global.setSelectedStructure(this.tradGroup.parentFolder);
   }
 
-  async presentDeleteConfirm() {
-    const alert = await this.alertController.create({
+  async presentPopover(ev: any, f) {
+    const popover = await this.popoverCtrl.create({
+      component: PopoverMenu,
+      componentProps: { item:f },
       cssClass: '',
-      header: 'Attention',
-      subHeader: '',
-      message: 'Are you sure to delete this item?',
-      buttons: [{
-        text: 'No',
-        role: 'cancel',
-        cssClass: 'danger',
-        handler: (blah) => {
-        }
-      }, {
-        text: 'Yes',
-        cssClass: 'primary',
-        handler: () => {
-          this.delete();
-        }
-      }]
+      event: ev,
+      translucent: true
     });
-
-    await alert.present();
+    await popover.present();
   }
 
   async presentLanguagesModal(id: number = 0) {

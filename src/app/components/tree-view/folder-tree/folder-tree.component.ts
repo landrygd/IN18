@@ -3,8 +3,9 @@ import { Folder } from "src/app/classes/folder";
 import { Structure } from "src/app/classes/structure";
 import { GlobalService } from "src/app/services/global.service";
 import { TraductionsGroup } from "src/app/classes/traductions-group";
-import { ModalController } from "@ionic/angular";
+import { ModalController, PopoverController } from "@ionic/angular";
 import { NewTradModalComponent } from "../new-trad-modal/new-trad-modal.component";
+import { PopoverMenu } from "../menu-popover/template-popover.component";
 
 @Component({
   selector: "app-folder-tree",
@@ -21,6 +22,7 @@ export class FolderTreeComponent implements OnInit {
   hovered = false;
 
   constructor(
+    private popoverCtrl: PopoverController,
     private modalController: ModalController,
     private global: GlobalService
   ) {}
@@ -113,5 +115,16 @@ export class FolderTreeComponent implements OnInit {
       componentProps: { parentFolder: this.folder, isFolder },
     });
     await modal.present();
+  }
+
+  async presentPopover(ev: any, f) {
+    const popover = await this.popoverCtrl.create({
+      component: PopoverMenu,
+      componentProps: { item:f },
+      cssClass: '',
+      event: ev,
+      translucent: true
+    });
+    await popover.present();
   }
 }

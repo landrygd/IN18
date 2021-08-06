@@ -1,5 +1,6 @@
 ion-progress-bar {
     grid-area: 1 / 1 / 2 / 2;
+    --background: var(--ion-background-color);
     --progress-background: var(--ion-color-primary);
 }
 
