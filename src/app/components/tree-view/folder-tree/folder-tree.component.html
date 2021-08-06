@@ -1,20 +1,30 @@
-<ion-row *ngIf="level>=0">
+<ion-row *ngIf="level>=0" (mouseover)="hovered=true" (mouseleave)="hovered=false">
   <ion-col [size]="level*2"></ion-col>
   <ion-col size="sizeXs" *ngIf="isFolder()">
     <ion-item button (click)="toggleCollapse()">
+      
       <ion-icon [name]="chevronIcon()" [color]="getColor()"></ion-icon>
-
+      
     </ion-item>
   </ion-col>
   <ion-col style="min-width: 0px;">
     <ion-item button (click)="click()" [class]="getBgColor()?'selected':''">
-      <ion-icon slot="start" [name]="folderIcon()" [color]="getColor()"></ion-icon>
+      <ion-icon slot="start" [name]="folder.isValidated()?'checkmark-circle':'checkmark-circle-outline'" [color]="getColor()"
+        *ngIf="folder.isFilled() && !folder.isValidated() && hovered"></ion-icon>
+      <ion-icon slot="start" [name]="folderIcon()" [color]="getColor()"  *ngIf="!folder.isFilled() || !hovered"></ion-icon>
       <ion-label [color]="getColor()">
         {{folder.getName()}}
       </ion-label>
-      <ion-icon slot="end" name="checkmark-circle-outline" color="primary"
-        *ngIf="folder.isFilled() && !folder.isValidated()"></ion-icon>
-      <ion-icon slot="end" name="checkmark-circle" color="success" *ngIf="folder.isValidated()"></ion-icon>
+      
+    </ion-item>
+    
+    
+  </ion-col>
+  <ion-col size="sizeXs" *ngIf="hovered">
+    <ion-item button>
+    
+      <ion-icon name="ellipsis-vertical"  ></ion-icon>
+      
     </ion-item>
   </ion-col>
 </ion-row>

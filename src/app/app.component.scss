@@ -49,3 +49,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(40em, 1fr));
 }
+
+ion-menu ion-content{
+  --background: var(--ion-color-step-0);
+}

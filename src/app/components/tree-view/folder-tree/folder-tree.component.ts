@@ -20,6 +20,8 @@ export class FolderTreeComponent implements OnInit {
 
   @Input() collapsed = true;
 
+  hovered = false;
+
   constructor(private modalController: ModalController, private global: GlobalService) {
   }
 
