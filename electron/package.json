@@ -1,18 +1,19 @@
 {
-  "name": "in18",
-  "version": "1.2.0",
+  "name": "IN18",
+  "version": "1.1.0",
   "description": "An i18n translator",
   "main": "index.js",
   "scripts": {
     "electron:start": "electron ./"
   },
   "dependencies": {
-    "@capacitor/electron": "^2.4.8",
-    "electron-is-dev": "^2.0.0"
+    "@capacitor/electron": "^2.4.0",
+    "electron-bridge": "^0.1.1",
+    "electron-is-dev": "^1.2.0"
   },
   "devDependencies": {
-    "electron": "^11.0.5",
-    "electron-is-dev": "^2.0.0"
+    "electron": "^9.1.2",
+    "electron-is-dev": "^1.2.0"
   },
   "keywords": [
     "capacitor",
