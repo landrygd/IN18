@@ -32,3 +32,4 @@ npm-debug.log*
 /www
 /electron/www
 /release-builds
+/debug
