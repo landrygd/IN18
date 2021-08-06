@@ -8,9 +8,9 @@
 
             <ion-icon slot="start" [name]="canExpand?'folder':'folder-open'"
               [color]="folder.isValidated()?'success':folder.isFilled()?'primary':''"></ion-icon>
-            <ion-icon slot="start" name="checkmark-circle-outline" color="primary"
+            <!-- <ion-icon slot="start" name="checkmark-circle-outline" color="primary"
               *ngIf="folder.isFilled() && !folder.isValidated()"></ion-icon>
-            <ion-icon slot="start" name="checkmark-circle" color="success" *ngIf="folder.isValidated()"></ion-icon>
+            <ion-icon slot="start" name="checkmark-circle" color="success" *ngIf="folder.isValidated()"></ion-icon> -->
             <ion-textarea slot="start" [value]="folder.getName()" (ionChange)="onNameUpdate($event.target.value)"
               [color]="folder.isValidated()?'success':folder.isFilled()?'primary':''"></ion-textarea>
 
@@ -18,19 +18,19 @@
           </ion-item>
 
         </ion-col>
-        <ion-col *ngIf="!folder.isRoot()">
-          <ion-item [class]="canExpand?'':'opened-folder'">
+        <ion-col size="sizeXs">
+          <ion-buttons [class]="canExpand?'':'opened-folder'" >
             <ion-button fill="clear" slot="end" expand="block" shape="round" (click)="select()" *ngIf="canExpand">
               <ion-icon name="chevron-down-outline"></ion-icon> Expand
             </ion-button>
             <ion-button fill="clear" slot="end" expand="block" shape="round" (click)="selectParent()"
               *ngIf="!canExpand && !folder.isRoot()">
-              <ion-icon name="chevron-up-outline"></ion-icon>
+              <ion-icon name="chevron-up-outline"></ion-icon> Back
             </ion-button>
             <ion-button slot="end" expand="block" fill="clear" shape="round" (click)="presentPopover($event,folder)">
               <ion-icon name="ellipsis-vertical"></ion-icon>
             </ion-button>
-          </ion-item>
+          </ion-buttons>
         </ion-col>
       </ion-row>
     </ion-card-subtitle>

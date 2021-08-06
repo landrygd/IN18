@@ -16,18 +16,18 @@
           </ion-item>
         </ion-col>
         <ion-col size="sizeXs">
-          <ion-item [class]="canExpand?'':'opened-file'">
+          <ion-buttons [class]="canExpand?'':'opened-file'">
             <ion-button fill="clear" slot="end" expand="block" shape="round" (click)="select()" *ngIf="canExpand">
               <ion-icon name="chevron-down-outline"></ion-icon> Show
             </ion-button>
             <ion-button fill="clear" slot="end" expand="block" shape="round" (click)="selectParent()"
               *ngIf="!canExpand">
-              <ion-icon name="chevron-up-outline"></ion-icon>
+              <ion-icon name="chevron-up-outline"></ion-icon> Back
             </ion-button>
             <ion-button slot="end" expand="block" fill="clear" shape="round" (click)="presentPopover($event,tradGroup)">
               <ion-icon name="ellipsis-vertical"></ion-icon>
             </ion-button>
-          </ion-item>
+          </ion-buttons>
         </ion-col>
       </ion-row>
     </ion-card-subtitle>

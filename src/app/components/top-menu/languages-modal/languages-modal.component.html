@@ -9,28 +9,56 @@
   </ion-toolbar>
 </ion-header>
 <ion-content fullscreen>
-  <ion-item *ngFor="let language of global.languages; let index = index">
-    <ion-input [value]="language" [id]="index" (ionChange)="onLanguageChange($event.detail.value,id)"></ion-input>
-    <ion-button slot="end" (click)="presentDeleteConfirm(language)" shape="round" color="danger">
-      <ion-icon name="trash"></ion-icon>
-    </ion-button>
-  </ion-item>
+  <ion-card>
+    <ion-card-content>
+      <ion-item *ngIf="global.languages.length == 0">No language</ion-item>
+      <ion-item *ngFor="let language of global.languages; let index = index">
+        <ion-input
+          [value]="language"
+          [id]="index"
+          (ionChange)="onLanguageChange($event.detail.value, id)"
+        ></ion-input>
+        <ion-button
+          slot="end"
+          (click)="presentDeleteConfirm(language)"
+          shape="round"
+          color="danger"
+        >
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
 
   <!--<ion-item>
         <ion-label position="floating">This is a folder</ion-label>
         <ion-checkbox [value]="isFolder" (ionChange)="onIsFolderChange($event.detail.value)"></ion-checkbox>
       </ion-item>-->
-
 </ion-content>
 <ion-footer class="ion-no-border">
-  <ion-item>
-    <ion-label position="floating">New Language</ion-label>
-    <ion-input [value]="newLanguage" (keydown.enter)="add()" (ionChange)="onNewLanguageChange($event.detail.value)"
-      autofocus="true"></ion-input>
-    <ion-button slot="end" (click)="add()" shape="round" color="primary" [disabled]="newLanguage==''">
-      <ion-icon name="add"></ion-icon>
-    </ion-button>
-  </ion-item>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">New Language</ion-label>
+        <ion-input
+          [value]="newLanguage"
+          (keydown.enter)="add()"
+          (ionChange)="onNewLanguageChange($event.detail.value)"
+          autofocus="true"
+        ></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="sizeXs">
+      <ion-button
+        (click)="add()"
+        color="primary"
+        [disabled]="newLanguage == ''"
+      >
+        <ion-icon name="add" size="large"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
   <!--<ion-toolbar>
         <ion-item>
             <ion-label>Primary language</ion-label>

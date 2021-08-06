@@ -48,6 +48,10 @@ export class Structure {
         return count[0] / count[1];
     }
 
+    public isRoot(): boolean {
+        return false;
+    }
+
     constructor(name: string, parentFolder: Folder) {
         this.name = name;
         this.parentFolder = parentFolder;

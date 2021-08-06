@@ -4,6 +4,7 @@ import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   templateUrl: './languages-modal.component.html',
+  styleUrls: ['./languages-modal.component.scss']
 })
 export class LanguagesModalPage {
 
