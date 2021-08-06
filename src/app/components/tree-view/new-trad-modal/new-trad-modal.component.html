@@ -12,28 +12,32 @@
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <ion-label position="floating">Parent folder</ion-label>
-    <ion-input [value]="parentFolderName" (ionChange)="onFolderChange($event.detail.value)" disabled="true"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="floating">Name *</ion-label>
-    <ion-input [value]="fileName" (ionChange)="onNameChange($event.detail.value)"></ion-input>
-  </ion-item>
-
-  <ion-title *ngIf="!isFolder" style="margin: 10px auto;">Fill traductions</ion-title>
-  <div *ngIf="!isFolder">
-
-    <app-trad-field *ngFor="let trad of tradGroup.tradList" [trad]="trad"></app-trad-field>
-  </div>
-
-  <ion-button (click)="presentLanguagesModal()" expand="block" fill="clear" shape="round" *ngIf="!isFolder">
-    <ion-icon name="globe"></ion-icon> Add languages
-  </ion-button>
-  <!--<ion-item>
-    <ion-label position="floating">This is a folder</ion-label>
-    <ion-checkbox [value]="isFolder" (ionChange)="onIsFolderChange($event.detail.value)"></ion-checkbox>
-  </ion-item>-->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Project</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Parent folder</ion-label>
+        <ion-input [value]="parentFolderName" (ionChange)="onFolderChange($event.detail.value)" disabled="true"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Name *</ion-label>
+        <ion-input [value]="fileName" (ionChange)="onNameChange($event.detail.value)"></ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="!isFolder">
+    <ion-card-header>
+      <ion-card-subtitle>Fill translations</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <app-trad-field *ngFor="let trad of tradGroup.tradList" [trad]="trad"></app-trad-field>
+      <ion-button (click)="presentLanguagesModal()" expand="block" fill="clear" shape="round" *ngIf="!isFolder">
+        <ion-icon name="globe"></ion-icon> Add languages
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
 
 <ion-footer>

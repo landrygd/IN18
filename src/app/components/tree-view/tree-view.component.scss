@@ -14,3 +14,9 @@ ion-row {
   flex-wrap: nowrap;
 }
 
+ion-item {
+  --background: rgba(0, 0, 0, 0);
+  box-shadow: none;
+  background-color: rgba(0, 0, 0, 0);
+  --border-color: rgba(0, 0, 0, 0);
+}
