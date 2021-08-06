@@ -1,64 +1,81 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Folder } from 'src/app/classes/folder';
-import { Structure } from 'src/app/classes/structure';
-import { GlobalService } from 'src/app/services/global.service';
-import { TraductionsGroup } from 'src/app/classes/traductions-group';
-import { ModalController } from '@ionic/angular';
-import { NewTradModalComponent } from '../new-trad-modal/new-trad-modal.component';
+import { Component, OnInit, Input } from "@angular/core";
+import { Folder } from "src/app/classes/folder";
+import { Structure } from "src/app/classes/structure";
+import { GlobalService } from "src/app/services/global.service";
+import { TraductionsGroup } from "src/app/classes/traductions-group";
+import { ModalController } from "@ionic/angular";
+import { NewTradModalComponent } from "../new-trad-modal/new-trad-modal.component";
 
 @Component({
-  selector: 'app-folder-tree',
-  templateUrl: './folder-tree.component.html',
-  styleUrls: ['./folder-tree.component.scss'],
+  selector: "app-folder-tree",
+  templateUrl: "./folder-tree.component.html",
+  styleUrls: ["./folder-tree.component.scss"],
 })
 export class FolderTreeComponent implements OnInit {
-
   @Input() folder: Structure;
 
   @Input() level: number;
-
 
   @Input() collapsed = true;
 
   hovered = false;
 
-  constructor(private modalController: ModalController, private global: GlobalService) {
-  }
+  constructor(
+    private modalController: ModalController,
+    private global: GlobalService
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
-  click(){
-    if (this.isFolder()){
-      this.toggleCollapse(true)
-    }else{
-      this.select()
+  click() {
+    if (this.isFolder()) {
+      this.toggleCollapse(true);
+    } else {
+      this.select();
     }
   }
 
   toggleCollapse(select = false) {
-    if (!this.global.OneChildIsSelected(this.folder as Folder) || select) {
-      if (select) {
-        this.select(this.folder);
-      } else {
-        this.collapsed = !this.collapsed;
+    if (this.isFolder()) {
+      if (!this.global.OneChildIsSelected(this.folder as Folder) || select) {
+        if (select) {
+          this.select(this.folder);
+        } else {
+          this.collapsed = !this.collapsed;
+        }
       }
     }
   }
 
   isExpanded(): boolean {
-    return !this.collapsed || this.level < 0 || this.global.OneChildIsSelected(this.folder as Folder);
+    if (this.isFolder()) {
+      return (
+        !this.collapsed ||
+        this.level < 0 ||
+        this.global.OneChildIsSelected(this.folder as Folder)
+      );
+    }
+    return false;
   }
 
   select(structure: Structure = this.folder) {
-    this.global.setSelectedStructure(this.global.selectedStructure === structure ? this.global.structure : structure);
+    this.global.setSelectedStructure(
+      this.global.selectedStructure === structure
+        ? this.global.structure
+        : structure
+    );
   }
 
   chevronIcon() {
-    return this.collapsed ? 'chevron-forward' : 'chevron-down';
+    return this.collapsed ? "chevron-forward" : "chevron-down";
   }
 
   folderIcon() {
-    return this.isFolder()?(this.collapsed ? 'folder' : 'folder-open'):'document';
+    return this.isFolder()
+      ? this.collapsed
+        ? "folder"
+        : "folder-open"
+      : "document";
   }
 
   getBgColor(structure: Structure = this.folder): boolean {
@@ -76,29 +93,25 @@ export class FolderTreeComponent implements OnInit {
 
   getColor(structure: Structure = this.folder): string {
     if (structure.isValidated()) {
-      return 'success';
+      return "success";
     } else if (structure.isFilled()) {
-      return 'primary';
+      return "primary";
+    } else if (!this.collapsed || !this.isFolder()) {
+      return "dark";
     }
-
-    else if (!this.collapsed || !this.isFolder()) {
-      return 'dark';
-    }
-    return 'medium';
+    return "medium";
   }
 
-  isFolder():boolean{
-    let f:any = this.folder;
+  isFolder(): boolean {
+    let f: any = this.folder;
     return f instanceof Folder;
   }
 
   async addTraduction(isFolder = false) {
     const modal = await this.modalController.create({
       component: NewTradModalComponent,
-      componentProps: { parentFolder: this.folder, isFolder }
+      componentProps: { parentFolder: this.folder, isFolder },
     });
     await modal.present();
   }
-
-
 }
