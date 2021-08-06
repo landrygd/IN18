@@ -1,5 +1,5 @@
 ion-progress-bar {
-    position: absolute;
+    grid-area: 1 / 1 / 2 / 2;
     --progress-background: var(--ion-color-primary);
 }
 
@@ -13,8 +13,12 @@ ion-item {
     --background: rgba(0, 0, 0, 0);
     box-shadow: none;
     background-color: rgba(0, 0, 0, 0);
+    --border-color: rgba(0, 0, 0, 0);
 }
 
 .buffer-circles {
     background-image: none !important;
+}
+div{
+    display: grid;
 }

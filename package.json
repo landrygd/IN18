@@ -12,7 +12,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "start": "electron .",
-    "electron": "ionic build && ionic cap copy && electron .",
+    "electron": "ionic cap copy && electron .",
     "electron:win_debug": "electron-packager ./electron IN18 --overwrite --asar=true --platform=win32 --arch=ia32 --prune=true --out=debug --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='IN18' --icon=./electron/icon/favicon_invert.ico",
     "electron:win": "electron-packager ./electron IN18 --overwrite --asar=true --platform=win32 --arch=ia32 --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='IN18' --icon=./electron/icon/favicon_invert.ico",
     "electron:linux": "electron-packager ./electron IN18 --overwrite --asar=true --platform=linux --arch=x64 --icon=./electron/icon/favicon_invert.png --prune=true --out=release-builds",

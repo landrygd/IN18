@@ -1,15 +1,15 @@
 <ion-row *ngIf="level>=0">
   <ion-col [size]="level*2"></ion-col>
-  <ion-col size="sizeXs">
+  <ion-col size="sizeXs" *ngIf="isFolder()">
     <ion-item button (click)="toggleCollapse()">
-      <ion-icon [name]="chevronIcon()" [color]="getColor(true)"></ion-icon>
+      <ion-icon [name]="chevronIcon()" [color]="getColor()"></ion-icon>
 
     </ion-item>
   </ion-col>
   <ion-col style="min-width: 0px;">
-    <ion-item button (click)="toggleCollapse(true)" [class]="getBgColor(true)?'selected':''">
-      <ion-icon slot="start" [name]="folderIcon()" [color]="getColor(true)"></ion-icon>
-      <ion-label [color]="getColor(true)">
+    <ion-item button (click)="click()" [class]="getBgColor()?'selected':''">
+      <ion-icon slot="start" [name]="folderIcon()" [color]="getColor()"></ion-icon>
+      <ion-label [color]="getColor()">
         {{folder.getName()}}
       </ion-label>
       <ion-icon slot="end" name="checkmark-circle-outline" color="primary"
@@ -34,20 +34,9 @@
   </ion-col>
 </ion-row>-->
 <div *ngIf="isExpanded()">
-  <ion-row *ngFor="let file of folder.tradGroupList">
-    <ion-col [size]="(level+1)*2"></ion-col>
-    <ion-col style="min-width: 0px;">
-      <ion-item button (click)="select(file)" [class]="getBgColor(false,file)?'selected':''">
-        <ion-icon slot="start" name="document" [color]="getColor(false,file)"></ion-icon>
-        <ion-label [color]="getColor(false,file)">
-          {{file.getName()}}
-        </ion-label>
-        <ion-icon slot="end" name="checkmark-circle-outline" color="primary"
-          *ngIf="file.isFilled() && !file.isValidated()"></ion-icon>
-        <ion-icon slot="end" name="checkmark-circle" color="success" *ngIf="file.isValidated()"></ion-icon>
-      </ion-item>
-    </ion-col>
-  </ion-row>
+  <div *ngFor="let file of folder.tradGroupList">
+    <app-folder-tree [folder]="file" [level]="level+1" [collapsed]="collapsed"></app-folder-tree>
+  </div>
 </div>
 <div *ngIf="isExpanded()">
   <div *ngFor="let f of folder.folderList">

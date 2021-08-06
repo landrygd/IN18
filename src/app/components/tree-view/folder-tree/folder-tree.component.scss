@@ -5,3 +5,10 @@ ion-row {
 .selected {
     --background: var(--ion-color-step-150);
 }
+
+ion-item {
+    --background: rgba(0, 0, 0, 0);
+    box-shadow: none;
+    background-color: rgba(0, 0, 0, 0);
+    --border-color: rgba(0, 0, 0, 0);
+}
