@@ -113,14 +113,13 @@
               <ion-card-header>
                 <ion-card-subtitle>Recent project</ion-card-subtitle>
               </ion-card-header>
-              <ion-card-content *ngFor="let path of settings.recentProjects">
-                <ion-item
-                  button
-                  (click)="importExportService.load_in18(path, true)"
+              <ion-card-content>
+                <app-recent-file
+                  *ngFor="let path of settings.recentProjects"
+                  [path]="path"
+                  [project]="true"
                 >
-                  <ion-icon name="document-outline"></ion-icon>
-                  <ion-label>{{ global.getPrettyPath(path) }}</ion-label>
-                </ion-item>
+                </app-recent-file>
               </ion-card-content>
             </ion-card>
           </div>
@@ -129,11 +128,13 @@
               <ion-card-header>
                 <ion-card-subtitle>Recent files</ion-card-subtitle>
               </ion-card-header>
-              <ion-card-content *ngFor="let path of settings.recentFiles">
-                <ion-item button (click)="importExportService.importFile(path)">
-                  <ion-icon name="document-outline"></ion-icon>
-                  <ion-label>{{ global.getPrettyPath(path) }}</ion-label>
-                </ion-item>
+              <ion-card-content>
+                <app-recent-file
+                  *ngFor="let path of settings.recentFiles"
+                  [path]="path"
+                  [project]="false"
+                >
+                </app-recent-file>
               </ion-card-content>
             </ion-card>
           </div>

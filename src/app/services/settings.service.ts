@@ -69,7 +69,7 @@ export class SettingsService {
     }
   }
 
-  addRecentProjectPath(path:String){
+  addRecentProjectPath(path:string){
     if (path !==undefined && path !==null && path!=="" && !this.recentProjects.includes(path)){
       if (this.recentProjects.length>10){
         this.recentProjects.pop();
@@ -79,12 +79,29 @@ export class SettingsService {
     }
   }
 
-  addRecentFilePath(path:String){
+  addRecentFilePath(path:string){
     if (path !==undefined && path !==null && path!=="" && !this.recentFiles.includes(path)){
       if (this.recentFiles.length>10){
         this.recentFiles.pop();
       }
       this.recentFiles.unshift(path);
+      this.save();
+    }
+  }
+
+  removeProjectPath(path:string){
+    let index = this.recentProjects.indexOf(path);
+    if (index !== -1) {
+      this.recentProjects.splice(index, 1);
+      this.save();
+    }
+    
+  }
+
+  removeFilePath(path:string){
+    let index = this.recentFiles.indexOf(path);
+    if (index !== -1) {
+      this.recentFiles.splice(index, 1);
       this.save();
     }
   }

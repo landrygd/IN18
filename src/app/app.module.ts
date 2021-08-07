@@ -32,6 +32,7 @@ import { NgxElectronModule } from 'ngx-electron';
 import { NewProjectModalComponent } from './components/top-menu/new-project-modal/new-project-modal.component';
 import { ExportModalComponent } from './components/top-menu/export-modal/export-modal.component';
 import { PopoverMenu } from './components/tree-view/menu-popover/template-popover.component';
+import { RecentFileComponent } from './components/main-view/recent-file/recent-file.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { PopoverMenu } from './components/tree-view/menu-popover/template-popove
     AboutModalComponent,
     NewProjectModalComponent,
     ExportModalComponent,
-    PopoverMenu
+    PopoverMenu,
+    RecentFileComponent
   ],
   entryComponents: [],
   imports: [

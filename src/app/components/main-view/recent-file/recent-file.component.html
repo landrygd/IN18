@@ -1,0 +1,20 @@
+<ion-row (mouseover)="hovered = true" (mouseleave)="hovered = false">
+  <ion-col>
+    <ion-item
+      button
+      (click)="
+        project
+          ? importExport.load_in18(path, true)
+          : importExport.importFile(path)
+      "
+    >
+      <ion-icon name="document-outline"></ion-icon>
+      <ion-label>{{ global.getPrettyPath(path) }}</ion-label>
+    </ion-item>
+  </ion-col>
+  <ion-col size="sizeXs" *ngIf="hovered">
+    <ion-item button color="danger" (click)="remove()"
+      ><ion-icon name="trash"></ion-icon
+    ></ion-item>
+  </ion-col>
+</ion-row>
