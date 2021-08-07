@@ -1,10 +1,27 @@
 <ion-app>
-  <app-top-menu></app-top-menu>
+  <app-top-menu #topmenu></app-top-menu>
 
-  <ion-split-pane when="sm" content-id="main-content" class="main-content">
-    <ion-menu content-id="main-content" *ngIf="global.structure !== undefined">
+  <ion-split-pane when="sm" contentId="main-content" class="main-content">
+    <ion-menu contentId="main-content">
       <ion-content>
-        <app-tree-view></app-tree-view>
+        <app-tree-view *ngIf="global.hasProject()"></app-tree-view>
+        <ion-list *ngIf="!global.hasProject()">
+          <ion-item button lines="none" (click)="topMenu.presentNewProject()">
+            <ion-icon size="large" slot="start" name="document"></ion-icon>
+            <ion-label>New</ion-label>
+            <ion-note slot="end">Ctrl+N</ion-note>
+          </ion-item>
+
+          <ion-item button (click)="topMenu.load()">
+            <ion-icon size="large" slot="start" name="folder"></ion-icon>
+            <ion-label>Open</ion-label> <ion-note slot="end">Ctrl+O</ion-note>
+          </ion-item>
+
+          <ion-item button lines="none" (click)="topMenu.upload()">
+            <ion-icon size="large" slot="start" name="share"></ion-icon>
+            <ion-label>Import</ion-label> <ion-note slot="end">Ctrl+I</ion-note>
+          </ion-item>
+        </ion-list>
       </ion-content>
     </ion-menu>
 
@@ -15,8 +32,8 @@
         class="loading_bar"
         *ngIf="global.loading"
       ></ion-progress-bar>
-      <ion-content class="ion-padding" *ngIf="global.structure !== undefined">
-        <ion-item class="no-background">
+      <ion-content class="ion-padding" *ngIf="global.hasProject()">
+        <ion-item class="no-background" lines="none">
           <ion-buttons slot="end">
             <ion-button
               fill="clear"

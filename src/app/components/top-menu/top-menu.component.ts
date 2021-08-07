@@ -72,11 +72,7 @@ export class TopMenuComponent implements OnInit {
     if (data !== undefined) {
       switch (data) {
         case 'load':
-          if (this.electronService.isElectronApp) {
-            this.importExport.load_in18();
-          } else {
-            this.loadInput.nativeElement.click();
-          }
+          this.load()
           break;
         case 'close':
           this.closeProject();
@@ -111,6 +107,14 @@ export class TopMenuComponent implements OnInit {
   quit() {
     if (this.electronService.isElectronApp) {
       App.exitApp();
+    }
+  }
+
+  load(){
+    if (this.electronService.isElectronApp) {
+      this.importExport.load_in18();
+    } else {
+      this.loadInput.nativeElement.click();
     }
   }
 
@@ -286,12 +290,7 @@ export class TopMenuComponent implements OnInit {
 
     else if (event.keyCode === 79 && this.ctrlDown) {
       this.ctrlDown = false;
-      if (this.electronService.isElectronApp) {
-        this.importExport.load_in18();
-        // this.loadInput.nativeElement.click();
-      } else {
-        this.loadInput.nativeElement.click();
-      }
+      this.load();
     }
     else if (event.keyCode === 78 && this.ctrlDown) {
       this.presentNewProject();
@@ -303,6 +302,12 @@ export class TopMenuComponent implements OnInit {
     }
     else if (event.keyCode === 87 && this.ctrlDown) {
       this.closeProject()
+      this.ctrlDown = false;
+    }else if (event.keyCode === 73 && this.ctrlDown) {
+      this.upload()
+      this.ctrlDown = false;
+    }else if (event.keyCode === 69 && this.ctrlDown) {
+      this.export()
       this.ctrlDown = false;
     }
 

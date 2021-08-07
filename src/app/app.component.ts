@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, Directive, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, OnInit, Directive, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { Platform, ModalController, IonVirtualScroll, ToastController, AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -21,6 +21,7 @@ let self;
 export class AppComponent implements OnInit {
 
   @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
+  @ViewChild('topmenu') topMenu:ElementRef;
 
   path: string;
   subStructure: any;
