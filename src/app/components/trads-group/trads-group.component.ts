@@ -18,7 +18,7 @@ export class TradsGroupComponent implements OnInit {
 
   constructor(public popoverCtrl: PopoverController, public modalController: ModalController,
               public settings: SettingsService,
-              private global: GlobalService,
+              public global: GlobalService,
               public alertController: AlertController) { }
 
   ngOnInit() {

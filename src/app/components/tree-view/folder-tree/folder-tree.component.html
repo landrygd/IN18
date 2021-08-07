@@ -44,12 +44,12 @@
   </ion-col>
 </ion-row>-->
 <div *ngIf="isExpanded()">
-  <div *ngFor="let file of folder.tradGroupList">
+  <div *ngFor="let file of getItemList()">
     <app-folder-tree [folder]="file" [level]="level+1" [collapsed]="collapsed"></app-folder-tree>
   </div>
 </div>
 <div *ngIf="isExpanded()">
-  <div *ngFor="let f of folder.folderList">
+  <div *ngFor="let f of getFolderList()">
     <app-folder-tree [folder]="f" [level]="level+1"></app-folder-tree>
   </div>
 </div>

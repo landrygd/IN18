@@ -10,6 +10,7 @@ import { LanguagesModalPage } from './components/top-menu/languages-modal/langua
 import { ElectronService } from 'ngx-electron';
 import { ImportExportService } from './services/import-export.service';
 import { SettingsService } from './services/settings.service';
+import { TopMenuComponent } from './components/top-menu/top-menu.component';
 
 let self;
 
@@ -21,7 +22,7 @@ let self;
 export class AppComponent implements OnInit {
 
   @ViewChild(IonVirtualScroll) virtualScroll: IonVirtualScroll;
-  @ViewChild('topmenu') topMenu:ElementRef;
+  @ViewChild('topmenu') topMenu:TopMenuComponent;
 
   path: string;
   subStructure: any;

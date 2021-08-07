@@ -16,7 +16,7 @@ export class RecentFileComponent implements OnInit {
 
   hovered = false;
 
-  constructor(private setting: SettingsService,private global: GlobalService,private importExport: ImportExportService) { }
+  constructor(private setting: SettingsService,public global: GlobalService,public importExport: ImportExportService) { }
 
   ngOnInit() {}
 

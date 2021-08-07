@@ -24,7 +24,7 @@ export class FolderTreeComponent implements OnInit {
   constructor(
     private popoverCtrl: PopoverController,
     private modalController: ModalController,
-    private global: GlobalService
+    public global: GlobalService
   ) {}
 
   ngOnInit() {}
@@ -105,8 +105,23 @@ export class FolderTreeComponent implements OnInit {
   }
 
   isFolder(): boolean {
-    let f: any = this.folder;
-    return f instanceof Folder;
+    return this.folder instanceof Folder;
+  }
+
+  getFolderList(){
+    if (this.folder instanceof Folder){
+      return this.folder.folderList
+    }else{
+      return []
+    }
+  }
+
+  getItemList(){
+    if (this.folder instanceof Folder){
+      return this.folder.tradGroupList
+    }else{
+      return []
+    }
   }
 
   async addTraduction(isFolder = false) {

@@ -20,7 +20,7 @@ export class TradFolderComponent implements OnInit {
 
   constructor(
     public popoverCtrl: PopoverController,
-    private global: GlobalService,
+    public global: GlobalService,
     public alertController: AlertController
   ) {}
 
