@@ -3,7 +3,7 @@
     <ion-card-subtitle>
       <ion-row>
         <ion-col>
-          <ion-item [class]="canExpand?'':'opened-file'">
+          <ion-item [class]="canExpand?'':'opened-file'" [disabled]="global.isCut && global.copyItem===tradGroup">
             <ion-icon slot="start" name="document"
               [color]="tradGroup.isValidated()?'success':tradGroup.isFilled()?'primary':''"></ion-icon>
             <!-- <ion-icon slot="start" name="checkmark-circle-outline" color="primary"

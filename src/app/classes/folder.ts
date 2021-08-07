@@ -10,6 +10,7 @@ export class Folder extends Structure {
     public addTraductionGroup(traductionGroup: TraductionsGroup): boolean {
         if (!this.hasTraductionGroup(traductionGroup.getName())) {
             this.tradGroupList.push(traductionGroup);
+            traductionGroup.parentFolder=this;
             return true;
         } else {
             return false;
@@ -21,11 +22,21 @@ export class Folder extends Structure {
     public addFolder(folder: Folder): boolean {
         if (this.folderList.findIndex(e => e.getName() === folder.getName()) === -1) {
             this.folderList.push(folder);
+            folder.parentFolder=this;
             return true;
         } else {
             return false;
         }
 
+    }
+
+    public add(item:Structure):boolean{
+        if (item instanceof Folder){
+            return this.addFolder(item);
+        }else if (item instanceof TraductionsGroup){
+            return this.addTraductionGroup(item);
+        }
+        return false;
     }
 
     public removeFolder(folder: Folder): boolean {
@@ -40,6 +51,15 @@ export class Folder extends Structure {
         return l > this.tradGroupList.length;
     }
 
+    public remove(item:Structure):boolean{
+        if (item instanceof Folder){
+            return this.removeFolder(item);
+        }else if (item instanceof TraductionsGroup){
+            return this.removeTradGroup(item);
+        }
+        return false;
+    }
+
     public findTraductionGroup(path: string): TraductionsGroup {
         return this.tradGroupList.find(element => element.getName() === path);
     }
@@ -50,6 +70,16 @@ export class Folder extends Structure {
 
     public findFolder(path: string) {
         return this.folderList.find(element => element.getName() === path);
+    }
+
+    public has(e:Structure):boolean{
+        if (this.tradGroupList.find(element => element === e)){
+            return true;
+        }
+        if (this.folderList.find(element => element === e)){
+            return true;
+        }
+        return e === this;
     }
 
     public isValidated(): boolean {
@@ -138,10 +168,24 @@ export class Folder extends Structure {
         return super.hasFilter(filter) 
     }
 
+    public clone(): Folder {
+        var cloneObj = new Folder(this.getName(),this.parentFolder);
+        cloneObj.folderList = [];
+        for (const k of this.folderList) {
+            cloneObj.folderList.push(k.clone());
+        }
+        cloneObj.tradGroupList = [];
+        for (const k of this.tradGroupList) {
+            cloneObj.tradGroupList.push(k.clone());
+        }
+        return cloneObj;
+    }
 
     constructor(name: string, parentFolder: Folder) {
         super(name, parentFolder);
         this.folderList = [];
         this.tradGroupList = [];
     }
+
+
 }

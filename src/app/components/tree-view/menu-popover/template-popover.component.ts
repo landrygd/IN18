@@ -12,6 +12,7 @@ import { Structure } from "src/app/classes/structure";
 import { TraductionsGroup } from "src/app/classes/traductions-group";
 import { Folder } from "src/app/classes/folder";
 import { NewTradModalComponent } from "../new-trad-modal/new-trad-modal.component";
+import { folder } from "jszip";
 
 @Component({
   templateUrl: "./template-popover.component.html",
@@ -43,18 +44,25 @@ export class PopoverMenu {
     return i instanceof Folder;
   }
 
+  cut(){
+    this.global.isCut=true;
+    this.global.copyItem = this.item;
+    this.popoverCtrl.dismiss();
+  }
+
+  copy(){
+    this.global.isCut=false;
+    this.global.copyItem = this.item;
+    this.popoverCtrl.dismiss();
+  }
+
+  paste(){
+    this.global.paste(this.item);
+    this.popoverCtrl.dismiss();
+  }
+
   delete() {
-    if (this.isFolder()) {
-      if (this.item.parentFolder.removeFolder(this.item as Folder)) {
-        this.global.setSelectedStructure();
-      }
-    } else {
-      if (
-        this.item.parentFolder.removeTradGroup(this.item as TraductionsGroup)
-      ) {
-        this.global.setSelectedStructure(this.global.selectedFolder);
-      }
-    }
+    this.global.removeItem(this.item);
   }
 
   async presentDeleteConfirm() {

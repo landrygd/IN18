@@ -3,7 +3,7 @@
     <ion-card-subtitle>
       <ion-row>
         <ion-col>
-          <ion-item [class]="canExpand?'':'opened-folder'">
+          <ion-item [class]="canExpand?'':'opened-folder'" [disabled]="global.isCut && global.copyItem===folder">
 
 
             <ion-icon slot="start" [name]="canExpand?'folder':'folder-open'"

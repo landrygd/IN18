@@ -10,6 +10,21 @@
     <ion-label>New Folder</ion-label>
   </ion-item>
 
+  <ion-item button lines="none" (click)="cut()" *ngIf="!item.isRoot()">
+    <ion-icon slot="end" name="cut"></ion-icon>
+    <ion-label>Cut</ion-label>
+  </ion-item>
+
+  <ion-item button [lines]="isFolder()?'none':''" (click)="copy()" *ngIf="!item.isRoot()">
+    <ion-icon slot="end" name="copy"></ion-icon>
+    <ion-label>Copy</ion-label>
+  </ion-item>
+
+  <ion-item button (click)="paste()" *ngIf="isFolder()" [disabled]="!global.isValidPaste(item)">
+    <ion-icon slot="end" name="clipboard"></ion-icon>
+    <ion-label>Paste</ion-label>
+  </ion-item>
+
   <ion-item button lines="none" (click)="presentDeleteConfirm()" *ngIf="!item.isRoot()">
     <ion-icon slot="end" color="danger" name="trash"></ion-icon>
     <ion-label color="danger">Delete</ion-label>

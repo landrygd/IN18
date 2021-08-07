@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { Folder } from '../classes/folder';
-import { TraductionsGroup } from '../classes/traductions-group';
-import { Structure } from '../classes/structure';
-import { SettingsService } from './settings.service';
-import { ElectronService } from 'ngx-electron';
+import { Injectable } from "@angular/core";
+import { Observable, of } from "rxjs";
+import { Folder } from "../classes/folder";
+import { TraductionsGroup } from "../classes/traductions-group";
+import { Structure } from "../classes/structure";
+import { SettingsService } from "./settings.service";
+import { ElectronService } from "ngx-electron";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class GlobalService {
   projectPath: string;
@@ -18,15 +18,19 @@ export class GlobalService {
   languages: string[] = [];
   paths: any;
 
-  loading:boolean = false;
-  filter:string = "";
+  loading: boolean = false;
+  filter: string = "";
 
+  isCut: boolean = false;
+  copyItem: Structure;
 
   selectedTradGroups$: Observable<TraductionsGroup[]>;
   selectedFolders$: Observable<Structure[]>;
 
-
-  constructor(private setting: SettingsService,private electronService: ElectronService) {
+  constructor(
+    private setting: SettingsService,
+    private electronService: ElectronService
+  ) {
     if (this.electronService.isElectronApp) {
       this.structure = undefined;
     } else {
@@ -48,7 +52,6 @@ export class GlobalService {
       this.selectedFolders$ = of(this.getSelectedFolder().folderList);
       this.selectedStructure = structure;
     }
-
   }
 
   // update lastsavedstructure when we save the structure
@@ -57,7 +60,10 @@ export class GlobalService {
   }
 
   isSaved(): boolean {
-    return JSON.stringify(this.lastSavedStrcture) === JSON.stringify(this.savein18(this.structure));
+    return (
+      JSON.stringify(this.lastSavedStrcture) ===
+      JSON.stringify(this.savein18(this.structure))
+    );
   }
 
   hasProject(): boolean {
@@ -96,11 +102,12 @@ export class GlobalService {
       }
     }
     return false;
-
   }
 
   getSelectedFolder() {
-    return this.selectedFolder === undefined ? this.structure : this.selectedFolder;
+    return this.selectedFolder === undefined
+      ? this.structure
+      : this.selectedFolder;
   }
 
   async setSelectedFolder(folder: Folder) {
@@ -115,14 +122,51 @@ export class GlobalService {
   }
 
   newProject() {
-    this.setStructure(new Folder('project_name', undefined));
+    this.setStructure(new Folder("project_name", undefined));
     this.languages = [];
     this.setSelectedStructure();
     this.projectPath = undefined;
   }
 
-  setFilter(newFilter:string){
+  setFilter(newFilter: string) {
     this.filter = newFilter;
+  }
+
+  isValidPaste(newParent: Structure): boolean {
+    if (newParent instanceof Folder) {
+      if (this.copyItem !== undefined) {
+        if (!newParent.has(this.copyItem as Structure)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  paste(newParent: Structure) {
+    if (newParent instanceof Folder) {
+      if (this.isValidPaste(newParent)) {
+        if (this.isCut) {
+          this.removeItem(this.copyItem);
+          newParent.add(this.copyItem);
+        } else {
+          newParent.add(this.copyItem.clone());
+        }
+      }
+    }
+    this.copyItem = undefined;
+  }
+
+  removeItem(item: Structure) {
+    if (item instanceof Folder) {
+      if (item.parentFolder.removeFolder(item)) {
+        this.setSelectedStructure();
+      }
+    } else if (item instanceof TraductionsGroup) {
+      if (item.parentFolder.removeTradGroup(item)) {
+        this.setSelectedStructure(this.selectedFolder);
+      }
+    }
   }
 
   /*test() {
@@ -130,9 +174,9 @@ export class GlobalService {
   }*/
 
   removeLanguage(language: string): boolean {
-    const exist = this.languages.find(e => e === language);
+    const exist = this.languages.find((e) => e === language);
     if (exist) {
-      this.languages = this.languages.filter(l => l !== exist);
+      this.languages = this.languages.filter((l) => l !== exist);
       this.majLanguages(this.structure);
       return true;
     } else {
@@ -140,10 +184,8 @@ export class GlobalService {
     }
   }
 
-
-
   addLanguage(language: string): boolean {
-    const exist = this.languages.find(e => e === language);
+    const exist = this.languages.find((e) => e === language);
     if (exist) {
       return false;
     } else {
@@ -165,14 +207,13 @@ export class GlobalService {
       structure.removeTradWrongLanguage(this.languages);
       structure.addMissingTrad(this.languages);
     }
-
   }
 
-  modifyJson(obj, is, value = '') {
-    if (typeof is === 'string') {
-      return this.modifyJson(obj, is.split('.'), value);
-    } else if (is.length === 1 && value !== '') {
-      return obj[is[0]] = value;
+  modifyJson(obj, is, value = "") {
+    if (typeof is === "string") {
+      return this.modifyJson(obj, is.split("."), value);
+    } else if (is.length === 1 && value !== "") {
+      return (obj[is[0]] = value);
     } else if (is.length === 0) {
       return obj;
     } else {
@@ -194,10 +235,8 @@ export class GlobalService {
   savein18(structure: Structure = this.structure): object {
     const json: object = {};
     if (this.structure !== undefined) {
-
-
       if (structure == this.structure) {
-        json[structure.getName()] = {}
+        json[structure.getName()] = {};
       }
 
       if (structure instanceof Folder) {
@@ -212,45 +251,48 @@ export class GlobalService {
           if (structure == this.structure) {
             json[structure.getName()][trad.getName()] = {};
             for (const t of trad.tradList) {
-              json[structure.getName()][trad.getName()][t.language] = { value: t.value, checked: t.checked };
-
+              json[structure.getName()][trad.getName()][t.language] = {
+                value: t.value,
+                checked: t.checked,
+              };
             }
           } else {
             json[trad.getName()] = {};
             for (const t of trad.tradList) {
-              json[trad.getName()][t.language] = { value: t.value, checked: t.checked };
-
+              json[trad.getName()][t.language] = {
+                value: t.value,
+                checked: t.checked,
+              };
             }
           }
-
         }
       }
     }
     return json;
   }
 
-  getFileDirectory(path:String) {
-    if (path.indexOf("/") == -1) { // windows
-      return path.substring(0, path.lastIndexOf('\\')).split('\\').pop();
-    } 
-    else { // unix
-      return path.substring(0, path.lastIndexOf('/')).split('/').pop();
+  getFileDirectory(path: String) {
+    if (path.indexOf("/") == -1) {
+      // windows
+      return path.substring(0, path.lastIndexOf("\\")).split("\\").pop();
+    } else {
+      // unix
+      return path.substring(0, path.lastIndexOf("/")).split("/").pop();
     }
   }
 
-  getPrettyPath(path:String){
+  getPrettyPath(path: String) {
     let tmp = path.split(/.*[\/|\\]/);
-    let str:String = "";
-    if (tmp.length>1){
-      str+=this.getFileDirectory(path);
-      if (str!=""){
-        str+="/"
+    let str: String = "";
+    if (tmp.length > 1) {
+      str += this.getFileDirectory(path);
+      if (str != "") {
+        str += "/";
       }
-      str+=tmp[1]
-    }else{
-      str=path
+      str += tmp[1];
+    } else {
+      str = path;
     }
     return str;
   }
-
 }

@@ -8,7 +8,7 @@
     </ion-item>
   </ion-col>
   <ion-col style="min-width: 0px;">
-    <ion-item button (click)="click()" [class]="getBgColor()?'selected':''">
+    <ion-item button (click)="click()" [class]="getBgColor()?'selected':''" [disabled]="global.isCut && global.copyItem===folder">
       
       <ion-icon slot="start" [name]="folderIcon()" [color]="getColor()"></ion-icon>
       <ion-label [color]="getColor()">

@@ -1,10 +1,9 @@
-import { Traduction } from './traduction';
-import { Structure } from './structure';
-import { Folder } from './folder';
+import { Traduction } from "./traduction";
+import { Structure } from "./structure";
+import { Folder } from "./folder";
 
 export class TraductionsGroup extends Structure {
   public tradList: Traduction[];
-
 
   public getTradList(): Traduction[] {
     return this.tradList;
@@ -15,7 +14,7 @@ export class TraductionsGroup extends Structure {
   }
 
   public getTradByLanguage(language: string): Traduction {
-    return this.tradList.find(t => t.language === language);
+    return this.tradList.find((t) => t.language === language);
   }
 
   public addTraduction(traduction: Traduction) {
@@ -23,7 +22,7 @@ export class TraductionsGroup extends Structure {
   }
 
   public removeTraduction(traduction: Traduction) {
-    this.tradList = this.tradList.filter(trad => trad !== traduction);
+    this.tradList = this.tradList.filter((trad) => trad !== traduction);
   }
 
   public hasLanguage(language: string) {
@@ -31,13 +30,15 @@ export class TraductionsGroup extends Structure {
   }
 
   public removeTradWrongLanguage(languages: string[]) {
-    this.tradList = this.tradList.filter(t => languages.find(l => l === t.language) !== undefined);
+    this.tradList = this.tradList.filter(
+      (t) => languages.find((l) => l === t.language) !== undefined
+    );
   }
 
   public addMissingTrad(languages: string[]) {
     for (const l of languages) {
       if (!this.hasLanguage(l)) {
-        this.addTraduction(new Traduction('', l));
+        this.addTraduction(new Traduction("", l));
       }
     }
   }
@@ -86,8 +87,6 @@ export class TraductionsGroup extends Structure {
     return [count, this.tradList.length];
   }
 
-
-
   public setTrad(traduction: Traduction) {
     const language = traduction.getLanguage();
     for (let trad of this.tradList) {
@@ -102,10 +101,17 @@ export class TraductionsGroup extends Structure {
     return this.tradList.length === 0;
   }
 
+  public clone(): TraductionsGroup {
+    var cloneObj = new TraductionsGroup(this.getName(), this.parentFolder, []);
+    cloneObj.tradList = [];
+    for (const k of this.tradList) {
+      cloneObj.tradList.push(k.clone());
+    }
+    return cloneObj;
+  }
+
   constructor(name: string, parentFolder: Folder, tradList: Traduction[] = []) {
     super(name, parentFolder);
     this.tradList = tradList;
   }
-
-
 }

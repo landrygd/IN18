@@ -31,6 +31,11 @@ export class Traduction {
         this.checked = checked;
     }
 
+    public clone(): Traduction {
+        var cloneObj = new Traduction(this.value,this.language,this.checked);
+        return cloneObj;
+      }
+
 
     constructor(value: string, language: string, checked = false) {
         this.language = language;

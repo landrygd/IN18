@@ -56,6 +56,11 @@ export class Structure {
         return this.getName().toLowerCase().includes(filter.toLowerCase());
     }
 
+    public clone(): Structure {
+        var cloneObj = new Structure(this.name,this.parentFolder);
+        return cloneObj;
+    }
+
     constructor(name: string, parentFolder: Folder) {
         this.name = name;
         this.parentFolder = parentFolder;
