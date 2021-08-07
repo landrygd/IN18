@@ -18,7 +18,8 @@ export class GlobalService {
   languages: string[] = [];
   paths: any;
 
-  loading = false;
+  loading:boolean = false;
+  filter:string = "";
 
 
   selectedTradGroups$: Observable<TraductionsGroup[]>;
@@ -118,6 +119,10 @@ export class GlobalService {
     this.languages = [];
     this.setSelectedStructure();
     this.projectPath = undefined;
+  }
+
+  setFilter(newFilter:string){
+    this.filter = newFilter;
   }
 
   /*test() {

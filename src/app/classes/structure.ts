@@ -52,6 +52,10 @@ export class Structure {
         return false;
     }
 
+    public hasFilter(filter:string):boolean{
+        return this.getName().toLowerCase().includes(filter.toLowerCase());
+    }
+
     constructor(name: string, parentFolder: Folder) {
         this.name = name;
         this.parentFolder = parentFolder;

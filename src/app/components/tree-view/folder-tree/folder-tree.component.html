@@ -1,4 +1,4 @@
-<ion-row *ngIf="level>=0" (mouseover)="hovered=true" (mouseleave)="hovered=false">
+<ion-row *ngIf="level>=0 && folder.hasFilter(global.filter)" (mouseover)="hovered=true" (mouseleave)="hovered=false">
   <ion-col [size]="level*2"></ion-col>
   <ion-col size="sizeXs" *ngIf="isFolder()">
     <ion-item button (click)="toggleCollapse()">

@@ -5,10 +5,22 @@
       Create an item or a folder
     </ion-button>
   </ion-list-header>-->
-  <ion-row *ngIf="!this.global.isSaved()">
-    <ion-item>
-      <ion-badge color="warning">Not saved</ion-badge>
-    </ion-item>
+  <ion-row>
+    <ion-col size="sizeXs" *ngIf="!this.global.isSaved()">
+      <ion-item>
+        <ion-badge color="warning">Not saved</ion-badge>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-searchbar animated placeholder="Filter" [value]="global.filter" (ionChange)="global.setFilter($event.target.value)"></ion-searchbar>
+    </ion-col>
+    <ion-col size="sizeXs">
+      <ion-item button (click)="presentPopover($event,global.structure)" >
+      
+        <ion-icon name="ellipsis-vertical"  ></ion-icon>
+        
+      </ion-item>
+    </ion-col>
   </ion-row>
   <app-folder-tree [folder]="global.structure" [level]="-1"></app-folder-tree>
 </ion-list>

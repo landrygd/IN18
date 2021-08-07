@@ -124,6 +124,20 @@ export class Folder extends Structure {
         return this.parentFolder === undefined;
     }
 
+    public hasFilter(filter:string):boolean{
+        for (const k of this.tradGroupList) {
+            if (k.hasFilter(filter)) {
+                return true;
+            }
+        }
+        for (const k of this.folderList) {
+            if (k.hasFilter(filter)) {
+                return true;
+            }
+        }
+        return super.hasFilter(filter) 
+    }
+
 
     constructor(name: string, parentFolder: Folder) {
         super(name, parentFolder);
