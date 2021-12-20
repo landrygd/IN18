@@ -344,7 +344,6 @@ export class ImportExportService {
         this.global.ExportingPaths["csv"] ?? this.global.structure.getName() + ".csv"
       );
     }
-    let tmp;
     this.global.loading = false;
   }
 
@@ -487,7 +486,7 @@ export class ImportExportService {
           "save-file",
           json,
           tmp,
-          this.global.structure.getName() + ".in18"
+          this.global.projectPath ?? this.global.structure.getName() + ".in18"
         );
       }
     } else {

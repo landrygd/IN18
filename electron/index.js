@@ -109,7 +109,7 @@ ipcMain.on('get-file-data', function(event) {
 
 
 ipcMain.on('save-file', async function(event,json,path = undefined,defaultName = '') {
-
+  
   let success = false;
   let canceled = false;
   if (path === undefined){
@@ -134,14 +134,15 @@ ipcMain.on('save-file', async function(event,json,path = undefined,defaultName =
   event.reply('file-saved', path, !canceled)
 });
 
-ipcMain.on('export-file', async function(event,data,defaultPath = '') {
+ipcMain.on('export-file', async function(event,data,defaultName = '') {
 
   let success = false;
   let canceled = false;
-  var ext =  defaultPath.split('.').pop();
+  var ext =  defaultName.split('.').pop();
+  let path = undefined;
   if (path === undefined){
     const { filePath, cancel } = await dialog.showSaveDialog({
-      defaultPath: defaultPath,
+      defaultPath: defaultName,
       filters : [{ name: ext+" files", extensions: [ext] }]
       
     });

@@ -73,9 +73,10 @@ export class AppComponent implements OnInit {
   }
 
   async fileExported(event, filePath: string, success: boolean) {
+    
     if (success && filePath !== '' && filePath !== undefined) {
       var ext =  filePath.split('.').pop();
-      self.global.ExportingPaths["ext"] = filePath;
+      self.global.ExportingPaths[ext] = filePath;
     }
   }
 
