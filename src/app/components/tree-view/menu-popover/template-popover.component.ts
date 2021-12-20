@@ -13,18 +13,21 @@ import { TraductionsGroup } from "src/app/classes/traductions-group";
 import { Folder } from "src/app/classes/folder";
 import { NewTradModalComponent } from "../new-trad-modal/new-trad-modal.component";
 import { folder } from "jszip";
+import { Traduction } from "src/app/classes/traduction";
+import { TranslatorService } from "src/app/services/translator.service";
 
 @Component({
   templateUrl: "./template-popover.component.html",
 })
 export class PopoverMenu {
-  @Input() item: Structure;
+  @Input() item: any;
 
   constructor(
     private modalController: ModalController,
     public popoverCtrl: PopoverController,
     public alertController: AlertController,
-    public global: GlobalService
+    public global: GlobalService,
+    public translator: TranslatorService
   ) {}
 
   testClick() {
@@ -39,9 +42,23 @@ export class PopoverMenu {
     this.addTraduction(true);
   }
 
+  isStruct(): boolean {
+    return this.item instanceof Structure;
+  }
+
+  isRoot(): boolean {
+      if (this.isFolder()){
+        return this.item.isRoot();
+      }
+      return false;
+  }
+
   isFolder(): boolean {
-    let i: any = this.item;
-    return i instanceof Folder;
+    return this.item instanceof Folder;
+  }
+
+  isField(): boolean {
+    return this.item instanceof Traduction;
   }
 
   cut(){
@@ -102,6 +119,11 @@ export class PopoverMenu {
       componentProps: { parentFolder: this.item, isFolder: folder },
     });
     await modal.present();
+    this.popoverCtrl.dismiss();
+  }
+
+  async translateFromMain(){
+    this.translator.translateFromMain(this.item);
     this.popoverCtrl.dismiss();
   }
 }

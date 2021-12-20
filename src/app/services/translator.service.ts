@@ -74,6 +74,51 @@ export class TranslatorService {
     return count;
   }
 
+  getMain(t:Traduction,structure = this.global.structure):Traduction {
+    for (const folder of structure.folderList) {
+      var tmp = this.getMain(t,folder);
+      if (tmp !== undefined){
+        return tmp;
+      }
+    }
+    for (const tradGroup of structure.tradGroupList) {
+      const mainTrad = tradGroup.getTradByLanguage(this.global.mainLanguage);
+      for (const trad of tradGroup.tradList) {
+        if (mainTrad !== undefined && mainTrad.isFilled() && mainTrad !== trad && t==trad) {
+          if (!trad.checked) {
+            return mainTrad;
+          }
+        }
+      }
+    }
+  }
+
+  async translateFromMain(trad:Traduction){
+    let error = false;
+    let mainTrad = this.getMain(trad);
+    if (mainTrad !== undefined){
+      this.http.get(this.api + '?q=' + mainTrad.value + '&langpair=' + this.global.mainLanguage + '|' + trad.language).subscribe(
+        res => {
+          const r = res as ResponseTrad;
+          if (r.responseDetails === '') {
+            trad[1].value = r.responseData.translatedText;
+          } else if (!error) {
+            error = true;
+            this.error(r.responseDetails);
+          }
+  
+        }, err => {
+          if (!error) {
+            error = true;
+            const r = err as ResponseTrad;
+            this.error(r.error.responseDetails);
+          }
+        }
+      );
+    }
+    
+  }
+
   async translate() {
     this.prepareTranslation();
     let error = false;

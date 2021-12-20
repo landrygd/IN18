@@ -1,9 +1,12 @@
 <ion-item class="no-background">
   <ion-label position="floating" [color]="trad.checked?'success':'secondary'">{{trad.language}}</ion-label>
-  <ion-textarea  [value]="trad.value" (ionChange)="onUpdate($event.target.value)" [disabled]="trad.checked">
+  <ion-textarea  [value]="trad.value" (ionChange)="onUpdate($event.target.value)" [disabled]="trad.checked" spellcheck="true">
   </ion-textarea>
   <ion-button slot="end" (click)="confirm()" expand="block" shape="round" [color]="btnColor" [fill]="btnFill"
     [disabled]="!trad.isFilled()">
     {{btnText}}
+  </ion-button>
+  <ion-button slot="end" expand="block" fill="clear" shape="round" color="medium" (click)="presentPopover($event,trad)">
+    <ion-icon name="ellipsis-vertical"></ion-icon>
   </ion-button>
 </ion-item>

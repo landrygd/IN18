@@ -20,6 +20,14 @@
         ></ion-input>
         <ion-button
           slot="end"
+          (click)="global.mainLanguage = language"
+          shape="round"
+          [color]="global.mainLanguage == language ? 'success' : 'light'"
+        >
+          Main
+          </ion-button>
+        <ion-button
+          slot="end"
           (click)="presentDeleteConfirm(language)"
           shape="round"
           color="danger"

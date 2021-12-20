@@ -134,6 +134,33 @@ ipcMain.on('save-file', async function(event,json,path = undefined,defaultName =
   event.reply('file-saved', path, !canceled)
 });
 
+ipcMain.on('export-file', async function(event,data,defaultPath = '') {
+
+  let success = false;
+  let canceled = false;
+  var ext =  defaultPath.split('.').pop();
+  if (path === undefined){
+    const { filePath, cancel } = await dialog.showSaveDialog({
+      defaultPath: defaultPath,
+      filters : [{ name: ext+" files", extensions: [ext] }]
+      
+    });
+    path = filePath;
+    canceled = cancel;
+  }
+  
+
+  if (path && !canceled) {
+    
+    fs.writeFile(path, data, (err) => {
+      if (!err) throw err;
+      success = true
+    });
+  }
+
+  event.reply('file-exported', path, !canceled)
+});
+
 ipcMain.on('load-file', async function(event, path = '', noExplorer = false){
   let canceled = false;
   if (!noExplorer){

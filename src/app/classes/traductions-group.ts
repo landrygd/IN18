@@ -110,6 +110,18 @@ export class TraductionsGroup extends Structure {
     return cloneObj;
   }
 
+  public hasFilter(filter:string):boolean{
+    if (super.hasFilter(filter)){
+      return true;
+    }
+    for (let trad of this.tradList) {
+      if (trad.hasFilter(filter)) {
+        return true;
+      }
+    }
+    return false;
+}
+
   constructor(name: string, parentFolder: Folder, tradList: Traduction[] = []) {
     super(name, parentFolder);
     this.tradList = tradList;

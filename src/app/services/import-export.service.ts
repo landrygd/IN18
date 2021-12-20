@@ -162,9 +162,7 @@ export class ImportExportService {
           }
         }
       }
-      this.global.languages = languages.filter(
-        (e, i) => languages.indexOf(e) === i
-      );
+      this.global.setLanguages(languages);
       this.global.setStructure(newStructure);
     }
     this.global.loading = false;
@@ -177,8 +175,7 @@ export class ImportExportService {
       }
     }
     this.global.loading = true;
-    languages = languages.filter((e, i) => languages.indexOf(e) === i);
-    this.global.languages = languages;
+    this.global.setLanguages(languages);
     if (this.global.structure === undefined) {
       this.global.structure = new Folder("project_name", undefined);
     }
@@ -335,10 +332,19 @@ export class ImportExportService {
   async downloadCsv() {
     this.global.loading = true;
     let csv = this._exportToCsv(this.global.structure);
-    const blob = new Blob(["\uFEFF" + csv], {
-      type: "text/csv; charset=utf-8",
-    });
-    saveAs(blob, this.global.structure.getName() + ".csv");
+    if (!this.electronService.isElectronApp) {
+      const blob = new Blob(["\uFEFF" + csv], {
+        type: "text/csv; charset=utf-8",
+      });
+      saveAs(blob, this.global.ExportingPaths["csv"] ?? this.global.structure.getName() + ".csv");
+    } else {
+      this.electronService.ipcRenderer.send(
+        "export-file",
+        csv,
+        this.global.ExportingPaths["csv"] ?? this.global.structure.getName() + ".csv"
+      );
+    }
+    let tmp;
     this.global.loading = false;
   }
 
@@ -351,11 +357,11 @@ export class ImportExportService {
     }
 
     for (const key of Object.keys(jsons)) {
-      zip.file(key + ".json", JSON.stringify(jsons[key]));
+      zip.file(key + ".json", JSON.stringify(jsons[key], undefined, 2));
     }
     const data = await zip.generateAsync({ type: "blob" });
     const blob = new Blob([data], { type: "application/zip" });
-    saveAs(blob, this.global.structure.getName() + ".zip");
+    saveAs(blob, this.global.ExportingPaths["zip"] ?? this.global.structure.getName() + ".zip");
     this.global.loading = false;
   }
 
@@ -429,20 +435,27 @@ export class ImportExportService {
         if (this.global.structure === undefined) {
           this.global.structure = new Folder("project_name", undefined);
         }
-        if (Object.keys(obj).length == 1) {
-          this.global.structure.setName(Object.keys(obj)[0]);
+        var project = {}
+        if (obj.hasOwnProperty('project')){
+          project=obj.project
+        }else if (Object.keys(obj).length == 1) {
+          project=obj;
         } else {
           obj = { default: obj };
+          project=obj;
         }
+        this.global.structure.setName(Object.keys(project)[0]);
         const newStructure = new Folder(
           this.global.structure.getName(),
           undefined
         );
         this.global.languages = [];
-        this._load_in18(obj, Object.keys(obj)[0], newStructure);
+        this._load_in18(project, Object.keys(project)[0], newStructure);
         this.global.setStructure(newStructure);
         this.global.updateSavedStructure();
+        this.global.setMainLanguage(obj.mainLanguage ?? undefined);
         this.global.projectPath = path;
+        this.global.ExportingPaths = obj.ExportingPaths ?? {};
         this.global.setSelectedStructure();
         this.presentLoadedToast();
         this.global.loading = false;
@@ -461,7 +474,7 @@ export class ImportExportService {
   async download(as = false) {
     this.global.loading = true;
     const obj = this.global.savein18();
-    const json = JSON.stringify(obj);
+    const json = JSON.stringify(obj, undefined, 2);
     if (!this.global.isSaved() || as) {
       if (!this.electronService.isElectronApp) {
         this.fileSaveAs(json);

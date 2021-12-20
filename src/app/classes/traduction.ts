@@ -31,6 +31,10 @@ export class Traduction {
         this.checked = checked;
     }
 
+    public hasFilter(filter:string):boolean{
+        return this.value.toLowerCase().includes(filter.toLowerCase());
+    }
+
     public clone(): Traduction {
         var cloneObj = new Traduction(this.value,this.language,this.checked);
         return cloneObj;

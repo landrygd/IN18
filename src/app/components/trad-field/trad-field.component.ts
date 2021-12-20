@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
 import { Traduction } from 'src/app/classes/traduction';
+import { PopoverMenu } from '../tree-view/menu-popover/template-popover.component';
 
 @Component({
   selector: 'app-trad-field',
@@ -14,7 +16,7 @@ export class TradFieldComponent implements OnInit {
   btnFill: string;
   btnText: string;
 
-  constructor() {
+  constructor(public popoverCtrl: PopoverController) {
 
   }
 
@@ -41,5 +43,16 @@ export class TradFieldComponent implements OnInit {
 
   onUpdate(value) {
     this.trad.value = value;
+  }
+
+  async presentPopover(ev: any, f) {
+    const popover = await this.popoverCtrl.create({
+      component: PopoverMenu,
+      componentProps: { item:f },
+      cssClass: '',
+      event: ev,
+      translucent: true
+    });
+    await popover.present();
   }
 }

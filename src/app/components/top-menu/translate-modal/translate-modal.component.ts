@@ -19,7 +19,10 @@ export class TranslateModalComponent implements OnInit {
 
   constructor(public modalCtrl: ModalController,
               public global: GlobalService,
-              public translator: TranslatorService) { }
+              public translator: TranslatorService) {
+
+                translator.mainLanguage = global.mainLanguage;
+               }
 
   ngOnInit() { }
 

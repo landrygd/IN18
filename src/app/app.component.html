@@ -43,8 +43,11 @@
               <ion-label slot="start">+</ion-label>
               <ion-icon slot="start" name="globe-outline"></ion-icon>
             </ion-button>
+            <ion-chip color="success" *ngIf="global.mainLanguage !== undefined">{{
+              global.mainLanguage
+            }}</ion-chip>
             <div *ngFor="let language of global.languages; let index = index">
-              <ion-chip (click)="presentLanguagesModal()" *ngIf="index < 3">{{
+              <ion-chip (click)="global.mainLanguage = language" *ngIf="index < 3 && language !== global.mainLanguage" color="medium">{{
                 language
               }}</ion-chip>
               <ion-chip (click)="presentLanguagesModal()" *ngIf="index == 3"

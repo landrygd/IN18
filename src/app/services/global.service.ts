@@ -10,12 +10,15 @@ import { ElectronService } from "ngx-electron";
   providedIn: "root",
 })
 export class GlobalService {
+  version:string = "1.3.0"
   projectPath: string;
+  ExportingPaths: object = {};
   structure: Folder; //= new Folder('project_name', undefined);
   lastSavedStrcture: object;
   selectedStructure: Structure;
   selectedFolder: Folder;
   languages: string[] = [];
+  mainLanguage: string;
   paths: any;
 
   loading: boolean = false;
@@ -56,13 +59,13 @@ export class GlobalService {
 
   // update lastsavedstructure when we save the structure
   updateSavedStructure() {
-    this.lastSavedStrcture = this.savein18(this.structure);
+    this.lastSavedStrcture = this.savein18();
   }
 
   isSaved(): boolean {
     return (
       JSON.stringify(this.lastSavedStrcture) ===
-      JSON.stringify(this.savein18(this.structure))
+      JSON.stringify(this.savein18())
     );
   }
 
@@ -126,10 +129,18 @@ export class GlobalService {
     this.languages = [];
     this.setSelectedStructure();
     this.projectPath = undefined;
+    this.ExportingPaths = {};
+    this.mainLanguage = undefined;
   }
 
   setFilter(newFilter: string) {
     this.filter = newFilter;
+  }
+
+  setMainLanguage(newMainLanguage: string) {
+    if (this.languages.includes(newMainLanguage)){
+      this.mainLanguage = newMainLanguage;
+    }
   }
 
   isValidPaste(newParent: Structure): boolean {
@@ -178,9 +189,21 @@ export class GlobalService {
     if (exist) {
       this.languages = this.languages.filter((l) => l !== exist);
       this.majLanguages(this.structure);
+      if (! this.languages.includes(this.mainLanguage)){
+        this.mainLanguage = this.languages.length>0? this.languages[0]:undefined;
+      }
       return true;
     } else {
       return false;
+    }
+  }
+
+  setLanguages(newLanguages: string[]){
+    newLanguages = newLanguages.filter((e, i) => newLanguages.indexOf(e) === i);
+    this.languages = newLanguages;
+    this.majLanguages(this.structure);
+    if (this.mainLanguage === undefined){
+      this.mainLanguage = this.languages.length>0? this.languages[0]:undefined;
     }
   }
 
@@ -191,6 +214,9 @@ export class GlobalService {
     } else {
       this.languages.push(language);
       this.majLanguages(this.structure);
+      if (this.mainLanguage === undefined){
+        this.mainLanguage = this.languages[0];
+      }
       return true;
     }
   }
@@ -232,7 +258,16 @@ export class GlobalService {
     return this.modifyJson(this.structure, path);
   }
 
-  savein18(structure: Structure = this.structure): object {
+  savein18(): object{
+    const json:object={};
+    json["version"] = this.version;
+    json["mainLanguage"] = this.mainLanguage;
+    json["ExportingPaths"] = this.ExportingPaths;
+    json["project"] = this._savein18();
+    return json;
+  }
+
+  _savein18(structure: Structure = this.structure): object {
     const json: object = {};
     if (this.structure !== undefined) {
       if (structure == this.structure) {
@@ -242,9 +277,9 @@ export class GlobalService {
       if (structure instanceof Folder) {
         for (const folder of structure.folderList) {
           if (structure == this.structure) {
-            json[structure.getName()][folder.getName()] = this.savein18(folder);
+            json[structure.getName()][folder.getName()] = this._savein18(folder);
           } else {
-            json[folder.getName()] = this.savein18(folder);
+            json[folder.getName()] = this._savein18(folder);
           }
         }
         for (const trad of structure.tradGroupList) {
