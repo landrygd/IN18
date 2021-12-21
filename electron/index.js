@@ -162,6 +162,36 @@ ipcMain.on('export-file', async function(event,data,defaultName = '') {
   event.reply('file-exported', path, !canceled)
 });
 
+ipcMain.on('export-multi-file', async function(event,data,defaultName = '') {
+
+  let success = false;
+  let canceled = false;
+  var ext =  defaultName.split('.').pop();
+  let path = undefined;
+  if (path === undefined){
+    const { filePath, cancel } = await dialog.showSaveDialog({
+      defaultPath: defaultName,
+      filters : [{ name: ext+" files", extensions: [ext] }]
+      
+    });
+    path = filePath;
+    canceled = cancel;
+  }
+  
+
+  if (path && !canceled) {
+    for (const key of Object.keys(data)) {
+      fs.writeFile(path.split('.').shift() + '_' + key +'.'+ ext, data, (err) => {
+        if (!err) throw err;
+        success = true
+      });
+    }
+    
+  }
+
+  event.reply('file-exported', path, !canceled)
+});
+
 ipcMain.on('load-file', async function(event, path = '', noExplorer = false){
   let canceled = false;
   if (!noExplorer){

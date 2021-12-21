@@ -61,6 +61,14 @@
         <ion-checkbox slot="end" [checked]="folderNameOnlyForDoublon" (ionChange)="folderNameOnlyForDoublonChanged($event.detail.checked)">
         </ion-checkbox>
       </ion-item>
+      <ion-item>
+        <ion-label>For JSON, save as</ion-label>
+        <ion-select [value]="jsonSavingType" okText="Okay" cancelText="Dismiss"
+          (ionChange)="jsonSavingTypeChanged($event.detail.value)">
+          <ion-select-option value="json">Multiple JSON files</ion-select-option>
+          <ion-select-option value="zip">One ZIP file</ion-select-option>
+        </ion-select>
+      </ion-item>
     </ion-card-content>
   </ion-card>
   <ion-card>

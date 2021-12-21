@@ -349,18 +349,43 @@ export class ImportExportService {
 
   async downloadJsons() {
     this.global.loading = true;
-    const zip = new JSZip();
+    
     const jsons = {};
     for (const language of this.global.languages) {
       jsons[language] = this._exportToJsons(this.global.structure, language);
     }
 
-    for (const key of Object.keys(jsons)) {
-      zip.file(key + ".json", JSON.stringify(jsons[key], undefined, 2));
+    
+    if (this.settings.jsonSavingType == 'zip'){
+      const zip = new JSZip();
+      for (const key of Object.keys(jsons)) {
+        zip.file(key + ".json", JSON.stringify(jsons[key], undefined, 2));
+      }
+      const data = await zip.generateAsync({ type: "blob" });
+      const blob = new Blob([data], { type: "application/zip" });
+      saveAs(blob, this.global.ExportingPaths["zip"] ?? this.global.structure.getName() + ".zip");
+    }else{
+      var path =  this.global.structure.getName();
+        if (this.global.ExportingPaths["json"] !== undefined){
+          path = this.global.ExportingPaths["json"].split('.').shift()
+        }
+      if (!this.electronService.isElectronApp) {
+        
+        
+        for (const key of Object.keys(jsons)) {
+          const blob = new Blob([jsons[key]], { type: "application/json" });
+          saveAs(blob,  path +"_" +  key + ".json");
+        }
+        
+      }else{
+        this.electronService.ipcRenderer.send(
+          "export-multi-file",
+          jsons,
+          path + ".json"
+        );
+      }
     }
-    const data = await zip.generateAsync({ type: "blob" });
-    const blob = new Blob([data], { type: "application/zip" });
-    saveAs(blob, this.global.ExportingPaths["zip"] ?? this.global.structure.getName() + ".zip");
+    
     this.global.loading = false;
   }
 

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { GlobalService } from 'src/app/services/global.service';
 import { ImportExportService } from 'src/app/services/import-export.service';
+import { SettingsService } from 'src/app/services/settings.service';
 import { SettingsModalComponent } from '../settings-modal/settings-modal.component';
 
 @Component({
@@ -22,7 +23,8 @@ export class ExportModalComponent implements OnInit {
   constructor(
     private modalController: ModalController,
     public global: GlobalService,
-    private importExport: ImportExportService
+    private importExport: ImportExportService,
+    public settings: SettingsService
   ) { }
 
   ngOnInit() {this.typeChanged(this.type); }

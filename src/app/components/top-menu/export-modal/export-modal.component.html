@@ -21,9 +21,14 @@
 
   <ion-row *ngIf="type=='json' && previewExport.length>0">
     <ion-col>
+      <ion-card>
+        <ion-card-header *ngIf = 'settings.jsonSavingType == "zip"'>
+          <ion-card-subtitle>In a ZIP file.</ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
       <ion-card *ngFor="let jsonFile of previewExport; ; index as i;">
         <ion-card-header>
-          <ion-card-subtitle>{{global.languages[i]}}.json</ion-card-subtitle>
+          <ion-card-subtitle><span *ngIf = 'settings.jsonSavingType == "json"'>{{global.structure.getName()}}_</span>{{global.languages[i]}}.json</ion-card-subtitle>
         </ion-card-header>
 
         <ion-card-content>

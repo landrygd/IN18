@@ -10,6 +10,7 @@ export class SettingsService {
   separatorCharCsv = ',';
   folderCharCsv = '.';
   folderNameOnlyForDoublon = false;
+  jsonSavingType = 'json';
   importFusion = 'no';
   autoValidate = false;
   recentProjects:String[]=[];
@@ -24,6 +25,7 @@ export class SettingsService {
     localStorage.setItem('tabImportExport', this.tabImportExport);
     localStorage.setItem('separatorCharCsv', this.separatorCharCsv);
     localStorage.setItem('folderCharCsv', this.folderCharCsv);
+    localStorage.setItem('jsonSavingType', this.jsonSavingType);
     localStorage.setItem('folderNameOnlyForDoublon', this.folderNameOnlyForDoublon ? '1' : '0');
     localStorage.setItem('importFusion', this.importFusion);
     localStorage.setItem("recentProjects", JSON.stringify(this.recentProjects));
@@ -50,6 +52,10 @@ export class SettingsService {
     const newFolderCharCsv = localStorage.getItem('folderCharCsv');
     if (newFolderCharCsv !== undefined && newFolderCharCsv !== null) {
       this.folderCharCsv = newFolderCharCsv;
+    }
+    const newJsonSavingType = localStorage.getItem('jsonSavingType');
+    if (newJsonSavingType !== undefined && newJsonSavingType !== null) {
+      this.jsonSavingType = newJsonSavingType;
     }
     const newFolderNameOnlyForDoublon = localStorage.getItem('folderNameOnlyForDoublon');
     if (newFolderNameOnlyForDoublon !== undefined && newFolderNameOnlyForDoublon !== null) {
