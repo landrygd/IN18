@@ -101,7 +101,7 @@ export class TranslatorService {
         res => {
           const r = res as ResponseTrad;
           if (r.responseDetails === '') {
-            trad[1].value = r.responseData.translatedText;
+            trad.value = r.responseData.translatedText;
           } else if (!error) {
             error = true;
             this.error(r.responseDetails);
