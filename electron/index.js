@@ -75,6 +75,9 @@ async function createWindow() {
     }
     
   })
+  ipcMain.on('get-languages', function(event) {
+    event.returnValue = mainWindow.webContents.session.availableSpellCheckerLanguages;
+  });
 
   ipcMain.on('update-languages', function(event, languages) {
     languages = languages.map(language => language=="en"?"en-US":language);

@@ -52,8 +52,10 @@ export class AppComponent implements OnInit {
       this.electronService.ipcRenderer.on('file-loaded', this.fileLoaded);
       this.electronService.ipcRenderer.on('file-saved', this.fileSaved);
       this.electronService.ipcRenderer.on('file-exported', this.fileExported)
+      this.global.availableLanguages = this.electronService.ipcRenderer.sendSync("get-languages");
     }
   }
+
   async fileLoaded(event, filePath: string, data: string, success: boolean) {
     if (success) {
       self.importExportService.load(data, filePath);

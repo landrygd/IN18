@@ -11,6 +11,8 @@ import { ElectronService } from "ngx-electron";
 })
 export class GlobalService {
   version:string = "1.3.0"
+  availableLanguages:String[];
+
   projectPath: string;
   ExportingPaths: object = {};
   structure: Folder; //= new Folder('project_name', undefined);
@@ -236,6 +238,49 @@ export class GlobalService {
         );
       }
       return true;
+    }
+  }
+
+  swapLanguage(oldLanguage:string,newLanguage:string):boolean{
+    const existNew = this.languages.find((e) => e === newLanguage);
+    const existOld = this.languages.find((e) => e === oldLanguage);
+    if (existNew || !existOld) {
+      return false;
+    } else {
+      let i = this.languages.indexOf(oldLanguage);
+      if (i!==-1){
+        this.languages[i]=newLanguage;
+        this._swapLanguage(this.structure,oldLanguage,newLanguage);
+        this.majLanguages(this.structure);
+        if (this.mainLanguage === oldLanguage){
+          this.mainLanguage = newLanguage;
+        }
+        if (this.mainLanguage === undefined){
+          this.mainLanguage = this.languages[0];
+        }
+        if (this.electronService.isElectronApp) {
+          this.electronService.ipcRenderer.send(
+            "update-languages",
+            this.languages
+          );
+      }
+      return true;
+      }
+      return false;
+      
+    }
+  }
+
+  _swapLanguage(structure: Structure,oldLanguage:string,newLanguage:string){
+    if (structure instanceof Folder) {
+      for (const k of structure.folderList) {
+        this._swapLanguage(k,oldLanguage,newLanguage);
+      }
+      for (const k of structure.tradGroupList) {
+        this._swapLanguage(k,oldLanguage,newLanguage);
+      }
+    } else if (structure instanceof TraductionsGroup) {
+      structure.swapTradLanguage(oldLanguage,newLanguage);
     }
   }
 
