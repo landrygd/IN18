@@ -192,6 +192,12 @@ export class GlobalService {
       if (! this.languages.includes(this.mainLanguage)){
         this.mainLanguage = this.languages.length>0? this.languages[0]:undefined;
       }
+      if (this.electronService.isElectronApp) {
+        this.electronService.ipcRenderer.send(
+          "update-languages",
+          this.languages
+        );
+      }
       return true;
     } else {
       return false;
@@ -205,6 +211,12 @@ export class GlobalService {
     if (this.mainLanguage === undefined){
       this.mainLanguage = this.languages.length>0? this.languages[0]:undefined;
     }
+    if (this.electronService.isElectronApp) {
+      this.electronService.ipcRenderer.send(
+        "update-languages",
+        this.languages
+      );
+    }
   }
 
   addLanguage(language: string): boolean {
@@ -216,6 +228,12 @@ export class GlobalService {
       this.majLanguages(this.structure);
       if (this.mainLanguage === undefined){
         this.mainLanguage = this.languages[0];
+      }
+      if (this.electronService.isElectronApp) {
+        this.electronService.ipcRenderer.send(
+          "update-languages",
+          this.languages
+        );
       }
       return true;
     }

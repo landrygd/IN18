@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
+import { ElectronService } from 'ngx-electron';
 import { Traduction } from 'src/app/classes/traduction';
+import { GlobalService } from 'src/app/services/global.service';
 import { PopoverMenu } from '../tree-view/menu-popover/template-popover.component';
 
 @Component({
@@ -16,7 +18,7 @@ export class TradFieldComponent implements OnInit {
   btnFill: string;
   btnText: string;
 
-  constructor(public popoverCtrl: PopoverController) {
+  constructor(public popoverCtrl: PopoverController, private electronService:ElectronService) {
 
   }
 
@@ -43,6 +45,15 @@ export class TradFieldComponent implements OnInit {
 
   onUpdate(value) {
     this.trad.value = value;
+  }
+
+  updateLanguage(){
+    if (this.electronService.isElectronApp) {
+      this.electronService.ipcRenderer.send(
+        "update-language",
+        this.trad.language
+      );
+    }
   }
 
   async presentPopover(ev: any, f) {

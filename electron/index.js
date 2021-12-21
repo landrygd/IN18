@@ -1,8 +1,7 @@
-const { app, BrowserWindow, Menu, ipcMain, dialog, ipcRenderer } = require('electron');
+const { app, BrowserWindow, Menu, MenuItem, ipcMain, dialog, ipcRenderer } = require('electron');
 const fs = require('fs');
 const isDevMode = require('electron-is-dev');
 const { CapacitorSplashScreen, configCapacitor } = require('@capacitor/electron');
-
 const path = require('path');
 
 // Place holders for our windows so they don't get garbage collected.
@@ -42,10 +41,54 @@ async function createWindow() {
     show: false,
     icon: image,
     webPreferences: {
+      spellcheck: true,
       nodeIntegration: true,
       preload: path.join(__dirname, 'node_modules', '@capacitor', 'electron', 'dist', 'electron-bridge.js')
     }
   });
+
+  mainWindow.webContents.on('context-menu', (event, params) => {
+    const menu = new Menu()
+    let valid=false;
+    // Add each spelling suggestion
+    for (const suggestion of params.dictionarySuggestions) {
+      menu.append(new MenuItem({
+        label: suggestion,
+        click: () => mainWindow.webContents.replaceMisspelling(suggestion)
+      }))
+      valid=true;
+    }
+  
+    // Allow users to add the misspelled word to the dictionary
+    if (params.misspelledWord) {
+      menu.append(new MenuItem({ type: 'separator' }));
+      menu.append(
+        new MenuItem({
+          label: 'Add to dictionary',
+          click: () => mainWindow.webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
+        })
+      )
+      valid=true;
+    }
+    if (valid){
+      menu.popup();
+    }
+    
+  })
+
+  ipcMain.on('update-languages', function(event, languages) {
+    languages = languages.map(language => language=="en"?"en-US":language);
+    languages = languages.filter(language => mainWindow.webContents.session.availableSpellCheckerLanguages.includes(language));
+    mainWindow.webContents.session.setSpellCheckerLanguages(languages);
+  })
+
+  ipcMain.on('update-language', function(event, language) {
+    language = language=="en"?"en-US":language;
+    if (mainWindow.webContents.session.availableSpellCheckerLanguages.includes(language)){
+      mainWindow.webContents.session.setSpellCheckerLanguages([language]);
+    }
+    
+  })
 
   configCapacitor(mainWindow);
 
