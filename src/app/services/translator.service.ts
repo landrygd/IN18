@@ -3,6 +3,7 @@ import { ToastController, AlertController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { GlobalService } from './global.service';
 import { Traduction } from '../classes/traduction';
+import { TraductionsGroup } from '../classes/traductions-group';
 
 export interface GoogleObj {
   q: string[];
@@ -74,28 +75,39 @@ export class TranslatorService {
     return count;
   }
 
-  getMain(t:Traduction,structure = this.global.structure):Traduction {
-    for (const folder of structure.folderList) {
-      var tmp = this.getMain(t,folder);
-      if (tmp !== undefined){
-        return tmp;
-      }
+  getMain(t:Traduction,structure):Traduction {
+    if (structure ===undefined){
+      structure = this.global.structure
     }
-    for (const tradGroup of structure.tradGroupList) {
-      const mainTrad = tradGroup.getTradByLanguage(this.global.mainLanguage);
-      for (const trad of tradGroup.tradList) {
+    if (structure instanceof TraductionsGroup){
+      const mainTrad = structure.getTradByLanguage(this.global.mainLanguage);
+      for (const trad of structure.tradList) {
         if (mainTrad !== undefined && mainTrad.isFilled() && mainTrad !== trad && t==trad) {
           if (!trad.checked) {
             return mainTrad;
           }
         }
       }
+    }else{
+      for (const folder of structure.folderList) {
+        var tmp = this.getMain(t,folder);
+        if (tmp !== undefined){
+          return tmp;
+        }
+      }
+      for (const tradGroup of structure.tradGroupList) {
+        var tmp = this.getMain(t,tradGroup);
+        if (tmp !== undefined){
+          return tmp;
+        }
+      }
     }
+    
   }
 
-  async translateFromMain(trad:Traduction){
+  async translateFromMain(trad:Traduction,parent:TraductionsGroup){
     let error = false;
-    let mainTrad = this.getMain(trad);
+    let mainTrad = this.getMain(trad,parent);
     if (mainTrad !== undefined){
       this.http.get(this.api + '?q=' + mainTrad.value + '&langpair=' + this.global.mainLanguage + '|' + trad.language).subscribe(
         res => {

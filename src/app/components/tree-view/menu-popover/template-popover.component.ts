@@ -21,6 +21,7 @@ import { TranslatorService } from "src/app/services/translator.service";
 })
 export class PopoverMenu {
   @Input() item: any;
+  @Input() parent: any;
 
   constructor(
     private modalController: ModalController,
@@ -123,7 +124,7 @@ export class PopoverMenu {
   }
 
   async translateFromMain(){
-    this.translator.translateFromMain(this.item);
+    this.translator.translateFromMain(this.item, this.parent);
     this.popoverCtrl.dismiss();
   }
 }

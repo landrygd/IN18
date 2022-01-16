@@ -39,7 +39,7 @@
   <ion-card-content *ngIf="!canExpand || settings.extendTrad">
     <app-progress-bar [showBar]="false" [percentValidation]="tradGroup.percentValidation()"
       [percentFill]="tradGroup.percentFill()"></app-progress-bar>
-    <app-trad-field *ngFor="let trad of tradGroup.tradList" [trad]="trad"></app-trad-field>
+    <app-trad-field *ngFor="let trad of tradGroup.tradList" [trad]="trad" [parent]="tradGroup"></app-trad-field>
     <ion-button (click)="presentLanguagesModal()" expand="block" fill="clear" shape="round"
       *ngIf="tradGroup.emptyTrad()">
       <ion-icon name="globe"></ion-icon> Add languages
