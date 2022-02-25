@@ -5,6 +5,8 @@ import { GlobalService } from './global.service';
 import { Traduction } from '../classes/traduction';
 import { TraductionsGroup } from '../classes/traductions-group';
 
+const translate = require("deepl");
+
 export interface GoogleObj {
   q: string[];
   target: string;
@@ -27,10 +29,12 @@ export class TranslatorService {
 
   // url = 'https://translation.googleapis.com/language/translate/v2?key=';
 
-  api = 'https://api.mymemory.translated.net/get';
+  apiMyMemory = 'https://api.mymemory.translated.net/get';
 
   // count = 0;
   // untranslated: any;
+  translators: string[] = ["Deepl","MyMemory"];
+  translator : string = "Deepl";
   languages: string[] = [];
   mainLanguage: string;
   unfilled = true;
@@ -109,7 +113,8 @@ export class TranslatorService {
     let error = false;
     let mainTrad = this.getMain(trad,parent);
     if (mainTrad !== undefined){
-      this.http.get(this.api + '?q=' + mainTrad.value + '&langpair=' + this.global.mainLanguage + '|' + trad.language).subscribe(
+      if (this.translator == "MyMemory"){
+      this.http.get(this.apiMyMemory + '?q=' + mainTrad.value + '&langpair=' + this.global.mainLanguage + '|' + trad.language).subscribe(
         res => {
           const r = res as ResponseTrad;
           if (r.responseDetails === '') {
@@ -126,7 +131,24 @@ export class TranslatorService {
             this.error(r.error.responseDetails);
           }
         }
-      );
+      );}else if (this.translator == "Deepl"){
+        translate(mainTrad.value, this.global.mainLanguage, trad.language)
+        .then(res => {
+          const r = res as ResponseTrad;
+          if (r.responseDetails === '') {
+            trad.value = r.responseData.translatedText;
+          } else if (!error) {
+            error = true;
+            this.error(r.responseDetails);
+          }})
+        .catch(err => {
+          if (!error) {
+            error = true;
+            const r = err as ResponseTrad;
+            this.error(r.error.responseDetails);
+          }
+        });
+      }
     }
     
   }
@@ -135,7 +157,8 @@ export class TranslatorService {
     this.prepareTranslation();
     let error = false;
     for (const trad of this.traductionsTargeted) {
-      this.http.get(this.api + '?q=' + trad[0].value + '&langpair=' + this.mainLanguage + '|' + trad[1].language).subscribe(
+      if (this.translator == "MyMemory"){
+      this.http.get(this.apiMyMemory + '?q=' + trad[0].value + '&langpair=' + this.mainLanguage + '|' + trad[1].language).subscribe(
         res => {
           const r = res as ResponseTrad;
           if (r.responseDetails === '') {
@@ -153,6 +176,24 @@ export class TranslatorService {
           }
         }
       );
+      }else if (this.translator == "Deepl"){
+        translate(trad[0].value, this.mainLanguage, trad[1].language)
+        .then(res => {
+          const r = res as ResponseTrad;
+          if (r.responseDetails === '') {
+            trad[1].value = r.responseData.translatedText;
+          } else if (!error) {
+            error = true;
+            this.error(r.responseDetails);
+          }})
+        .catch(err => {
+          if (!error) {
+            error = true;
+            const r = err as ResponseTrad;
+            this.error(r.error.responseDetails);
+          }
+        });
+      }
     }
 
   }
