@@ -33,7 +33,7 @@ import { NewProjectModalComponent } from './components/top-menu/new-project-moda
 import { ExportModalComponent } from './components/top-menu/export-modal/export-modal.component';
 import { PopoverMenu } from './components/tree-view/menu-popover/template-popover.component';
 import { RecentFileComponent } from './components/main-view/recent-file/recent-file.component';
-
+import { ClipboardModule } from 'ngx-clipboard';
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,6 +66,7 @@ import { RecentFileComponent } from './components/main-view/recent-file/recent-f
     NgxDropzoneModule,
     HttpClientModule,
     NgxElectronModule,
+    ClipboardModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [

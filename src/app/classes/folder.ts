@@ -8,7 +8,7 @@ export class Folder extends Structure {
     public folderList: Folder[];
 
     public addTraductionGroup(traductionGroup: TraductionsGroup): boolean {
-        if (!this.hasTraductionGroup(traductionGroup.getName())) {
+        if (!this.hasChildbyName(traductionGroup.getName())) {
             this.tradGroupList.push(traductionGroup);
             traductionGroup.parentFolder=this;
             return true;
@@ -20,7 +20,7 @@ export class Folder extends Structure {
 
 
     public addFolder(folder: Folder): boolean {
-        if (this.folderList.findIndex(e => e.getName() === folder.getName()) === -1) {
+        if (!this.hasChildbyName(folder.getName())) {
             this.folderList.push(folder);
             folder.parentFolder=this;
             return true;
@@ -80,6 +80,15 @@ export class Folder extends Structure {
             return true;
         }
         return e === this;
+    }
+
+    public hasChildbyName(name:String):boolean{
+        if (this.tradGroupList.find(element => element.getName() === name)){
+            return true;
+        }
+        if (this.folderList.find(element => element.getName() === name)){
+            return true;
+        }
     }
 
     public isValidated(): boolean {

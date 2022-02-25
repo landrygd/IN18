@@ -148,7 +148,7 @@ export class GlobalService {
   isValidPaste(newParent: Structure): boolean {
     if (newParent instanceof Folder) {
       if (this.copyItem !== undefined) {
-        if (!newParent.has(this.copyItem as Structure)) {
+        if (!newParent.hasChildbyName(this.copyItem.getName())) {
           return true;
         }
       }

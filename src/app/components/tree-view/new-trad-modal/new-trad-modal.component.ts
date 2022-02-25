@@ -78,7 +78,7 @@ export class NewTradModalComponent implements OnInit {
       cssClass: '',
       header: 'Attention',
       subHeader: '',
-      message: this.isFolder ? 'This folder already exist in this folder.' : 'This item already exist in this folder.',
+      message: 'Item or folder with same name already exist in this folder.',
       buttons: [{
         text: 'Ok',
         role: 'cancel',

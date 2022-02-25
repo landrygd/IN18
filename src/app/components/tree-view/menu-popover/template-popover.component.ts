@@ -1,4 +1,5 @@
 import { Component, Input, EventEmitter, HostListener } from "@angular/core";
+import { ClipboardService } from 'ngx-clipboard'
 import {
   PopoverController,
   AlertController,
@@ -28,7 +29,8 @@ export class PopoverMenu {
     public popoverCtrl: PopoverController,
     public alertController: AlertController,
     public global: GlobalService,
-    public translator: TranslatorService
+    public translator: TranslatorService,
+    private clipboard: ClipboardService
   ) {}
 
   testClick() {
@@ -71,6 +73,7 @@ export class PopoverMenu {
   copy(){
     this.global.isCut=false;
     this.global.copyItem = this.item;
+    this.clipboard.copy(JSON.stringify(this.global._savein18(this.item)));
     this.popoverCtrl.dismiss();
   }
 
