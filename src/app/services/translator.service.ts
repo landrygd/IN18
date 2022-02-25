@@ -4,8 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { GlobalService } from './global.service';
 import { Traduction } from '../classes/traduction';
 import { TraductionsGroup } from '../classes/traductions-group';
-
-const translate = require("deepl");
+import { SettingsService } from './settings.service';
 
 const translate = require("deepl");
 
@@ -14,11 +13,20 @@ export interface GoogleObj {
   target: string;
 }
 
-export interface ResponseTrad {
-  error?: ResponseTrad;
-  responseData?: ResponseTrad;
+export interface ResponseTradMyMemory {
+  error?: ResponseTradMyMemory;
+  responseData?: ResponseTradMyMemory;
   translatedText?: string;
   responseDetails?: string;
+}
+
+export interface ResponseTradDeepl {
+  translations?: TranslationDeepl[]
+}
+
+export interface TranslationDeepl {
+  text: String
+  detected_source_language?: String
 }
 
 @Injectable({
@@ -32,6 +40,8 @@ export class TranslatorService {
   // url = 'https://translation.googleapis.com/language/translate/v2?key=';
 
   apiMyMemory = 'https://api.mymemory.translated.net/get';
+
+  
 
   // count = 0;
   // untranslated: any;
@@ -48,7 +58,8 @@ export class TranslatorService {
     private toastController: ToastController,
     private http: HttpClient,
     private alertController: AlertController,
-    private global: GlobalService
+    private global: GlobalService,
+    private settings: SettingsService
   ) { }
 
   prepareTranslation(structure = this.global.structure) {
@@ -112,59 +123,29 @@ export class TranslatorService {
   }
 
   async translateFromMain(trad:Traduction,parent:TraductionsGroup){
-    let error = false;
     let mainTrad = this.getMain(trad,parent);
     if (mainTrad !== undefined){
-      if (this.translator == "MyMemory"){
-      this.http.get(this.apiMyMemory + '?q=' + mainTrad.value + '&langpair=' + this.global.mainLanguage + '|' + trad.language).subscribe(
-        res => {
-          const r = res as ResponseTrad;
-          if (r.responseDetails === '') {
-            trad.value = r.responseData.translatedText;
-          } else if (!error) {
-            error = true;
-            this.error(r.responseDetails);
-          }
-  
-        }, err => {
-          if (!error) {
-            error = true;
-            const r = err as ResponseTrad;
-            this.error(r.error.responseDetails);
-          }
-        }
-      );}else if (this.translator == "Deepl"){
-        translate(mainTrad.value, this.global.mainLanguage, trad.language)
-        .then(res => {
-          const r = res as ResponseTrad;
-          if (r.responseDetails === '') {
-            trad.value = r.responseData.translatedText;
-          } else if (!error) {
-            error = true;
-            this.error(r.responseDetails);
-          }})
-        .catch(err => {
-          if (!error) {
-            error = true;
-            const r = err as ResponseTrad;
-            this.error(r.error.responseDetails);
-          }
-        });
-      }
+      this.applyTranslation(mainTrad,trad);
     }
     
   }
 
   async translate() {
     this.prepareTranslation();
-    let error = false;
     for (const trad of this.traductionsTargeted) {
-      if (this.translator == "MyMemory"){
-      this.http.get(this.apiMyMemory + '?q=' + trad[0].value + '&langpair=' + this.mainLanguage + '|' + trad[1].language).subscribe(
+      this.applyTranslation(trad[0],trad[1]);
+    }
+
+  }
+
+  async applyTranslation(fromTrad,toTrad){
+    let error = false;
+    if (this.translator == "MyMemory"){
+      this.http.get(this.apiMyMemory + '?q=' + fromTrad.value + '&langpair=' + fromTrad.language + '|' + toTrad.language).subscribe(
         res => {
-          const r = res as ResponseTrad;
+          const r = res as ResponseTradMyMemory;
           if (r.responseDetails === '') {
-            trad[1].value = r.responseData.translatedText;
+            toTrad.value = r.responseData.translatedText;
           } else if (!error) {
             error = true;
             this.error(r.responseDetails);
@@ -173,31 +154,42 @@ export class TranslatorService {
         }, err => {
           if (!error) {
             error = true;
-            const r = err as ResponseTrad;
+            const r = err as ResponseTradMyMemory;
             this.error(r.error.responseDetails);
           }
         }
       );
       }else if (this.translator == "Deepl"){
-        translate(trad[0].value, this.mainLanguage, trad[1].language)
-        .then(res => {
-          const r = res as ResponseTrad;
-          if (r.responseDetails === '') {
-            trad[1].value = r.responseData.translatedText;
-          } else if (!error) {
-            error = true;
-            this.error(r.responseDetails);
-          }})
-        .catch(err => {
-          if (!error) {
-            error = true;
-            const r = err as ResponseTrad;
-            this.error(r.error.responseDetails);
-          }
-        });
+        if (this.settings.deeplAPIKey == ""){
+          error = true;
+          this.error("Please fill Deepl API key in settings. Get it here https://www.deepl.com/fr/pro-account/summary");
+        }else{
+          translate({
+            free_api: true,
+            text: fromTrad.value,
+            source_lang: fromTrad.language,
+            target_lang: toTrad.language,
+            auth_key: this.settings.deeplAPIKey,
+          })
+          .then(res => {
+            const r = res.data as ResponseTradDeepl;
+            if (r.translations.length>0) {
+              toTrad.value = r.translations[0].text;
+            } else if (!error) {
+              error = true;
+              this.error(r);
+            
+            }
+            })
+          .catch(err => {
+            if (!error) {
+              error = true;
+              this.error(err);
+            }
+          });
+        }
+        
       }
-    }
-
   }
 
   /*async translate() {

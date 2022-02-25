@@ -50,6 +50,10 @@ export class TranslateModalComponent implements OnInit {
     this.translator.mainLanguage = value;
   }
 
+  translatorChanged(value: string) {
+    this.translator.translator = value;
+  }
+
 
   async presentLanguagesModal(id: number = 0) {
     const modal = await this.modalCtrl.create({

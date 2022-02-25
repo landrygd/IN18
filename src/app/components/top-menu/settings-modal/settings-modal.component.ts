@@ -19,6 +19,7 @@ export class SettingsModalComponent implements OnInit {
   autoValidate = this.settings.autoValidate;
   jsonSavingType = this.settings.jsonSavingType;
   folderNameOnlyForDoublon = this.settings.folderNameOnlyForDoublon;
+  deeplAPIkey = this.settings.deeplAPIKey
   change = false;
 
   constructor(private modalController: ModalController,
@@ -83,6 +84,11 @@ export class SettingsModalComponent implements OnInit {
     this.change = true;
   }
 
+  deeplAPIkeyChanged(value) {
+    this.deeplAPIkey = value;
+    this.change = value;
+  }
+
   async presentTradConfirm() {
     const alert = await this.alertController.create({
       cssClass: '',
@@ -123,6 +129,7 @@ export class SettingsModalComponent implements OnInit {
     this.settings.jsonSavingType = this.jsonSavingType;
     this.settings.folderNameOnlyForDoublon = this.folderNameOnlyForDoublon;
     this.settings.separatorCharCsv = this.separatorCharCsv;
+    this.settings.deeplAPIKey = this.deeplAPIkey;
     this.change = false;
     this.settings.save();
     this.presentSettingsToast();

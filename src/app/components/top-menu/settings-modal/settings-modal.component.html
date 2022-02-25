@@ -25,6 +25,18 @@
     </ion-card-content>
   </ion-card>
 
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Translation</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">Deepl API key</ion-label>
+        <ion-input [value]="deeplAPIkey" (ionChange)="deeplAPIkeyChanged($event.detail.value)"></ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>
 
 <ion-content fullscreen *ngIf="tab=='import_export'">

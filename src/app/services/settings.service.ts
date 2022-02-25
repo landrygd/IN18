@@ -15,6 +15,7 @@ export class SettingsService {
   autoValidate = false;
   recentProjects:String[]=[];
   recentFiles:String[]=[];
+  deeplAPIKey = '';
   constructor() {
     this.load();
   }
@@ -30,6 +31,7 @@ export class SettingsService {
     localStorage.setItem('importFusion', this.importFusion);
     localStorage.setItem("recentProjects", JSON.stringify(this.recentProjects));
     localStorage.setItem("recentFiles", JSON.stringify(this.recentFiles));
+    localStorage.setItem("deeplAPIKey", this.deeplAPIKey);
   }
 
   load() {
@@ -72,6 +74,10 @@ export class SettingsService {
     const newrecentFiles = localStorage.getItem('recentFiles');
     if (newrecentFiles !== undefined && newrecentFiles !== null) {
       this.recentFiles = JSON.parse(newrecentFiles);
+    }
+    const newDeeplAPIKey = localStorage.getItem('deeplAPIKey');
+    if (newDeeplAPIKey !== undefined && newDeeplAPIKey !== null) {
+      this.deeplAPIKey = newDeeplAPIKey;
     }
   }
 
