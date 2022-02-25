@@ -35,6 +35,14 @@ export class TraductionsGroup extends Structure {
     );
   }
 
+  public swapTradLanguage(oldLanguage:string,newLanguage:string) {
+    for (const k of this.tradList) {
+      if (k.language==oldLanguage) {
+        k.language=newLanguage;
+      }
+    }
+  }
+
   public addMissingTrad(languages: string[]) {
     for (const l of languages) {
       if (!this.hasLanguage(l)) {
@@ -109,6 +117,18 @@ export class TraductionsGroup extends Structure {
     }
     return cloneObj;
   }
+
+  public hasFilter(filter:string):boolean{
+    if (super.hasFilter(filter)){
+      return true;
+    }
+    for (let trad of this.tradList) {
+      if (trad.hasFilter(filter)) {
+        return true;
+      }
+    }
+    return false;
+}
 
   constructor(name: string, parentFolder: Folder, tradList: Traduction[] = []) {
     super(name, parentFolder);

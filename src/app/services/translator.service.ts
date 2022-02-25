@@ -3,6 +3,9 @@ import { ToastController, AlertController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { GlobalService } from './global.service';
 import { Traduction } from '../classes/traduction';
+import { TraductionsGroup } from '../classes/traductions-group';
+
+const translate = require("deepl");
 
 const translate = require("deepl");
 

@@ -17,6 +17,7 @@ export class SettingsModalComponent implements OnInit {
   folderCharCsv = this.settings.folderCharCsv;
   importFusion = this.settings.importFusion;
   autoValidate = this.settings.autoValidate;
+  jsonSavingType = this.settings.jsonSavingType;
   folderNameOnlyForDoublon = this.settings.folderNameOnlyForDoublon;
   change = false;
 
@@ -58,6 +59,11 @@ export class SettingsModalComponent implements OnInit {
 
   separatorCharCsvChanged(value){
     this.separatorCharCsv = value;
+    this.change = true;
+  }
+
+  jsonSavingTypeChanged(value){
+    this.jsonSavingType = value;
     this.change = true;
   }
 
@@ -114,6 +120,7 @@ export class SettingsModalComponent implements OnInit {
     this.settings.folderCharCsv = this.folderCharCsv;
     this.settings.importFusion = this.importFusion;
     this.settings.autoValidate = this.autoValidate;
+    this.settings.jsonSavingType = this.jsonSavingType;
     this.settings.folderNameOnlyForDoublon = this.folderNameOnlyForDoublon;
     this.settings.separatorCharCsv = this.separatorCharCsv;
     this.change = false;

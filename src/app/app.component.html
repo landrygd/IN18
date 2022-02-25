@@ -43,8 +43,11 @@
               <ion-label slot="start">+</ion-label>
               <ion-icon slot="start" name="globe-outline"></ion-icon>
             </ion-button>
+            <ion-chip color="success" *ngIf="global.mainLanguage !== undefined">{{
+              global.mainLanguage
+            }}</ion-chip>
             <div *ngFor="let language of global.languages; let index = index">
-              <ion-chip (click)="presentLanguagesModal()" *ngIf="index < 3">{{
+              <ion-chip (click)="global.mainLanguage = language" *ngIf="index < 3 && language !== global.mainLanguage" color="medium">{{
                 language
               }}</ion-chip>
               <ion-chip (click)="presentLanguagesModal()" *ngIf="index == 3"
@@ -68,18 +71,19 @@
             <app-trad-folder
               [folder]="global.getSelectedFolder()"
             ></app-trad-folder>
-            <app-trads-group
-              *ngFor="let t of global.selectedTradGroups$ | async"
-              [tradGroup]="t"
-              [canExpand]="true"
-            >
-            </app-trads-group>
             <app-trad-folder
               *ngFor="let f of global.selectedFolders$ | async"
               [folder]="f"
               [canExpand]="true"
             >
             </app-trad-folder>
+            <app-trads-group
+              *ngFor="let t of global.selectedTradGroups$ | async"
+              [tradGroup]="t"
+              [canExpand]="true"
+            >
+            </app-trads-group>
+            
 
             <!--<ion-virtual-scroll [items]="selectedStructure">
               <div *virtualItem="let struct">

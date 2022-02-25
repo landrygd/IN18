@@ -1,5 +1,6 @@
 import { Component, Input, ViewChild, HostListener } from '@angular/core';
 import { ModalController, AlertController, IonInput } from '@ionic/angular';
+import { ElectronService } from 'ngx-electron';
 import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
@@ -11,6 +12,8 @@ export class LanguagesModalPage {
   @Input() id = 10;
 
   newLanguage = '';
+
+  tmpLanguages:object = {};
 
   constructor(public alertController: AlertController, public modalCtrl: ModalController, public global: GlobalService) {
   }
@@ -58,9 +61,24 @@ export class LanguagesModalPage {
   }
 
   onLanguageChange(value: string, id: number) {
-    this.global.languages[id] = value;
+    this.tmpLanguages[id]=value
+    
   }
 
+  applyLanguageChange(){
+    for (var k in this.tmpLanguages){
+      var res = this.global.swapLanguage(this.global.languages[k],this.tmpLanguages[k]);
+    }
+    this.tmpLanguages={}
+  }
 
+  getCompletion(){
+    if (this.newLanguage=="" || this.global.availableLanguages === undefined){
+      return [];
+    }
+    var res=this.global.availableLanguages.filter(l => !this.global.languages.includes(l.toLowerCase()) && l.toLowerCase().startsWith(this.newLanguage.toLowerCase()));
+    res.length = Math.min(res.length,5);
+    return res;
+  }
 
 }

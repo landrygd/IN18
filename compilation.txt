@@ -1,4 +1,10 @@
 cd /mnt/c/Users/vince/Documents/projects/IN18/release-builds/
 
-zip -r in18_1.2.0_linux.zip IN18-linux-x64
-zip -r in18_1.2.0_mac.zip IN18-darwin-x64
+zip -r in18_1.3.0_windows.zip IN18-win32-ia32
+zip -r in18_1.3.0_linux.zip IN18-linux-x64
+zip -r in18_1.3.0_mac.zip IN18-darwin-x64
+
+cd /mnt/c/Users/vince/Documents/projects/IN18/
+
+zip -r release-builds/in18_1.3.0_web.zip IN18-darwin-x64
+

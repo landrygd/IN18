@@ -10,12 +10,12 @@
     <ion-label>New Folder</ion-label>
   </ion-item>
 
-  <ion-item button lines="none" (click)="cut()" *ngIf="!item.isRoot()">
+  <ion-item button lines="none" (click)="cut()" *ngIf="isStruct() && !isRoot()">
     <ion-icon slot="end" name="cut"></ion-icon>
     <ion-label>Cut</ion-label>
   </ion-item>
 
-  <ion-item button [lines]="isFolder()?'none':''" (click)="copy()" *ngIf="!item.isRoot()">
+  <ion-item button [lines]="isFolder()?'none':''" (click)="copy()" *ngIf="isStruct() && !isRoot()">
     <ion-icon slot="end" name="copy"></ion-icon>
     <ion-label>Copy</ion-label>
   </ion-item>
@@ -25,9 +25,13 @@
     <ion-label>Paste</ion-label>
   </ion-item>
 
-  <ion-item button lines="none" (click)="presentDeleteConfirm()" *ngIf="!item.isRoot()">
+  <ion-item button lines="none" (click)="presentDeleteConfirm()" *ngIf="isStruct() && !isRoot()">
     <ion-icon slot="end" color="danger" name="trash"></ion-icon>
     <ion-label color="danger">Delete</ion-label>
+  </ion-item>
+
+  <ion-item button lines="none" (click)="translateFromMain()" *ngIf="isField()" [disabled]="global.mainLanguage==item.language || item.checked">
+    <ion-label>Translate from main language</ion-label>
   </ion-item>
 
 </ion-list>

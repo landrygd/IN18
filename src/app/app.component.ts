@@ -51,13 +51,34 @@ export class AppComponent implements OnInit {
       // this.electronService.ipcRenderer.on('save-file', this.fileSaved);
       this.electronService.ipcRenderer.on('file-loaded', this.fileLoaded);
       this.electronService.ipcRenderer.on('file-saved', this.fileSaved);
+      this.electronService.ipcRenderer.on('file-exported', this.fileExported)
+      this.global.availableLanguages = this.electronService.ipcRenderer.sendSync("get-languages");
     }
   }
+
   async fileLoaded(event, filePath: string, data: string, success: boolean) {
     if (success) {
       self.importExportService.load(data, filePath);
       // self.presentLoadedToast();
       self.presentLoadConfirm();
+    }
+  }
+
+  async fileSaved(event, filePath: string, success: boolean) {
+    if (success && filePath !== '' && filePath !== undefined) {
+      self.global.projectPath = filePath;
+      self.global.updateSavedStructure();
+      self.presentSavedToast();
+    }
+    self.cdr.detectChanges();
+    self.global.loading = false;
+  }
+
+  async fileExported(event, filePath: string, success: boolean) {
+    
+    if (success && filePath !== '' && filePath !== undefined) {
+      var ext =  filePath.split('.').pop();
+      self.global.ExportingPaths[ext] = filePath;
     }
   }
 
@@ -84,15 +105,7 @@ export class AppComponent implements OnInit {
   }
 
 
-  async fileSaved(event, filePath: string, success: boolean) {
-    if (success && filePath !== '' && filePath !== undefined) {
-      self.global.projectPath = filePath;
-      self.global.updateSavedStructure();
-      self.presentSavedToast();
-    }
-    self.cdr.detectChanges();
-    self.global.loading = false;
-  }
+  
 
   async presentLoadedToast() {
     const toast = await this.toastController.create({
