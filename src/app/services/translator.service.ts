@@ -51,6 +51,7 @@ export class TranslatorService {
   mainLanguage: string;
   unfilled = true;
   unverified = false;
+  translating = false;
 
   traductionsTargeted: Traduction[][];
 
@@ -140,6 +141,7 @@ export class TranslatorService {
 
   async applyTranslation(fromTrad,toTrad){
     let error = false;
+    this.translating = true;
     if (this.translator == "MyMemory"){
       this.http.get(this.apiMyMemory + '?q=' + fromTrad.value + '&langpair=' + fromTrad.language + '|' + toTrad.language).subscribe(
         res => {
@@ -150,13 +152,14 @@ export class TranslatorService {
             error = true;
             this.error(r.responseDetails);
           }
-
+          this.translating = false;
         }, err => {
           if (!error) {
             error = true;
             const r = err as ResponseTradMyMemory;
             this.error(r.error.responseDetails);
           }
+          this.translating = false;
         }
       );
       }else if (this.translator == "Deepl"){
@@ -180,12 +183,14 @@ export class TranslatorService {
               this.error(r);
             
             }
+            this.translating = false;
             })
           .catch(err => {
             if (!error) {
               error = true;
               this.error(err);
             }
+            this.translating = false;
           });
         }
         

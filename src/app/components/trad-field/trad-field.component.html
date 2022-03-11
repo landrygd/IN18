@@ -6,7 +6,10 @@
     [disabled]="!trad.isFilled()">
     {{btnText}}
   </ion-button>
-  <ion-button slot="end" expand="block" fill="clear" shape="round" color="medium" (click)="presentPopover($event)">
-    <ion-icon name="ellipsis-vertical"></ion-icon>
+  <ion-button slot="end" expand="block" fill="" shape="round" color="" (click)="translateFromMain()" [disabled]="!canBeTranslated()">
+    <ion-icon name="language-outline" *ngIf="!translator.translating"></ion-icon><ion-spinner *ngIf="translator.translating"></ion-spinner>
   </ion-button>
+  <!--<ion-button slot="end" expand="block" fill="clear" shape="round" color="medium" (click)="presentPopover($event)">
+    <ion-icon name="ellipsis-vertical"></ion-icon>
+  </ion-button>-->
 </ion-item>

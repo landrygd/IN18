@@ -4,6 +4,7 @@ import { ElectronService } from 'ngx-electron';
 import { Traduction } from 'src/app/classes/traduction';
 import { TraductionsGroup } from 'src/app/classes/traductions-group';
 import { GlobalService } from 'src/app/services/global.service';
+import { TranslatorService } from 'src/app/services/translator.service';
 import { PopoverMenu } from '../tree-view/menu-popover/template-popover.component';
 
 @Component({
@@ -21,7 +22,7 @@ export class TradFieldComponent implements OnInit {
   btnFill: string;
   btnText: string;
 
-  constructor(public popoverCtrl: PopoverController, private electronService:ElectronService) {
+  constructor(public popoverCtrl: PopoverController, public translator: TranslatorService, public global: GlobalService,private electronService:ElectronService) {
 
   }
 
@@ -68,5 +69,14 @@ export class TradFieldComponent implements OnInit {
       translucent: true
     });
     await popover.present();
+  }
+
+  async translateFromMain(){
+    this.translator.translateFromMain(this.trad, this.parent);
+  }
+
+
+  canBeTranslated(){
+    return this.parent.getTradByLanguage(this.global.mainLanguage).isFilled() && this.trad.language != this.global.mainLanguage && !this.trad.isChecked();
   }
 }
