@@ -47,14 +47,14 @@
     "jszip": "^3.5.0",
     "ngx-dropzone": "^2.2.2",
     "ngx-electron": "^2.2.0",
-    "npm": "^6.14.7",
+    "npm": "^9.4.1",
     "rxjs": "~6.5.1",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1000.5",
-    "@angular/cli": "10.2.1",
+    "@angular/cli": "15.1.4",
     "@angular/compiler": "^10.0.8",
     "@angular/compiler-cli": "^10.0.8",
     "@angular/language-service": "^10.0.8",
